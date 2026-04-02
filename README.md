@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/Angular-19-DD0031?logo=angular&logoColor=white" alt="Angular"/>
     <img src="https://img.shields.io/badge/Angular%20Material-19-757575?logo=angular&logoColor=white" alt="Angular Material"/>
     <img src="https://img.shields.io/badge/Tailwind%20CSS-3-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
-    <img src="https://img.shields.io/badge/Chart.js-4-FF6384?logo=chartdotjs&logoColor=white" alt="Chart.js"/>
+    <img src="https://img.shields.io/badge/Chart.js-4-FF6384?seralogo=chartdotjs&logoColor=white" alt="Chart.js"/>
     <img src="https://img.shields.io/badge/NgRx%20Signals-19-BA2BD2?logo=ngrx&logoColor=white" alt="NgRx"/>
     <img src="https://img.shields.io/badge/RxJS-7-B7178C?logo=reactivex&logoColor=white" alt="RxJS"/>
     <br/>
