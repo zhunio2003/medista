@@ -171,23 +171,74 @@ El presente documento se organiza en siete secciones. La Sección 2 presenta la 
 
 ### 2.1 Perspectiva del Producto
 
-<!-- PENDIENTE -->
+MEDISTA es un sistema nuevo que reemplaza completamente el proceso manual de atención médica del Departamento Médico del Instituto Superior Universitario TEC Azuay, actualmente gestionado mediante formularios en papel. El sistema se despliega en el servidor local de la institución y opera de forma autónoma, sin integrarse ni compartir datos con el sistema académico institucional ni con ningún sistema externo en la presente versión.
+ 
+El sistema está compuesto por tres componentes de software independientes que operan de forma coordinada: una aplicación web para el personal médico y administrativo, una aplicación móvil para los estudiantes, y un backend centralizado que gestiona la lógica de negocio, la base de datos y las comunicaciones entre componentes. Toda la información clínica generada por el sistema reside exclusivamente en la base de datos institucional, separada físicamente de cualquier otro sistema del instituto. 
 
 ### 2.2 Funciones Principales del Sistema
 
-<!-- PENDIENTE -->
+MEDISTA organiza sus funcionalidades en ocho módulos. El **Módulo de Gestión de Pacientes** permite al médico registrar, buscar y actualizar los datos de filiación de los estudiantes que acuden al departamento. El **Módulo de Atención Médica** digitaliza el formulario de atención clínica completo, incluyendo signos vitales, examen físico por sistemas, diagnóstico con código CIE-10 y tratamiento. El **Módulo de Referencia Médica** gestiona las derivaciones a otros establecimientos de salud y genera el documento de referencia en PDF con formato institucional.
+ 
+El **Módulo de Historial Clínico** permite visualizar la evolución médica completa de un paciente a lo largo del tiempo, incluyendo gráficas de signos vitales y diagnósticos recurrentes. El **Módulo de Dashboard Estadístico y Reportes** proporciona indicadores agregados de las atenciones médicas con filtros inteligentes cruzados y exportación a PDF y Excel para la toma de decisiones institucional. El **Módulo de Notificaciones Inteligentes** alerta proactivamente a cada rol sobre situaciones clínicas o epidemiológicas relevantes, incluyendo detección de posibles brotes y pacientes frecuentes.
+ 
+El **Módulo de Seguridad y Auditoría** garantiza la protección de los datos clínicos mediante autenticación por roles, cifrado de información sensible y un registro de auditoría completo e inmutable. El **Módulo de Administración del Sistema** permite gestionar usuarios, catálogos institucionales, umbrales de notificaciones y respaldos de base de datos.
 
 ### 2.3 Características de los Usuarios
 
-<!-- PENDIENTE -->
+El sistema contempla cuatro tipos de usuarios, cada uno con plataforma, nivel técnico y responsabilidades diferenciadas:
+ 
+| Rol | Plataforma | Nivel Técnico | Responsabilidades en el Sistema |
+|-----|-----------|---------------|--------------------------------|
+| Médico | Web | Básico. Usuario con formación clínica, no tecnológica. Familiarizado con el formulario físico actual. | Registrar pacientes nuevos, crear atenciones médicas, generar referencias médicas, consultar historiales clínicos y recibir alertas clínicas. Es el único rol que produce datos clínicos en el sistema. |
+| Decano | Web | Intermedio. Usuario con capacidad de interpretar gráficas y reportes estadísticos. | Consultar dashboards estadísticos con datos agregados de las atenciones médicas, exportar reportes institucionales y recibir alertas de situaciones epidemiológicas. No tiene acceso a expedientes clínicos individuales. |
+| Administrador del Sistema | Web | Avanzado. Usuario con conocimiento técnico de administración de sistemas. | Gestionar cuentas de usuario, roles y catálogos institucionales, configurar umbrales de notificaciones, supervisar respaldos de base de datos y realizar tareas de mantenimiento técnico del sistema. |
+| Estudiante | Móvil | Básico. Usuario con manejo cotidiano de aplicaciones móviles. | Consultar su propio historial clínico personal y recibir notificaciones relacionadas con sus atenciones médicas. Rol de solo lectura — no introduce ni modifica ningún dato en el sistema. |
 
 ### 2.4 Restricciones Generales
 
-<!-- PENDIENTE -->
+Las siguientes restricciones condicionan el diseño e implementación del sistema y no son negociables dentro del alcance del presente proyecto:
+ 
+| # | Restricción | Descripción |
+|---|-------------|-------------|
+| RG-01 | Cumplimiento LOPDP | El sistema maneja datos de salud clasificados como datos sensibles bajo la Ley Orgánica de Protección de Datos Personales del Ecuador. Todo tratamiento, almacenamiento y acceso a estos datos debe cumplir con las disposiciones de esta ley, incluyendo cifrado, control de acceso y auditoría. |
+| RG-02 | Cumplimiento Acuerdo MSP No. 00000125 | Los registros clínicos electrónicos deben cumplir con los requisitos de integridad, trazabilidad, confidencialidad e inmutabilidad establecidos por el Ministerio de Salud Pública del Ecuador. Las atenciones médicas no pueden eliminarse físicamente del sistema. |
+| RG-03 | Despliegue en infraestructura local | El sistema debe desplegarse exclusivamente en el servidor local del Instituto Superior Universitario TEC Azuay. No se permite el uso de servicios de nube pública para el almacenamiento de datos clínicos en la presente versión. |
+| RG-04 | Autenticación de estudiantes por dominio institucional | Los estudiantes solo pueden autenticarse en la aplicación móvil mediante una dirección de correo electrónico con dominio @tecazuay.edu.ec. Cualquier otro dominio debe ser rechazado automáticamente por el sistema. |
+| RG-05 | Separación de datos por rol | El Decano y el Administrador del Sistema no tienen acceso a expedientes clínicos individuales. El acceso a datos clínicos detallados está restringido exclusivamente al rol Médico. |
+| RG-06 | Registro de estudiantes a cargo del médico | Los estudiantes no pueden autoregistrarse en el sistema. El médico es el único responsable de crear el perfil de un estudiante en su primera visita al departamento. |
+| RG-07 | Stack tecnológico definido | El sistema debe desarrollarse utilizando el stack tecnológico establecido en el documento MEDISTA-V2 — Arquitectura Técnica v1.0. No se permite la incorporación de tecnologías fuera de este stack sin una revisión formal del documento de arquitectura. |
 
 ### 2.5 Suposiciones y Dependencias
 
-<!-- PENDIENTE -->
+Las siguientes suposiciones se consideran verdaderas para el desarrollo e implementación de MEDISTA-V2. Si alguna de estas condiciones cambia, el alcance, el diseño o el cronograma del proyecto podría verse afectado.
+ 
+#### Suposiciones de Desarrollo
+ 
+| # | Suposición |
+|---|------------|
+| SD-01 | El desarrollador cuenta con los conocimientos técnicos necesarios en el stack tecnológico definido, o con la capacidad de adquirirlos durante el proceso de desarrollo. |
+| SD-02 | El desarrollador dispone de un equipo de desarrollo personal con capacidad suficiente para ejecutar el entorno local del sistema durante todo el período de desarrollo. |
+| SD-03 | El formulario físico de atención médica actual, diseñado por la médico del departamento, está disponible como referencia visual para la digitalización del sistema y la generación de PDFs institucionales. |
+| SD-04 | La médico del departamento está disponible para sesiones de validación de requisitos y pruebas de aceptación durante el período de desarrollo. |
+ 
+#### Suposiciones Institucionales
+ 
+| # | Suposición |
+|---|------------|
+| SI-01 | El Instituto Superior Universitario TEC Azuay dispone de un servidor local con las especificaciones mínimas requeridas para el despliegue del sistema. |
+| SI-02 | El área de tecnología de la institución otorga al equipo de desarrollo acceso al servidor para el despliegue y configuración inicial del sistema. |
+| SI-03 | El mantenimiento técnico del servidor — actualizaciones de sistema operativo, disponibilidad de red y respaldo de hardware — es responsabilidad del área de tecnología de la institución, no del desarrollador. |
+| SI-04 | Todos los estudiantes que acuden al Departamento Médico cuentan con una dirección de correo electrónico institucional activa bajo el dominio @tecazuay.edu.ec. |
+ 
+#### Suposiciones de Negocio
+ 
+| # | Suposición |
+|---|------------|
+| SN-01 | El médico es el único responsable de generar datos clínicos en el sistema. Ningún otro rol puede crear ni modificar atenciones médicas, referencias o historiales clínicos. |
+| SN-02 | El médico es el único responsable de registrar a los estudiantes en el sistema durante su primera visita al departamento. Los estudiantes no tienen capacidad de autoregistro. |
+| SN-03 | El dominio de correo institucional @tecazuay.edu.ec permanece vigente y sin cambios durante el ciclo de vida del sistema. Cualquier cambio de dominio requerirá una actualización formal de la configuración del sistema. |
+| SN-04 | Durante el período de implementación inicial, el Departamento Médico opera con un único médico. Si se incorporan más médicos en el futuro, el sistema está diseñado para soportarlo sin cambios estructurales. |
+ 
 
 ---
 
