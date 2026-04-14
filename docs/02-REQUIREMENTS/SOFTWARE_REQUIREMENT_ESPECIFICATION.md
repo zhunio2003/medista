@@ -449,20 +449,41 @@ Este módulo permite configurar y mantener el sistema en operación. Es accesibl
 ## 5. Requisitos de Interfaz Externa
 
 ### 5.1 Interfaces de Usuario
-
-<!-- PENDIENTE -->
-
+ 
+El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
+ 
+| Interfaz | Usuarios | Descripción |
+|----------|----------|-------------|
+| Aplicación web | Médico, Decano, Administrador del Sistema | Interfaz SPA desarrollada en Angular 19 con Angular Material y Tailwind CSS. Accesible desde cualquier navegador web moderno. Diseño responsivo adaptable a diferentes resoluciones de pantalla. |
+| Aplicación móvil | Estudiante | Aplicación nativa Android desarrollada en Kotlin. Interfaz simplificada de solo lectura orientada a la consulta del historial clínico personal y recepción de notificaciones push. Compatible con Android 8.0 (API 26) en adelante. | 
 ### 5.2 Interfaces de Hardware
-
-<!-- PENDIENTE -->
-
+ 
+| Componente | Descripción |
+|------------|-------------|
+| Servidor institucional | Servidor local de gama media del Instituto Superior Universitario TEC Azuay, con sistema operativo Linux, mínimo 4 núcleos, 8 GB de RAM y 100 GB de almacenamiento SSD. El sistema se despliega sobre este servidor mediante Docker Compose. |
+| Computadora de escritorio o portátil | Dispositivo desde el cual el Médico, el Decano y el Administrador del Sistema acceden a la aplicación web mediante un navegador moderno. No requiere hardware especializado. |
+| Dispositivo móvil | Smartphone Android desde el cual el estudiante accede a la aplicación móvil. No se requieren especificaciones de hardware particulares más allá de las requeridas por el sistema operativo del dispositivo. |
+ 
 ### 5.3 Interfaces de Software
-
-<!-- PENDIENTE -->
-
+ 
+| Sistema externo | Propósito | Interacción |
+|-----------------|-----------|-------------|
+| PostgreSQL 16 | Base de datos principal del sistema. Almacena todos los datos clínicos, de usuarios, catálogos y logs de auditoría. | El backend se comunica con PostgreSQL mediante Spring Data JPA e Hibernate. |
+| Redis 7 | Almacenamiento en caché de sesiones JWT, catálogo CIE-10 y rate limiting. | El backend se comunica con Redis mediante Spring Data Redis. |
+| Firebase Cloud Messaging (FCM) | Servicio de Google para el envío de notificaciones push a los dispositivos móviles de los estudiantes. | El backend se comunica con FCM mediante su API HTTP v1. |
+| Servidor de correo electrónico (SMTP) | Envío de notificaciones y reportes automáticos por correo electrónico a todos los roles. | El backend se comunica con el servidor de correo mediante JavaMailSender sobre protocolo SMTP con TLS. |
+| Prometheus | Recolección de métricas de infraestructura del sistema: tiempo de respuesta, uso de memoria, consultas por segundo y errores. | El backend expone métricas mediante Spring Boot Actuator y Micrometer, que Prometheus recolecta periódicamente. |
+| Grafana | Visualización de métricas de infraestructura recolectadas por Prometheus mediante dashboards interactivos. | Grafana consume los datos de Prometheus para mostrar el estado operativo del sistema en tiempo real. |
+ 
 ### 5.4 Interfaces de Comunicación
-
-<!-- PENDIENTE -->
+ 
+| Protocolo | Uso en MEDISTA |
+|-----------|------------------|
+| HTTPS / TLS 1.3 | Protocolo base para toda comunicación entre clientes (web y móvil) y el servidor. Obligatorio en todas las rutas — el acceso HTTP sin cifrar es redirigido automáticamente. |
+| REST sobre HTTP/1.1 | Protocolo de comunicación entre el frontend Angular y el backend Spring Boot para todas las operaciones de la API. |
+| WebSocket + STOMP | Protocolo de mensajería bidireccional en tiempo real utilizado para la entrega de notificaciones instantáneas al médico y al Decano desde la aplicación web. |
+| FCM HTTP/2 | Protocolo utilizado por el backend para enviar notificaciones push a los dispositivos móviles de los estudiantes a través de Firebase Cloud Messaging. |
+| SMTP con STARTTLS | Protocolo de envío de correo electrónico cifrado utilizado para notificaciones y reportes automáticos dirigidos a todos los roles del sistema. |
 
 ---
 
