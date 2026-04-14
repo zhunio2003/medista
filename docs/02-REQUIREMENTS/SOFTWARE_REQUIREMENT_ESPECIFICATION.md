@@ -313,19 +313,69 @@ Este módulo permite visualizar la evolución médica completa de un paciente a 
 
 ### 3.5 M5 — Dashboard Estadístico y Reportes
 
-<!-- PENDIENTE -->
+Este módulo proporciona inteligencia de datos al Decano y al médico para la toma de decisiones institucional. Todos los datos presentados son agregados — ningún rol puede acceder a expedientes clínicos individuales desde este módulo.
+ 
+| ID | Nombre | Descripción | Prioridad |
+|----|--------|-------------|-----------|
+| RF-M5-01 | Dashboard interactivo en tiempo real | El sistema debe mostrar un dashboard interactivo con métricas actualizadas en tiempo real, incluyendo: total de atenciones por período, enfermedades más frecuentes, distribución de atenciones por carrera y ciclo, distribución por género y grupo etario, promedio de IMC general y por carrera, cantidad de referencias médicas generadas, picos de demanda por día o semana, y tasa de recurrencia de pacientes. | Alta |
+| RF-M5-02 | Detección de anomalías e incrementos inusuales | El sistema debe identificar y destacar visualmente en el dashboard incrementos inusuales en el volumen de atenciones o en la frecuencia de un diagnóstico específico, alertando sobre posibles anomalías epidemiológicas que requieran atención institucional. | Alta |
+| RF-M5-03 | Filtros inteligentes cruzados | El sistema debe permitir al Decano aplicar múltiples filtros de forma simultánea y combinada sobre las métricas del dashboard: por carrera, ciclo, período o semestre, género, rango de edad, diagnóstico CIE-10 y tipo de atención. El sistema debe permitir además comparar los resultados filtrados contra períodos anteriores. | Alta |
+| RF-M5-04 | Exportación de reportes a PDF institucional | El sistema debe permitir exportar las métricas visualizadas en el dashboard a un documento PDF con formato institucional del Instituto Superior Universitario TEC Azuay, apto para presentación ante autoridades. | Alta |
+| RF-M5-05 | Exportación de datos a Excel | El sistema debe permitir exportar los datos estadísticos a un archivo Excel (.xlsx) con formato estructurado, permitiendo al Decano manipular y analizar los datos fuera del sistema. | Media |
+| RF-M5-06 | Reportes automáticos periódicos | El sistema debe generar y enviar automáticamente reportes de actividad del departamento al Decano por correo electrónico en los intervalos configurados: semanal, mensual o semestral. El intervalo debe ser configurable por el Administrador del Sistema. | Media |
+| RF-M5-07 | Restricción a datos agregados | El Decano y el médico acceden exclusivamente a datos estadísticos agregados desde este módulo. Ningún indicador, gráfica ni reporte debe permitir identificar o acceder al expediente clínico de un estudiante individual. | Alta |
+| RF-M5-08 | Estadísticas propias del médico | El médico puede visualizar estadísticas agregadas limitadas a las atenciones médicas registradas por su propia cuenta, a efectos de monitorear su actividad clínica personal. Esta restricción aplica exclusivamente al módulo de estadísticas — en el Módulo de Historial Clínico (M4), el médico tiene acceso completo a todas las atenciones de un paciente independientemente del médico que las registró. | Media |
 
 ### 3.6 M6 — Notificaciones Inteligentes
 
-<!-- PENDIENTE -->
+Este módulo gestiona las alertas y notificaciones proactivas hacia cada rol del sistema. Opera de forma transversal — se activa como consecuencia de eventos generados en otros módulos y no produce datos clínicos propios.
+ 
+| ID | Nombre | Descripción | Prioridad |
+|----|--------|-------------|-----------|
+| RF-M6-01 | Notificación al estudiante por atención registrada | El sistema debe notificar automáticamente al estudiante cuando el médico registre una nueva atención médica a su nombre, incluyendo un resumen con fecha, motivo de consulta y diagnóstico. | Alta |
+| RF-M6-02 | Notificación al estudiante por referencia médica | El sistema debe notificar automáticamente al estudiante cuando se genere una referencia médica a su nombre, incluyendo los datos del establecimiento de salud destino y la especialidad a la que es derivado. | Alta |
+| RF-M6-03 | Recordatorio de seguimiento al estudiante | El sistema debe notificar al estudiante cuando el médico programe un seguimiento, indicando la fecha y las instrucciones correspondientes. | Media |
+| RF-M6-04 | Alerta al médico por paciente frecuente | El sistema debe alertar al médico cuando un paciente supere el umbral configurado de visitas en un período determinado, identificando al estudiante y el número de atenciones registradas. | Media |
+| RF-M6-05 | Recordatorio de seguimientos pendientes al médico | El sistema debe notificar al médico sobre los seguimientos programados pendientes antes de su fecha de vencimiento. | Media |
+| RF-M6-06 | Alerta al médico por diagnóstico inusual | El sistema debe alertar al médico cuando un diagnóstico específico aparezca con una frecuencia inusual en un período determinado, sugiriendo una posible tendencia epidemiológica. | Alta |
+| RF-M6-07 | Alerta al Decano por anomalías institucionales | El sistema debe notificar al Decano cuando se detecten anomalías en el volumen de atenciones médicas o en la frecuencia de diagnósticos específicos, indicando el tipo de anomalía detectada y el período en que se presenta. | Alta |
+| RF-M6-08 | Notificación al Decano por referencia generada | El sistema debe notificar al Decano cada vez que se genere una referencia médica, con información del establecimiento destino y la especialidad, sin exponer datos clínicos individuales del paciente. | Media |
+| RF-M6-09 | Canales de notificación | El sistema debe entregar las notificaciones a través de los siguientes canales según el rol del destinatario: bandeja de notificaciones interna del sistema para todos los roles, correo electrónico para todos los roles, y notificación push en la aplicación móvil exclusivamente para estudiantes. | Alta |
+| RF-M6-10 | Umbrales configurables | Los umbrales que activan las alertas automáticas — número de visitas por período, frecuencia de diagnósticos, volumen de atenciones — deben ser configurables por el Administrador del Sistema sin necesidad de modificar el código fuente. | Alta |
+| RF-M6-11 | Historial de notificaciones | Todas las notificaciones generadas por el sistema deben almacenarse y ser consultables históricamente por el destinatario correspondiente, indicando fecha, tipo de notificación y estado de lectura. | Media |
 
 ### 3.7 M7 — Seguridad y Auditoría
 
-<!-- PENDIENTE -->
+Este módulo garantiza la protección de los datos clínicos y la trazabilidad completa de todas las acciones realizadas en el sistema, en cumplimiento de la LOPDP y el Acuerdo Ministerial MSP No. 00000125. Opera de forma transversal — sus controles aplican a todos los módulos del sistema.
+ 
+| ID | Nombre | Descripción | Prioridad |
+|----|--------|-------------|-----------|
+| RF-M7-01 | Autenticación mediante JWT | El sistema debe implementar autenticación basada en JSON Web Tokens. Los tokens de acceso deben tener una duración máxima de 15 minutos. Los refresh tokens deben tener una duración de 7 días y permitir renovar el token de acceso sin requerir que el usuario inicie sesión nuevamente. | Alta |
+| RF-M7-02 | Cifrado de contraseñas con BCrypt | Las contraseñas de los usuarios Médico, Decano y Administrador del Sistema deben almacenarse en la base de datos cifradas mediante el algoritmo BCrypt con factor de trabajo 12. Ninguna contraseña debe almacenarse en texto plano. | Alta |
+| RF-M7-03 | Validación de dominio institucional | El sistema debe validar que los estudiantes se autentiquen exclusivamente con una dirección de correo electrónico bajo el dominio @tecazuay.edu.ec. Cualquier intento de autenticación con un dominio diferente debe ser rechazado automáticamente. | Alta |
+| RF-M7-04 | Expiración de sesión por inactividad | El sistema debe cerrar automáticamente la sesión de cualquier usuario que permanezca inactivo durante un período configurable, requiriendo que el usuario se autentique nuevamente para continuar. | Alta |
+| RF-M7-05 | Control de acceso por roles | El sistema debe garantizar que cada rol acceda únicamente a los recursos y funcionalidades que le corresponden. Ningún endpoint del sistema debe ser accesible sin autenticación válida. Un usuario autenticado no puede acceder a recursos de un rol diferente al suyo. | Alta |
+| RF-M7-06 | Cifrado de datos sensibles en reposo | Los datos clínicos sensibles almacenados en la base de datos — incluyendo diagnósticos, antecedentes médicos y datos obstétricos — deben estar cifrados mediante AES-256 a nivel de columna. | Alta |
+| RF-M7-07 | Cifrado del tráfico de red | Todas las comunicaciones entre los clientes (web y móvil) y el servidor deben realizarse exclusivamente mediante HTTPS con TLS 1.3. El acceso por HTTP sin cifrar debe ser redirigido automáticamente a HTTPS. | Alta |
+| RF-M7-08 | Log de auditoría inmutable | El sistema debe registrar automáticamente un log de auditoría por cada acción relevante ejecutada en el sistema, incluyendo: usuario que ejecutó la acción, tipo de acción, recurso afectado, timestamp e dirección IP de origen. Los registros de auditoría no pueden ser modificados ni eliminados por ningún rol — solo pueden ser consultados por el Administrador del Sistema. | Alta |
+| RF-M7-09 | Registro de intentos de autenticación | El sistema debe registrar en el log de auditoría todos los intentos de inicio de sesión, tanto exitosos como fallidos, incluyendo el número de intentos fallidos consecutivos por usuario e IP. | Alta |
+| RF-M7-10 | Integridad de logs mediante HMAC | Cada registro del log de auditoría debe incluir una firma digital generada con HMAC-SHA256 que permita detectar cualquier intento de manipulación del registro. | Alta |
+| RF-M7-11 | Rate limiting en autenticación | El sistema debe limitar los intentos de inicio de sesión a un máximo de 5 intentos por minuto por dirección IP. Al superar este límite, el sistema debe bloquear temporalmente las solicitudes provenientes de esa IP e informar al usuario. | Alta |
 
 ### 3.8 M8 — Administración del Sistema
 
-<!-- PENDIENTE -->
+Este módulo permite configurar y mantener el sistema en operación. Es accesible exclusivamente por el rol Administrador del Sistema — ningún otro rol tiene acceso a estas funcionalidades.
+ 
+| ID | Nombre | Descripción | Prioridad |
+|----|--------|-------------|-----------|
+| RF-M8-01 | Gestión de usuarios | El sistema debe permitir al Administrador crear, editar y desactivar cuentas de usuarios para los roles Médico, Decano y Administrador del Sistema. Los usuarios no se eliminan físicamente — solo se desactivan para preservar la trazabilidad de las acciones registradas en el log de auditoría. | Alta |
+| RF-M8-02 | Gestión de roles y permisos | El sistema debe permitir al Administrador asignar y modificar el rol de cada usuario, controlando los recursos y funcionalidades a los que tiene acceso dentro del sistema. | Alta |
+| RF-M8-03 | Gestión de catálogo de carreras y ciclos | El sistema debe permitir al Administrador gestionar el catálogo de las carreras del Instituto Superior Universitario TEC Azuay y sus ciclos correspondientes, con la posibilidad de agregar, editar y desactivar registros cuando la oferta académica institucional cambie. | Media |
+| RF-M8-04 | Gestión de catálogo de establecimientos de salud | El sistema debe permitir al Administrador gestionar el catálogo de establecimientos de salud disponibles como destino en las referencias médicas, con la posibilidad de agregar, editar y desactivar registros. | Media |
+| RF-M8-05 | Gestión del catálogo CIE-10 | El sistema debe permitir al Administrador gestionar el catálogo de códigos CIE-10, incluyendo la carga masiva inicial de los más de 14.000 códigos y la posibilidad de agregar o desactivar códigos individualmente. | Media |
+| RF-M8-06 | Configuración de umbrales de notificaciones | El sistema debe permitir al Administrador configurar los umbrales que activan las alertas automáticas del módulo de notificaciones, incluyendo: número máximo de visitas por paciente en un período, frecuencia de diagnósticos que activa alerta epidemiológica, y volumen de atenciones que activa alerta institucional. | Alta |
+| RF-M8-07 | Configuración de reportes automáticos | El sistema debe permitir al Administrador configurar los intervalos de generación de reportes automáticos — semanal, mensual o semestral — así como los filtros aplicados y los destinatarios de cada reporte. | Media |
+| RF-M8-08 | Respaldos automáticos de base de datos | El sistema debe generar respaldos automáticos de la base de datos en los intervalos configurados por el Administrador. Los respaldos deben almacenarse cifrados y el Administrador debe poder ejecutar un respaldo manual en cualquier momento. | Alta |
 
 ---
 
