@@ -507,12 +507,36 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
 ## 7. Apéndices
 
 ### 7.1 Apéndice A — Formato del Formulario de Atención Médica Actual
-
-<!-- PENDIENTE -->
-
+ 
+El formulario físico de atención médica del Departamento Médico del Instituto Superior Universitario TEC Azuay, diseñado por la médico de la institución, constituye la referencia visual principal para la digitalización del Módulo de Atención Médica (M2) y para la generación de PDFs institucionales de los módulos M2 y M3.
+ 
+El formulario físico está compuesto por dos páginas:
+ 
+**Página 1:** Datos de filiación del paciente, motivo de consulta, antecedentes familiares y personales, enfermedad actual, signos vitales (incluyendo Glasgow e IMC), y examen físico por sistemas.
+ 
+**Página 2:** Emergencias obstétricas, exámenes complementarios, diagnóstico con código CIE-10, tratamiento, datos del profesional, y formulario de referencia médica.
+  
+---
+ 
 ### 7.2 Apéndice B — Tabla de Requisitos por Rol
-
-<!-- PENDIENTE -->
+ 
+La siguiente tabla resume el acceso de cada rol a los módulos del sistema. Sirve como referencia rápida para la validación de requisitos con los stakeholders y como guía para la implementación del control de acceso en el Módulo de Seguridad y Auditoría (M7).
+ 
+| Módulo | Médico | Decano | Administrador | Estudiante |
+|--------|--------|--------|---------------|------------|
+| M1 — Gestión de Pacientes | ✅ Lectura y escritura | ❌ Sin acceso | ❌ Sin acceso | ❌ Sin acceso |
+| M2 — Atención Médica | ✅ Lectura y escritura | ❌ Sin acceso | ❌ Sin acceso | ❌ Sin acceso |
+| M3 — Referencia Médica | ✅ Lectura y escritura | ❌ Sin acceso | ❌ Sin acceso | ❌ Sin acceso |
+| M4 — Historial Clínico | ✅ Vista completa | ❌ Sin acceso | ❌ Sin acceso | ✅ Vista simplificada (solo sus datos) |
+| M5 — Dashboard y Reportes | ✅ Solo sus atenciones | ✅ Datos agregados | ❌ Sin acceso | ❌ Sin acceso |
+| M6 — Notificaciones | ✅ Alertas clínicas | ✅ Alertas institucionales | ❌ Sin acceso | ✅ Notificaciones personales |
+| M7 — Seguridad y Auditoría | ❌ Sin acceso al log | ❌ Sin acceso al log | ✅ Consulta del log | ❌ Sin acceso |
+| M8 — Administración | ❌ Sin acceso | ❌ Sin acceso | ✅ Acceso completo | ❌ Sin acceso |
+ 
+**Referencias de la tabla:**
+- ✅ Acceso permitido con el alcance indicado.
+- ❌ Acceso denegado. Cualquier intento de acceso debe ser rechazado por el sistema con código de error 403 (Forbidden).
+ 
 
 ---
 
