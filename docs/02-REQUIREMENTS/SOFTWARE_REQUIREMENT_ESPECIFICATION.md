@@ -489,7 +489,18 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
 
 ## 6. Restricciones del Sistema
 
-<!-- PENDIENTE -->
+| ID | Categoría | Restricción |
+|----|-----------|-------------|
+| RS-01 | Tecnológica | El stack tecnológico del sistema es fijo para la presente versión. El backend debe desarrollarse en Java 21 con Spring Boot 4.0.0, el frontend web en Angular 19, la aplicación móvil en Kotlin nativo para Android, la base de datos principal en PostgreSQL 16 y la caché en Redis 7. No se permite la incorporación de tecnologías alternativas sin una revisión formal del documento de arquitectura. |
+| RS-02 | Tecnológica | El despliegue del sistema en la presente versión se realiza exclusivamente mediante Docker Compose en el servidor local del instituto. No se contempla el uso de Kubernetes ni de servicios de infraestructura en la nube pública. |
+| RS-03 | Tecnológica | Firebase Cloud Messaging es el único servicio externo permitido en el sistema, limitado exclusivamente al envío de notificaciones push a dispositivos móviles. Ningún dato clínico es transmitido a servicios externos. |
+| RS-04 | De datos | Todos los datos clínicos del sistema residen exclusivamente en el servidor local del Instituto Superior Universitario TEC Azuay. No se permite la transferencia, replicación ni exportación de datos clínicos individuales fuera de la infraestructura institucional bajo ninguna circunstancia. |
+| RS-05 | De datos | Todos los datos clínicos almacenados en la base de datos deben estar cifrados mediante AES-256 a nivel de columna, dada la naturaleza sensible de la información de salud y las obligaciones impuestas por la LOPDP. |
+| RS-06 | De datos | Ningún registro clínico del sistema puede ser eliminado físicamente de la base de datos. Las atenciones médicas, referencias y registros de auditoría son inmutables. Los datos que deban dejarse fuera de uso se desactivan mediante un campo de estado, preservando íntegra la trazabilidad histórica. |
+| RS-07 | De datos | Los datos de filiación de los pacientes y los registros de usuarios pueden ser editados únicamente por los roles autorizados. Sin embargo, el historial de cada modificación debe quedar registrado en el log de auditoría, garantizando que ningún cambio sea anónimo ni irrastreable. |
+| RS-08 | De infraestructura | El sistema depende exclusivamente del servidor local del instituto para su operación. No existe redundancia de infraestructura en la presente versión — si el servidor no está disponible, el sistema no es accesible. Esta restricción debe ser considerada en el plan de mantenimiento institucional. |
+| RS-09 | De negocio | El acceso de estudiantes al sistema está restringido a cuentas con dirección de correo electrónico bajo el dominio @tecazuay.edu.ec. No se permite el registro ni la autenticación de estudiantes con dominios de correo externos. |
+| RS-10 | De negocio | La generación de datos clínicos en el sistema — registro de pacientes, atenciones médicas y referencias — es responsabilidad exclusiva del rol Médico. Ningún otro rol puede crear ni modificar información clínica. |
 
 ---
 
@@ -505,5 +516,5 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
 
 ---
 
-*MEDISTA-V2 — Especificación de Requisitos de Software v1.0*
+*MEDISTA — Especificación de Requisitos de Software v1.0*
 *Instituto Superior Universitario TEC Azuay — Abril 2026*
