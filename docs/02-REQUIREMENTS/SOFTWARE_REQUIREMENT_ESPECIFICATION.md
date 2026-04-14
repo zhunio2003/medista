@@ -382,32 +382,67 @@ Este módulo permite configurar y mantener el sistema en operación. Es accesibl
 ## 4. Requisitos No Funcionales
 
 ### 4.1 Rendimiento
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Métrica |
+|----|-----------|---------|
+| RNF-01 | Tiempo de respuesta de la interfaz web | Las páginas y formularios del sistema web deben cargar en menos de 2 segundos bajo condiciones normales de uso. |
+| RNF-02 | Tiempo de respuesta del buscador CIE-10 | El buscador de diagnósticos CIE-10 debe mostrar sugerencias en menos de 500 milisegundos desde que el médico comienza a escribir. |
+| RNF-03 | Tiempo de respuesta de la API | El backend debe responder a las solicitudes de la interfaz web y móvil en menos de 1 segundo para operaciones de consulta y menos de 3 segundos para operaciones de escritura bajo carga normal. |
+| RNF-04 | Generación de PDF | El sistema debe generar documentos PDF de atención médica y referencia en menos de 5 segundos. |
+| RNF-05 | Usuarios concurrentes | El sistema debe soportar un mínimo de 600 usuarios concurrentes sin degradación perceptible del rendimiento, contemplando el crecimiento futuro de la institución. |
+ 
 ### 4.2 Seguridad
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-06 | Cumplimiento OWASP Top 10 | El sistema debe estar protegido contra las diez vulnerabilidades más críticas de seguridad web definidas por OWASP, incluyendo inyección SQL, cross-site scripting (XSS), broken authentication, exposición de datos sensibles y control de acceso roto. |
+| RNF-07 | HTTPS obligatorio | Todas las comunicaciones entre clientes y servidor deben realizarse exclusivamente mediante HTTPS. El acceso por HTTP debe ser redirigido automáticamente a HTTPS en todo momento. |
+| RNF-08 | Cifrado de datos en reposo | Los datos clínicos sensibles deben estar cifrados en la base de datos mediante AES-256. Los respaldos de base de datos deben almacenarse cifrados. |
+| RNF-09 | Escaneo de vulnerabilidades | El sistema debe ser sometido a un escaneo automatizado de vulnerabilidades con OWASP ZAP antes de su despliegue en producción. |
+| RNF-10 | Principio de mínimo privilegio | Cada componente del sistema debe operar con los permisos mínimos necesarios para cumplir su función. Ningún componente debe tener acceso a recursos que no necesite. |
+ 
 ### 4.3 Usabilidad
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-11 | Interfaz intuitiva para usuario con nivel técnico básico | La interfaz web debe ser operable por un usuario con conocimientos básicos de software sin necesidad de capacitación técnica. El flujo de registro de una atención médica completa debe poder completarse sin consultar el manual de usuario. |
+| RNF-12 | Consistencia visual | La interfaz debe mantener consistencia visual y de interacción en todas las pantallas, utilizando los mismos patrones de navegación, colores, tipografía y componentes en todo el sistema. |
+| RNF-13 | Mensajes de error comprensibles | Los mensajes de error y validación deben estar redactados en lenguaje claro y no técnico, indicando al usuario qué ocurrió y cómo resolverlo. |
+| RNF-14 | Diseño responsivo | La interfaz web debe adaptarse correctamente a diferentes resoluciones de pantalla, siendo funcional tanto en computadoras de escritorio como en pantallas más pequeñas. |
+| RNF-15 | Aplicación móvil nativa | La aplicación móvil para estudiantes debe seguir las guías de diseño de la plataforma correspondiente (Android / iOS), ofreciendo una experiencia de uso coherente con las convenciones del sistema operativo del dispositivo. |
+ 
 ### 4.4 Disponibilidad y Confiabilidad
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-16 | Disponibilidad continua | El sistema debe estar disponible las 24 horas del día, los 7 días de la semana, dado que los estudiantes pueden consultar su historial en cualquier momento desde la aplicación móvil. |
+| RNF-17 | Recuperación ante fallos | En caso de caída del sistema, el tiempo de recuperación objetivo (RTO) debe ser el menor posible. El despliegue mediante Docker Compose debe permitir el reinicio de servicios de forma individual sin afectar a los demás componentes. |
+| RNF-18 | Persistencia de datos | La base de datos debe operar sobre volúmenes persistentes que garanticen que ningún dato clínico se pierda ante un reinicio o fallo del contenedor. |
+| RNF-19 | Integridad transaccional | Todas las operaciones de escritura en la base de datos deben ser transaccionales — en caso de error parcial, la operación completa debe revertirse para evitar datos inconsistentes. |
+ 
 ### 4.5 Escalabilidad
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-20 | Escalabilidad de usuarios | El sistema debe soportar el crecimiento de la población estudiantil del instituto sin requerir cambios estructurales en la arquitectura, desde los 500 estudiantes actuales hasta miles de usuarios en el futuro. |
+| RNF-21 | Arquitectura preparada para escalar | La arquitectura de monolito modular debe estar diseñada de forma que sus módulos puedan extraerse como servicios independientes en el futuro si el crecimiento institucional lo requiere, sin necesidad de reescribir el sistema. |
+ 
 ### 4.6 Cumplimiento Normativo
-
-<!-- PENDIENTE -->
-
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-22 | Cumplimiento LOPDP | El sistema debe cumplir en su totalidad con las disposiciones de la Ley Orgánica de Protección de Datos Personales del Ecuador, incluyendo cifrado de datos sensibles, control de acceso, trazabilidad y derechos del titular sobre sus datos. |
+| RNF-23 | Cumplimiento Acuerdo MSP No. 00000125 | El sistema debe cumplir con los requisitos de integridad, trazabilidad, confidencialidad e inmutabilidad de la historia clínica electrónica establecidos por el Ministerio de Salud Pública del Ecuador. |
+| RNF-24 | Trazabilidad completa | Toda acción realizada sobre datos clínicos debe quedar registrada en el log de auditoría de forma completa e inmutable, garantizando la trazabilidad exigida por la normativa vigente. |
+ 
 ### 4.7 Mantenibilidad
-
-<!-- PENDIENTE -->
+ 
+| ID | Requisito | Detalle |
+|----|-----------|---------|
+| RNF-25 | Stack tecnológico estándar | El sistema debe desarrollarse con tecnologías maduras, ampliamente adoptadas y con soporte a largo plazo — Java 21, Spring Boot, Angular, PostgreSQL — de forma que cualquier desarrollador con conocimientos estándar del stack pueda mantener y extender el sistema. |
+| RNF-26 | Arquitectura modular | El código fuente debe organizarse en módulos independientes y bien delimitados, de forma que un cambio en un módulo no genere efectos no deseados en otros. |
+| RNF-27 | Migraciones versionadas de base de datos | Todos los cambios en el esquema de la base de datos deben gestionarse mediante migraciones versionadas con Flyway, garantizando que el esquema sea reproducible y auditable en cualquier entorno. |
+| RNF-28 | Documentación técnica | El sistema debe incluir documentación técnica actualizada: API documentada con OpenAPI 3, README con instrucciones de instalación y despliegue, y comentarios en el código para lógica no trivial. |
 
 ---
 
