@@ -2,7 +2,7 @@
 
 **Módulo:** M2 — Atención Médica  
 **Versión:** 1.0  
-**Fecha:** Abril 2026
+**Fecha:** 14 de Abril 2026
 
 ---
 
@@ -114,4 +114,4 @@ Permite al médico registrar una atención médica completa para un paciente exi
 
 ---
 
-*MEDISTA-V2 — Casos de Uso M2 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M2 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
