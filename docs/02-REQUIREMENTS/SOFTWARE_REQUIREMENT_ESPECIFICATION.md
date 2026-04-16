@@ -228,7 +228,7 @@ Las siguientes suposiciones se consideran verdaderas para el desarrollo e implem
 | SI-01 | El Instituto Superior Universitario TEC Azuay dispone de un servidor local con las especificaciones mínimas requeridas para el despliegue del sistema. |
 | SI-02 | El área de tecnología de la institución otorga al equipo de desarrollo acceso al servidor para el despliegue y configuración inicial del sistema. |
 | SI-03 | El mantenimiento técnico del servidor — actualizaciones de sistema operativo, disponibilidad de red y respaldo de hardware — es responsabilidad del área de tecnología de la institución, no del desarrollador. |
-| SI-04 | Todos los estudiantes que acuden al Departamento Médico cuentan con una dirección de correo electrónico institucional activa bajo el dominio @tecazuay.edu.ec. |
+| SI-04 | Todos los usuarios del sistema — Médico, Decano, Administrador del Sistema y Estudiante — cuentan con una dirección de correo electrónico institucional activa bajo el dominio @tecazuay.edu.ecs. |
  
 #### Suposiciones de Negocio
  
