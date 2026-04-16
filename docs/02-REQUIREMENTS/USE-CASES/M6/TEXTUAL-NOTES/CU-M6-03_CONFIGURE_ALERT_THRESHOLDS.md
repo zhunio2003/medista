@@ -2,7 +2,7 @@
 
 **Módulo:** M6 — Notificaciones Inteligentes  
 **Versión:** 1.0  
-**Fecha:** Abril 2026
+**Fecha:** 16 Abril 2026
 
 ---
 
@@ -79,4 +79,4 @@ Permite al Administrador del Sistema configurar los umbrales numéricos que cont
 
 ---
 
-*MEDISTA-V2 — Casos de Uso M6 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M6 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
