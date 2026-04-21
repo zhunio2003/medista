@@ -10,7 +10,7 @@
 
 El sistema gestiona datos clínicos sensibles de estudiantes — atenciones médicas, diagnósticos, referencias, antecedentes — que por su naturaleza médica y legal requieren un tratamiento especial frente a las operaciones de eliminación.
  
-En un sistema convencional, eliminar un registro significa ejecutar un `DELETE` que lo remueve físicamente de la base de datos. Para MEDISTA-V2, esta aproximación es incompatible con dos marcos normativos aplicables: la **Ley Orgánica de Protección de Datos Personales (LOPDP)** de Ecuador, que exige trazabilidad completa sobre los datos personales gestionados, y el **Acuerdo Ministerial MSP No. 00000125**, que establece que la historia clínica electrónica debe preservarse íntegra y ser inalterable. Eliminar físicamente un registro clínico constituiría una infracción directa a ambas normativas.
+En un sistema convencional, eliminar un registro significa ejecutar un `DELETE` que lo remueve físicamente de la base de datos. Para MEDISTA, esta aproximación es incompatible con dos marcos normativos aplicables: la **Ley Orgánica de Protección de Datos Personales (LOPDP)** de Ecuador, que exige trazabilidad completa sobre los datos personales gestionados, y el **Acuerdo Ministerial MSP No. 00000125**, que establece que la historia clínica electrónica debe preservarse íntegra y ser inalterable. Eliminar físicamente un registro clínico constituiría una infracción directa a ambas normativas.
  
 Adicionalmente, la eliminación física es irreversible. Cualquier error operativo — un clic accidental, una operación masiva mal ejecutada — destruiría datos que no pueden recuperarse, salvo desde un respaldo completo de la base de datos.
 
