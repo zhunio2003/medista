@@ -8,10 +8,8 @@
 
 ## Contexto
 
-El sistema maneja cuatro tipos de usuarios: Médico, Decano, Administrador del Sistema y Estudiante. Durante el modelado de datos surgió la necesidad de decidir cómo representar a estas personas en la base de datos.
- 
-La tentación natural es centralizar todo en una única tabla `users` que contenga tanto los datos de autenticación como los datos clínicos del paciente. Esto simplifica el diagrama y reduce el número de tablas. Sin embargo, los datos clínicos — cédula, carrera, ciclo, dirección, fecha de nacimiento, género, tipo de sangre — son atributos exclusivos de los estudiantes en su rol de pacientes. Un médico, un decano o un administrador del sistema también son usuarios, pero nunca son pacientes y nunca tendrán esos atributos.
- 
+El sistema maneja cuatro tipos de usuarios: Médico, Decano, Administrador del Sistema y Estudiante. Durante el modelado de datos surgió la necesidad de decidir cómo representar a estas personas en la base de datos.  
+La tentación natural es centralizar todo en una única tabla `users` que contenga tanto los datos de autenticación como los datos clínicos del paciente. Esto simplifica el diagrama y reduce el número de tablas. Sin embargo, los datos clínicos — cédula, carrera, ciclo, dirección, fecha de nacimiento, género, tipo de sangre — son atributos exclusivos de los estudiantes en su rol de pacientes. Un médico, un decano o un administrador del sistema también son usuarios, pero nunca son pacientes y nunca tendrán esos atributos.  
 Adicionalmente, se evaluó el patrón de herencia de tablas, donde `patients` heredaría de `users` como una especialización. Este patrón es válido en dominios donde todas las entidades hijo son variantes del mismo concepto. En MEDISTA, sin embargo, `users` y `patients` representan conceptos de dominio distintos: el primero responde a la pregunta *¿quién se autentica?* y el segundo a *¿de quién es este expediente clínico?*. La herencia mezclaría responsabilidades que deben permanecer separadas.
 
 ## Decisión
