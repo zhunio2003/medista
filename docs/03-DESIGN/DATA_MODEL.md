@@ -3,7 +3,7 @@
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
 **Institución:** Instituto Superior Universitario TEC Azuay  
 **Versión:** 1.0  
-**Fecha:** 20 Abril 2026  
+**Fecha:** 21 Abril 2026  
 **Fase:** Fase 2 — Diseño del Sistema  
 
 ---
@@ -21,12 +21,13 @@
    - 4.5 [M6 — Notificaciones Inteligentes](#45-m6--notificaciones-inteligentes)
    - 4.6 [M8 — Administración del Sistema](#46-m8--administración-del-sistema)
 5. [Relaciones Principales](#5-relaciones-principales)
+6. [Decisiones Arquitectónicas](#6-decisiones-arquitectónicas)
 
 ---
 
 ## 1. Descripción General
 
-Este documento define el modelo de datos relacional completo de MEDISTA. Cubre las 18 tablas del sistema, sus columnas, tipos de dato, restricciones y relaciones entre entidades. Este modelo es la referencia autoritativa para los scripts de migración Flyway, las clases de entidad JPA y los contratos de API REST.
+Este documento define el modelo de datos relacional completo de MEDISTA. Cubre las 19 tablas del sistema, sus columnas, tipos de dato, restricciones y relaciones entre entidades. Este modelo es la referencia autoritativa para los scripts de migración Flyway, las clases de entidad JPA y los contratos de API REST.
 
 El motor de base de datos es **PostgreSQL 16** con las extensiones `pgcrypto` (cifrado a nivel de campo para datos clínicos sensibles) y `pg_trgm` (indexación de trigramas para la búsqueda difusa del catálogo CIE-10).
 
@@ -65,13 +66,14 @@ Las tablas de revisión de auditoría no están listadas en este documento — s
 | 9 | `obstetric_emergency` | M2 | Datos obstétricos — condicional según género del paciente |
 | 10 | `complementary_exams` | M2 | Registros de exámenes complementarios y archivos adjuntos |
 | 11 | `diagnoses` | M2 | Diagnósticos asociados a una atención médica |
-| 12 | `cie10_codes` | M2 / M8 | Catálogo de códigos diagnósticos CIE-10 (+14.000 entradas) |
-| 13 | `medical_referrals` | M3 | Registros de referencias médicas a establecimientos externos |
-| 14 | `referral_diagnoses` | M3 | Diagnósticos comunicados en una referencia médica |
-| 15 | `health_establishments` | M3 / M8 | Catálogo de establecimientos de salud destino de referencias |
-| 16 | `notifications` | M6 | Notificaciones del sistema entregadas a los usuarios |
-| 17 | `notification_thresholds` | M6 / M8 | Umbrales configurables que activan alertas automáticas |
-| 18 | `automatic_reports` | M8 | Configuración de generación automática de reportes programados |
+| 12 | `attendance_corrections` | M2 | Notas de corrección acumuladas sobre una atención médica inmutable |
+| 13 | `cie10_codes` | M2 / M8 | Catálogo de códigos diagnósticos CIE-10 (+14.000 entradas) |
+| 14 | `medical_referrals` | M3 | Registros de referencias médicas a establecimientos externos |
+| 15 | `referral_diagnoses` | M3 | Diagnósticos comunicados en una referencia médica |
+| 16 | `health_establishments` | M3 / M8 | Catálogo de establecimientos de salud destino de referencias |
+| 17 | `notifications` | M6 | Notificaciones del sistema entregadas a los usuarios |
+| 18 | `notification_thresholds` | M6 / M8 | Umbrales configurables que activan alertas automáticas |
+| 19 | `automatic_reports` | M8 | Configuración de generación automática de reportes programados |
 
 **Módulos sin tablas propias:**
 - **M4 — Historial Clínico:** Consultas de solo lectura sobre `medical_attendances`, `diagnoses` y `physical_exam_findings`, filtradas por `patient_id`.
@@ -257,11 +259,28 @@ Los registros de esta tabla son **inmutables tras su creación**. No se permiten
 | `glasgow_total` | `SMALLINT` | NULLABLE | Total Escala de Glasgow — calculado por la aplicación, persistido |
 | `capillary_refill` | `VARCHAR(20)` | NULLABLE | Descripción del llenado capilar |
 | `pupillary_reflex` | `VARCHAR(50)` | NULLABLE | Hallazgos del reflejo pupilar |
-| `correction_note` | `TEXT` | NULLABLE | Nota de corrección de solo adición — se completa si la médico necesita corregir el registro tras su creación |
 | `is_active` | `BOOLEAN` | NOT NULL, DEFAULT true | Indicador de eliminación lógica |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT now() | Marca de tiempo de creación del registro |
 
 **Índices:** `patient_id` (btree), `attended_by` (btree), `attendance_date` (btree), `is_active` (btree)
+
+---
+
+#### `attendance_corrections`
+
+Almacena las notas de corrección sobre una atención médica ya guardada. Dado que las atenciones son inmutables, cualquier enmienda posterior se registra aquí como un nuevo registro acumulativo — nunca se sobreescribe ni elimina una corrección existente.
+
+Un médico puede agregar múltiples correcciones a la misma atención a lo largo del tiempo. Cada corrección queda fechada y firmada, preservando la trazabilidad completa exigida por la normativa MSP.
+
+| Columna | Tipo | Restricciones | Descripción |
+|---------|------|---------------|-------------|
+| `id` | `BIGSERIAL` | PK | Clave primaria sustituta |
+| `medical_attendance_id` | `BIGINT` | FK → `medical_attendances.id`, NOT NULL | Atención médica a la que pertenece esta corrección |
+| `note` | `TEXT` | NOT NULL | Texto de la corrección ingresado por la médico |
+| `created_by` | `BIGINT` | FK → `users.id`, NOT NULL | Médico que registró la corrección |
+| `created_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT now() | Marca de tiempo de la corrección |
+
+**Índices:** `medical_attendance_id` (btree)
 
 ---
 
@@ -480,6 +499,7 @@ Registros de configuración para la generación automática programada de report
 | `patients` → `medical_attendances` | 1:N | Un paciente puede tener muchas atenciones médicas a lo largo del tiempo. |
 | `medical_attendances` → `physical_exam_findings` | 1:N (fijo 9) | Cada atención produce exactamente 9 registros de hallazgos del examen físico, uno por sistema corporal. |
 | `medical_attendances` → `obstetric_emergency` | 1:1 opcional | Una atención puede tener cero o un registro obstétrico, condicional al género del paciente. |
+| `medical_attendances` → `attendance_corrections` | 1:N | Una atención puede tener cero o muchas correcciones acumuladas cronológicamente. |
 | `medical_attendances` → `complementary_exams` | 1:N | Una atención puede tener cero o muchos registros de exámenes complementarios. |
 | `medical_attendances` → `diagnoses` | 1:N | Una atención puede tener uno o muchos diagnósticos. |
 | `medical_attendances` → `medical_referrals` | 1:1 opcional | Una atención puede generar cero o una referencia médica. |
@@ -490,3 +510,33 @@ Registros de configuración para la generación automática programada de report
 | `notifications` → `users` | N:1 | Muchas notificaciones entregadas a un mismo usuario. |
 
 ---
+
+## 6. Decisiones Arquitectónicas
+
+**ADR-001 — Separación de `users` y `patients`**
+Decisión: La identidad de autenticación y los datos clínicos se almacenan en tablas separadas vinculadas por una clave foránea nullable.
+Justificación: Un médico es un usuario del sistema pero nunca es un paciente. Fusionar ambos conceptos obligaría a tener columnas clínicas nulas en todos los usuarios no estudiantes y violaría la responsabilidad única a nivel del modelo de datos.
+
+**ADR-002 — Eliminación lógica sobre eliminación física**
+Decisión: Todas las entidades clínicas utilizan `is_active = false` en lugar de operaciones DELETE.
+Justificación: La LOPDP y el Acuerdo MSP No. 00000125 exigen trazabilidad completa del historial clínico. La eliminación física de cualquier registro clínico constituiría una infracción normativa.
+
+**ADR-003 — Inmutabilidad de `medical_attendances`**
+Decisión: Los registros de atención médica no pueden actualizarse tras su creación. Las correcciones se registran como notas de corrección adjuntas al registro original.
+Justificación: La normativa MSP sobre historia clínica electrónica exige que cada acto clínico quede registrado con marca de tiempo y firma del profesional responsable, y permanezca inalterable. El patrón de nota de corrección satisface las necesidades de enmienda preservando la integridad del registro original.
+
+**ADR-004 — `referral_diagnoses` como tabla separada de `diagnoses`**
+Decisión: Los diagnósticos en las referencias médicas se almacenan en una tabla dedicada en lugar de añadir una columna nullable `referral_id` a `diagnoses`.
+Justificación: Una clave foránea nullable mutuamente excluyente con otra clave foránea en la misma fila es un defecto de diseño de modelo de datos. Las tablas separadas son semánticamente más claras, más fáciles de consultar de forma independiente y evitan la necesidad de validación de exclusividad a nivel de aplicación.
+
+**ADR-005 — Persistencia de campos calculados (IMC, Total Glasgow)**
+Decisión: El IMC y el Total de Glasgow son calculados por la capa de aplicación pero persistidos como columnas en `medical_attendances`.
+Justificación: Los registros clínicos son documentos históricos inmutables. Si la fórmula de cálculo de la aplicación cambia en una versión futura, los valores previamente calculados deben permanecer inalterados. El recálculo dinámico alteraría retroactivamente datos clínicos históricos.
+
+**ADR-006 — `audit_logs` en PostgreSQL sin política de eliminación**
+Decisión: Los registros de auditoría se almacenan en PostgreSQL sin política de eliminación ni archivado automatizado.
+Justificación: La LOPDP exige la retención indefinida de los registros de acceso y modificación de datos clínicos. La eliminación automatizada constituiría una infracción normativa. El particionamiento por rango de fecha mensual de PostgreSQL se recomienda como optimización de rendimiento a largo plazo sin comprometer la retención de datos.
+
+**ADR-007 — Almacenamiento de archivos en el sistema de ficheros, no en base de datos**
+Decisión: Los archivos adjuntos binarios (archivos de exámenes complementarios) se almacenan en el sistema de ficheros del servidor. La base de datos almacena únicamente los metadatos de ruta.
+Justificación: Almacenar BLOBs en PostgreSQL incrementa significativamente el tamaño de la base de datos, degrada el rendimiento de los respaldos y complica la entrega en streaming a los clientes. El almacenamiento en sistema de ficheros con referencias de ruta es el patrón estándar para este caso de uso.
