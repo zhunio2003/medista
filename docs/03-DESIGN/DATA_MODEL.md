@@ -21,10 +21,14 @@
    - 4.5 [M6 — Notificaciones Inteligentes](#45-m6--notificaciones-inteligentes)
    - 4.6 [M8 — Administración del Sistema](#46-m8--administración-del-sistema)
 5. [Relaciones Principales](#5-relaciones-principales)
-6. [Decisiones Arquitectónicas](#6-decisiones-arquitectónicas)
-7. [Tipos ENUM de PostgreSQL](#7-tipos-enum-de-postgresql)
+6. [Tipos ENUM de PostgreSQL](#6-tipos-enum-de-postgresql)
+7. [Extensiones PostgreSQL](#7-extensiones-postgresql)
+8. [Entidades Auditadas por Hibernate Envers](#8-entidades-auditadas-por-hibernate-envers)
+9. [Decisiones Arquitectónicas](#9-decisiones-arquitectónicas)
 
 ---
+
+<img src="diagram/data-model.jpg" alt="capture"/>
 
 ## 1. Descripción General
 
@@ -512,39 +516,7 @@ Registros de configuración para la generación automática programada de report
 
 ---
 
-## 6. Decisiones Arquitectónicas
-
-**ADR-001 — Separación de `users` y `patients`**
-Decisión: La identidad de autenticación y los datos clínicos se almacenan en tablas separadas vinculadas por una clave foránea nullable.
-Justificación: Un médico es un usuario del sistema pero nunca es un paciente. Fusionar ambos conceptos obligaría a tener columnas clínicas nulas en todos los usuarios no estudiantes y violaría la responsabilidad única a nivel del modelo de datos.
-
-**ADR-002 — Eliminación lógica sobre eliminación física**
-Decisión: Todas las entidades clínicas utilizan `is_active = false` en lugar de operaciones DELETE.
-Justificación: La LOPDP y el Acuerdo MSP No. 00000125 exigen trazabilidad completa del historial clínico. La eliminación física de cualquier registro clínico constituiría una infracción normativa.
-
-**ADR-003 — Inmutabilidad de `medical_attendances`**
-Decisión: Los registros de atención médica no pueden actualizarse tras su creación. Las correcciones se registran como notas de corrección adjuntas al registro original.
-Justificación: La normativa MSP sobre historia clínica electrónica exige que cada acto clínico quede registrado con marca de tiempo y firma del profesional responsable, y permanezca inalterable. El patrón de nota de corrección satisface las necesidades de enmienda preservando la integridad del registro original.
-
-**ADR-004 — `referral_diagnoses` como tabla separada de `diagnoses`**
-Decisión: Los diagnósticos en las referencias médicas se almacenan en una tabla dedicada en lugar de añadir una columna nullable `referral_id` a `diagnoses`.
-Justificación: Una clave foránea nullable mutuamente excluyente con otra clave foránea en la misma fila es un defecto de diseño de modelo de datos. Las tablas separadas son semánticamente más claras, más fáciles de consultar de forma independiente y evitan la necesidad de validación de exclusividad a nivel de aplicación.
-
-**ADR-005 — Persistencia de campos calculados (IMC, Total Glasgow)**
-Decisión: El IMC y el Total de Glasgow son calculados por la capa de aplicación pero persistidos como columnas en `medical_attendances`.
-Justificación: Los registros clínicos son documentos históricos inmutables. Si la fórmula de cálculo de la aplicación cambia en una versión futura, los valores previamente calculados deben permanecer inalterados. El recálculo dinámico alteraría retroactivamente datos clínicos históricos.
-
-**ADR-006 — `audit_logs` en PostgreSQL sin política de eliminación**
-Decisión: Los registros de auditoría se almacenan en PostgreSQL sin política de eliminación ni archivado automatizado.
-Justificación: La LOPDP exige la retención indefinida de los registros de acceso y modificación de datos clínicos. La eliminación automatizada constituiría una infracción normativa. El particionamiento por rango de fecha mensual de PostgreSQL se recomienda como optimización de rendimiento a largo plazo sin comprometer la retención de datos.
-
-**ADR-007 — Almacenamiento de archivos en el sistema de ficheros, no en base de datos**
-Decisión: Los archivos adjuntos binarios (archivos de exámenes complementarios) se almacenan en el sistema de ficheros del servidor. La base de datos almacena únicamente los metadatos de ruta.
-Justificación: Almacenar BLOBs en PostgreSQL incrementa significativamente el tamaño de la base de datos, degrada el rendimiento de los respaldos y complica la entrega en streaming a los clientes. El almacenamiento en sistema de ficheros con referencias de ruta es el patrón estándar para este caso de uso.
-
----
-
-## 7. Tipos ENUM de PostgreSQL
+## 6. Tipos ENUM de PostgreSQL
 
 El sistema define **13 tipos ENUM nativos de PostgreSQL** para todos los campos cuyo conjunto de valores es cerrado por diseño del negocio y no puede ser modificado en tiempo de ejecución sin un cambio de versión del sistema. Esta característica los distingue de las tablas de catálogo — como `careers`, `cie10_codes` o `health_establishments` — cuyos valores son administrados por el usuario desde la interfaz sin intervención del desarrollador.
 
@@ -712,3 +684,121 @@ Entre los tipos definidos destacan `role_enum` (`MEDICO`, `DECANO`, `ADMINISTRAD
 | `WEEKLY` | Reporte generado y enviado cada semana |
 | `MONTHLY` | Reporte generado y enviado cada mes |
 | `BIANNUAL` | Reporte generado y enviado cada seis meses |
+
+---
+
+## 7. Extensiones PostgreSQL
+
+MEDISTA utiliza dos extensiones nativas de PostgreSQL habilitadas en el momento del primer despliegue. Ambas se activan ejecutando los siguientes comandos en la base de datos antes de correr las migraciones Flyway:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```
+
+---
+
+### `pgcrypto`
+
+**Qué es:** Extensión oficial de PostgreSQL que provee funciones criptográficas a nivel de motor de base de datos, incluyendo cifrado simétrico, hashing y generación de valores aleatorios seguros.
+
+**Uso en MEDISTA:** Permite cifrar campos que contienen datos personales y clínicos sensibles directamente en la base de datos, de forma que los datos estén protegidos incluso ante acceso directo al servidor PostgreSQL. Esto satisface el principio de minimización de riesgo exigido por la LOPDP para el tratamiento de datos sensibles de salud.
+
+Los campos candidatos a cifrado con `pgcrypto` son:
+
+| Tabla | Columna | Justificación |
+|-------|---------|---------------|
+| `patients` | `cedula` | Dato de identificación personal — categoría especialmente protegida por la LOPDP |
+| `patients` | `phone` | Dato de contacto personal |
+| `patients` | `address` | Dato de ubicación personal |
+| `medical_attendances` | `reason_for_visit` | Dato clínico sensible |
+| `medical_attendances` | `current_illness` | Dato clínico sensible |
+| `medical_attendances` | `treatment` | Dato clínico sensible |
+
+**Nota de implementación:** El cifrado y descifrado es gestionado por la capa de aplicación (Spring Boot) usando las funciones `pgp_sym_encrypt` y `pgp_sym_decrypt` de la extensión. La clave de cifrado se gestiona como variable de entorno y nunca se persiste en el código fuente.
+
+---
+
+### `pg_trgm`
+
+**Qué es:** Extensión oficial de PostgreSQL que habilita la indexación y búsqueda por trigramas — fragmentos de 3 caracteres consecutivos — sobre columnas de texto. Permite búsqueda difusa eficiente independientemente del orden de las palabras o coincidencias parciales.
+
+**Uso en MEDISTA:** Se aplica exclusivamente sobre la columna `description` de la tabla `cie10_codes` para habilitar el autocompletado del catálogo de diagnósticos CIE-10 en tiempo real. El catálogo contiene más de 14.000 entradas — sin este índice, una búsqueda por texto sobre esa cantidad de registros sería inaceptablemente lenta.
+
+| Tabla | Columna | Tipo de índice | Efecto |
+|-------|---------|----------------|--------|
+| `cie10_codes` | `description` | GIN con `pg_trgm` | Búsqueda difusa en menos de 500ms sobre +14.000 entradas |
+
+**Ejemplo:** Una búsqueda por `"gripe"` puede retornar `"Rinofaringitis aguda (resfriado común)"` aunque ninguna palabra coincida exactamente, porque comparten trigramas suficientes para superar el umbral de similaridad.
+
+---
+
+## 8. Entidades Auditadas por Hibernate Envers
+
+Hibernate Envers es un módulo de Hibernate que genera automáticamente tablas de auditoría histórica para cada entidad anotada con `@Audited`. Por cada tabla auditada, Envers crea una tabla `*_aud` en la base de datos que registra cada versión del registro — creación, modificación y desactivación — con el número de revisión y la marca de tiempo correspondiente.
+
+Envers mantiene además una tabla global `revinfo` que centraliza los metadatos de cada revisión: número de revisión autoincremental, marca de tiempo y el usuario que realizó el cambio.
+
+Las tablas `_aud` **no están listadas en el Inventario de Entidades** de este documento — son generadas y gestionadas íntegramente por Envers y no requieren definición manual.
+
+---
+
+### Tablas auditadas
+
+| Tabla | Tabla generada por Envers | Justificación |
+|-------|--------------------------|---------------|
+| `patients` | `patients_aud` | Datos demográficos del paciente — la LOPDP exige trazabilidad completa de cualquier modificación sobre datos personales. |
+| `patient_background` | `patient_background_aud` | Los antecedentes clínicos se actualizan a lo largo del tiempo — Envers preserva cada versión histórica para que la médico pueda consultar cómo evolucionaron. |
+| `medical_attendances` | `medical_attendances_aud` | Aunque las atenciones son inmutables por regla de negocio, Envers actúa como segunda capa de garantía de integridad a nivel de infraestructura. |
+| `diagnoses` | `diagnoses_aud` | Los diagnósticos clínicos son datos sensibles sujetos a retención indefinida por normativa MSP. |
+| `medical_referrals` | `medical_referrals_aud` | Las referencias médicas son actos clínicos formales — cualquier cambio de estado debe quedar registrado. |
+| `users` | `users_aud` | Cambios en roles y estado de cuentas deben ser trazables para cumplimiento de la LOPDP. |
+| `notification_thresholds` | `notification_thresholds_aud` | Los umbrales son configuración crítica del sistema — se audita quién los modificó y cuándo. |
+
+---
+
+### Qué genera Envers por cada tabla auditada
+
+Por cada tabla en la lista anterior, Envers produce una tabla `*_aud` con las mismas columnas que la tabla original más tres columnas adicionales:
+
+| Columna adicional | Tipo | Descripción |
+|-------------------|------|-------------|
+| `rev` | `INTEGER` | Número de revisión — clave foránea a `revinfo.rev` |
+| `revtype` | `SMALLINT` | Tipo de operación: `0` = INSERT, `1` = UPDATE, `2` = DELETE |
+| `rev_end` | `INTEGER` | Número de revisión en que esta versión fue reemplazada — nulo si es la versión vigente |
+
+---
+
+## 9. Decisiones Arquitectónicas
+
+**ADR-001 — Separación de `users` y `patients`**
+Decisión: La identidad de autenticación y los datos clínicos se almacenan en tablas separadas vinculadas por una clave foránea nullable.
+Justificación: Un médico es un usuario del sistema pero nunca es un paciente. Fusionar ambos conceptos obligaría a tener columnas clínicas nulas en todos los usuarios no estudiantes y violaría la responsabilidad única a nivel del modelo de datos.
+
+**ADR-002 — Eliminación lógica sobre eliminación física**
+Decisión: Todas las entidades clínicas utilizan `is_active = false` en lugar de operaciones DELETE.
+Justificación: La LOPDP y el Acuerdo MSP No. 00000125 exigen trazabilidad completa del historial clínico. La eliminación física de cualquier registro clínico constituiría una infracción normativa.
+
+**ADR-003 — Inmutabilidad de `medical_attendances`**
+Decisión: Los registros de atención médica no pueden actualizarse tras su creación. Las correcciones se registran como notas de corrección adjuntas al registro original.
+Justificación: La normativa MSP sobre historia clínica electrónica exige que cada acto clínico quede registrado con marca de tiempo y firma del profesional responsable, y permanezca inalterable. El patrón de nota de corrección satisface las necesidades de enmienda preservando la integridad del registro original.
+
+**ADR-004 — `referral_diagnoses` como tabla separada de `diagnoses`**
+Decisión: Los diagnósticos en las referencias médicas se almacenan en una tabla dedicada en lugar de añadir una columna nullable `referral_id` a `diagnoses`.
+Justificación: Una clave foránea nullable mutuamente excluyente con otra clave foránea en la misma fila es un defecto de diseño de modelo de datos. Las tablas separadas son semánticamente más claras, más fáciles de consultar de forma independiente y evitan la necesidad de validación de exclusividad a nivel de aplicación.
+
+**ADR-005 — Persistencia de campos calculados (IMC, Total Glasgow)**
+Decisión: El IMC y el Total de Glasgow son calculados por la capa de aplicación pero persistidos como columnas en `medical_attendances`.
+Justificación: Los registros clínicos son documentos históricos inmutables. Si la fórmula de cálculo de la aplicación cambia en una versión futura, los valores previamente calculados deben permanecer inalterados. El recálculo dinámico alteraría retroactivamente datos clínicos históricos.
+
+**ADR-006 — `audit_logs` en PostgreSQL sin política de eliminación**
+Decisión: Los registros de auditoría se almacenan en PostgreSQL sin política de eliminación ni archivado automatizado.
+Justificación: La LOPDP exige la retención indefinida de los registros de acceso y modificación de datos clínicos. La eliminación automatizada constituiría una infracción normativa. El particionamiento por rango de fecha mensual de PostgreSQL se recomienda como optimización de rendimiento a largo plazo sin comprometer la retención de datos.
+
+**ADR-007 — Almacenamiento de archivos en el sistema de ficheros, no en base de datos**
+Decisión: Los archivos adjuntos binarios (archivos de exámenes complementarios) se almacenan en el sistema de ficheros del servidor. La base de datos almacena únicamente los metadatos de ruta.
+Justificación: Almacenar BLOBs en PostgreSQL incrementa significativamente el tamaño de la base de datos, degrada el rendimiento de los respaldos y complica la entrega en streaming a los clientes. El almacenamiento en sistema de ficheros con referencias de ruta es el patrón estándar para este caso de uso.
+
+**ADR-008 — Tabla independiente attendance_corrections para enmiendas de atenciones médicas**
+Decisión: Como establece el ADR-003, las atenciones médicas son inmutables tras su creación. Sin embargo, en la práctica clínica surgen situaciones legítimas que requieren agregar información posterior a una atención ya guardada — una aclaración sobre el diagnóstico, una corrección de un dato registrado incorrectamente, o una novedad clínica relevante que debe quedar vinculada al acto médico original.
+Justificación: El sistema debe ofrecer un mecanismo para registrar estas enmiendas sin comprometer la inmutabilidad del registro original. La pregunta de diseño es cómo implementar ese mecanismo a nivel de modelo de datos.
