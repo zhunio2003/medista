@@ -22,6 +22,7 @@
    - 4.6 [M8 — Administración del Sistema](#46-m8--administración-del-sistema)
 5. [Relaciones Principales](#5-relaciones-principales)
 6. [Decisiones Arquitectónicas](#6-decisiones-arquitectónicas)
+7. [Tipos ENUM de PostgreSQL](#7-tipos-enum-de-postgresql)
 
 ---
 
@@ -175,9 +176,9 @@ Almacena los datos demográficos e identificación de cada estudiante registrado
 | `birth_date` | `DATE` | NOT NULL | Fecha de nacimiento — la edad se calcula dinámicamente, no se almacena |
 | `birth_place` | `VARCHAR(100)` | NULLABLE | Ciudad o lugar de nacimiento |
 | `birth_country` | `VARCHAR(100)` | NOT NULL, DEFAULT 'Ecuador' | País de nacimiento |
-| `gender` | `gender_enum` | NOT NULL | Uno de: `MALE`, `FEMALE`, `OTHER` |
+| `gender` | `gender_enum` | NOT NULL | Uno de: `MALE`, `FEMALE` |
 | `marital_status` | `marital_status_enum` | NOT NULL | Uno de: `SINGLE`, `MARRIED`, `WIDOWED`, `DIVORCED`, `FREE_UNION` |
-| `blood_type` | `blood_type_enum` | NOT NULL | Uno de: `A+`, `A-`, `B+`, `B-`, `AB+`, `AB-`, `O+`, `O-` |
+| `blood_type` | `blood_type_enum` | NOT NULL | Uno de: `A_POSITIVE`, `A_NEGATIVE`, `B_POSITIVE`, `B_NEGATIVE`, `AB_POSITIVE`, `AB_NEGATIVE`, `O_POSITIVE`, `O_NEGATIVE` |
 | `is_active` | `BOOLEAN` | NOT NULL, DEFAULT true | Indicador de eliminación lógica |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT now() | Marca de tiempo de creación del registro |
 | `updated_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT now() | Marca de tiempo de última modificación |
@@ -540,3 +541,174 @@ Justificación: La LOPDP exige la retención indefinida de los registros de acce
 **ADR-007 — Almacenamiento de archivos en el sistema de ficheros, no en base de datos**
 Decisión: Los archivos adjuntos binarios (archivos de exámenes complementarios) se almacenan en el sistema de ficheros del servidor. La base de datos almacena únicamente los metadatos de ruta.
 Justificación: Almacenar BLOBs en PostgreSQL incrementa significativamente el tamaño de la base de datos, degrada el rendimiento de los respaldos y complica la entrega en streaming a los clientes. El almacenamiento en sistema de ficheros con referencias de ruta es el patrón estándar para este caso de uso.
+
+---
+
+## 7. Tipos ENUM de PostgreSQL
+
+El sistema define **13 tipos ENUM nativos de PostgreSQL** para todos los campos cuyo conjunto de valores es cerrado por diseño del negocio y no puede ser modificado en tiempo de ejecución sin un cambio de versión del sistema. Esta característica los distingue de las tablas de catálogo — como `careers`, `cie10_codes` o `health_establishments` — cuyos valores son administrados por el usuario desde la interfaz sin intervención del desarrollador.
+
+La elección de ENUMs nativos de PostgreSQL sobre alternativas como `VARCHAR` con restricción `CHECK` responde a tres ventajas concretas: el motor garantiza la integridad del dominio sin lógica adicional en la aplicación, el tipo es reutilizable entre tablas, y el almacenamiento es más eficiente que una cadena de texto libre.
+
+Entre los tipos definidos destacan `role_enum` (`MEDICO`, `DECANO`, `ADMINISTRADOR`, `ESTUDIANTE`), que determina el control de acceso en toda la aplicación; `blood_type_enum`, requerido por el formulario médico físico existente; y tipos de dominio reducido como `diagnosis_status_enum` (`PRESUMPTIVE`, `DEFINITIVE`) o `gender_enum` (`MALE`, `FEMALE`), cuya naturaleza binaria o cerrada hace inviable cualquier extensión sin redefinición del modelo clínico.
+
+---
+
+### Gestión de Usuarios y Seguridad
+
+#### `role_enum`
+
+**Usado en:** tabla `users`, columna `role`
+
+| Valor | Descripción |
+|-------|-------------|
+| `MEDICO` | Profesional médico del departamento. Tiene acceso completo a la gestión clínica: registrar atenciones, emitir referencias y consultar historiales. |
+| `DECANO` | Autoridad académica institucional. Acceso de solo lectura al dashboard estadístico y a los reportes agregados. No accede a datos clínicos individuales. |
+| `ADMINISTRADOR` | Responsable de la operación técnica del sistema. Gestiona catálogos, usuarios, umbrales de notificación, respaldos y configuración de reportes automáticos. No accede a datos clínicos. |
+| `ESTUDIANTE` | Paciente del sistema. Accede únicamente a su propio historial clínico y a las notificaciones dirigidas a su cuenta. |
+
+#### `gender_enum`
+
+**Usado en:** tabla `patients`, columna `gender`
+
+| Valor | Descripción |
+|-------|-------------|
+| `MALE` | Paciente masculino. La sección obstétrica del formulario de atención no se muestra. |
+| `FEMALE` | Paciente femenino. Habilita la visualización condicional de la sección obstétrica en el formulario de atención médica. |
+
+#### `marital_status_enum`
+
+**Usado en:** tabla `patients`, columna `marital_status`
+
+| Valor | Descripción |
+|-------|-------------|
+| `SINGLE` | Soltero/a |
+| `MARRIED` | Casado/a |
+| `WIDOWED` | Viudo/a |
+| `DIVORCED` | Divorciado/a |
+| `FREE_UNION` | Unión libre |
+
+#### `blood_type_enum`
+
+**Usado en:** tabla `patients`, columna `blood_type`
+
+| Valor | Descripción |
+|-------|-------------|
+| `A_POSITIVE` | Grupo sanguíneo A+ |
+| `A_NEGATIVE` | Grupo sanguíneo A− |
+| `B_POSITIVE` | Grupo sanguíneo B+ |
+| `B_NEGATIVE` | Grupo sanguíneo B− |
+| `AB_POSITIVE` | Grupo sanguíneo AB+ |
+| `AB_NEGATIVE` | Grupo sanguíneo AB− |
+| `O_POSITIVE` | Grupo sanguíneo O+ |
+| `O_NEGATIVE` | Grupo sanguíneo O− |
+
+---
+
+### Dominio Clínico
+
+#### `diagnosis_status_enum`
+
+**Usado en:** tablas `diagnoses` y `referral_diagnoses`, columna `status`
+
+| Valor | Descripción |
+|-------|-------------|
+| `PRESUMPTIVE` | Diagnóstico provisional emitido con base en los síntomas y hallazgos iniciales de la consulta, sujeto a confirmación posterior. |
+| `DEFINITIVE` | Diagnóstico confirmado por el médico con certeza clínica suficiente. |
+
+#### `body_system_enum`
+
+**Usado en:** tabla `physical_exam_findings`, columna `body_system`
+
+| Valor | Descripción |
+|-------|-------------|
+| `SKIN_AND_ANNEXES` | Hallazgos del examen de piel y anexos (cabello, uñas) |
+| `HEAD` | Hallazgos del examen de cabeza |
+| `NECK` | Hallazgos del examen de cuello |
+| `THORAX` | Hallazgos del examen de tórax |
+| `HEART` | Hallazgos del examen cardíaco |
+| `ABDOMEN` | Hallazgos del examen de abdomen |
+| `INGUINAL` | Hallazgos del examen inguinal |
+| `UPPER_LIMBS` | Hallazgos del examen de miembros superiores |
+| `LOWER_LIMBS` | Hallazgos del examen de miembros inferiores |
+
+#### `referral_reason_enum`
+
+**Usado en:** tabla `medical_referrals`, columna `referral_reason`
+
+| Valor | Descripción |
+|-------|-------------|
+| `LIMITED_RESOLUTION` | Referencia por capacidad de resolución limitada del departamento médico para el caso presentado. |
+| `LACK_OF_PROFESSIONAL` | Referencia por ausencia del profesional especializado requerido en la institución. |
+| `OTHER` | Referencia por motivo distinto a los anteriores — debe detallarse en el resumen clínico. |
+
+---
+
+### Sistema e Infraestructura
+
+#### `audit_action_enum`
+
+**Usado en:** tabla `audit_logs`, columna `action`
+
+| Valor | Descripción |
+|-------|-------------|
+| `LOGIN` | Inicio de sesión en el sistema |
+| `LOGOUT` | Cierre de sesión en el sistema |
+| `VIEW` | Visualización de un registro clínico o reporte |
+| `CREATE` | Creación de un nuevo registro |
+| `UPDATE` | Modificación de un registro existente |
+| `DELETE` | Desactivación lógica de un registro |
+| `EXPORT` | Exportación de datos o generación de reporte descargable |
+| `PRINT` | Generación de PDF para impresión |
+
+#### `backup_trigger_enum`
+
+**Usado en:** tabla `backup_logs`, columna `triggered_by`
+
+| Valor | Descripción |
+|-------|-------------|
+| `AUTOMATIC` | Respaldo ejecutado por el planificador automático del sistema |
+| `MANUAL` | Respaldo iniciado manualmente por el Administrador del Sistema |
+
+#### `backup_status_enum`
+
+**Usado en:** tabla `backup_logs`, columna `status`
+
+| Valor | Descripción |
+|-------|-------------|
+| `SUCCESS` | El respaldo se completó correctamente |
+| `FAILED` | El respaldo falló — el detalle del error queda registrado en la columna `error_message` |
+
+---
+
+### Notificaciones y Reportes
+
+#### `notification_type_enum`
+
+**Usado en:** tabla `notifications`, columna `type`
+
+| Valor | Descripción |
+|-------|-------------|
+| `CLINICAL` | Notificación relacionada con la atención clínica de un paciente específico |
+| `EPIDEMIOLOGICAL` | Alerta generada por el motor de umbrales ante un patrón de diagnósticos relevante |
+| `INSTITUTIONAL` | Comunicado de carácter administrativo o institucional dirigido a uno o varios usuarios |
+
+#### `threshold_type_enum`
+
+**Usado en:** tabla `notification_thresholds`, columna `threshold_type`
+
+| Valor | Descripción |
+|-------|-------------|
+| `PATIENT_VISITS` | Umbral sobre el número de visitas de un mismo paciente en un período definido |
+| `EPIDEMIOLOGICAL` | Umbral sobre la frecuencia de un diagnóstico específico en la población atendida |
+| `INSTITUTIONAL` | Umbral sobre métricas operativas generales del sistema |
+
+#### `report_frequency_enum`
+
+**Usado en:** tabla `automatic_reports`, columna `frequency`
+
+| Valor | Descripción |
+|-------|-------------|
+| `WEEKLY` | Reporte generado y enviado cada semana |
+| `MONTHLY` | Reporte generado y enviado cada mes |
+| `BIANNUAL` | Reporte generado y enviado cada seis meses |
