@@ -1,4 +1,4 @@
-# MEDISTA-V2 — Contratos de API REST
+# MEDISTA — Contratos de API REST
 
 **Versión:** 1.0
 **Fecha:** Mayo 2026
@@ -13,7 +13,7 @@
 
 ### 1.1 Propósito del Documento
 
-Este documento define el contrato formal de la API REST del backend de MEDISTA-V2. Cada endpoint queda especificado con su método HTTP, ruta, roles autorizados, estructura de request, estructura de response y códigos de estado posibles, antes de iniciar la fase de implementación.
+Este documento define el contrato formal de la API REST del backend de MEDISTA. Cada endpoint queda especificado con su método HTTP, ruta, roles autorizados, estructura de request, estructura de response y códigos de estado posibles, antes de iniciar la fase de implementación.
 
 El propósito es triple. Primero, fijar el contrato técnico entre el backend (Spring Boot) y los dos clientes — la aplicación web (Angular) y la aplicación móvil (Kotlin nativo) — de modo que el desarrollo de las tres capas pueda avanzar en paralelo sin dependencias bloqueantes. Segundo, garantizar la trazabilidad de cada endpoint hacia los requisitos funcionales del ERS y los casos de uso definidos en la Fase 1, evitando endpoints huérfanos o requisitos sin cobertura. Tercero, documentar las decisiones de diseño transversales — autenticación, paginación, formato de errores, convenciones de nomenclatura — una sola vez, evitando duplicación y contradicciones entre módulos.
 
@@ -72,7 +72,7 @@ Cada contrato individual presenta seis secciones en orden fijo:
 | `POST` | Crear recurso o ejecutar acción no idempotente. |
 | `PUT` | Reemplazar recurso completo. Idempotente. |
 | `PATCH` | Modificar campos específicos del recurso. |
-| `DELETE` | Desactivar recurso (soft delete vía `is_active = false`). MEDISTA-V2 no realiza eliminación física por exigencia normativa. |
+| `DELETE` | Desactivar recurso (soft delete vía `is_active = false`). MEDISTA no realiza eliminación física por exigencia normativa. |
 
 ---
 
@@ -2448,5 +2448,5 @@ Todos los demás endpoints requieren autenticación válida y autorización por 
 
 ---
 
-*MEDISTA-V2 — Contratos de API REST v1.0*
+*MEDISTA — Contratos de API REST v1.0*
 *Instituto Superior Universitario TEC Azuay — Mayo 2026*
