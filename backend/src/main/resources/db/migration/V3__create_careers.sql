@@ -6,9 +6,9 @@
 -- =============================================================
 
 CREATE TABLE careers (
-  id BIGSERIAL PRIMARY KEY,
-  name VARCHAR(150) NOT NULL UNIQUE,
-  is_active BOOLEAN NOT NULL DEFAULT true
+    id          BIGSERIAL       PRIMARY KEY,
+    name        VARCHAR(150)    NOT NULL UNIQUE,
+    is_active   BOOLEAN         NOT NULL DEFAULT true
 );
 
 -- Seed: 16 carreras institucionales activas en el primer despliegue.
