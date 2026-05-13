@@ -12,8 +12,13 @@ services:
       - POSTGRES_PASS=${POSTGRES_PASS}
     ports:
       - "8000:8000"
+    depends_on:
+      postgres_medista:
+        condition: service_healthy
+      redis_medista:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8000/actuator/health"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8000/actuator/health"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -31,9 +36,9 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - medista_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U medista_user -d medista_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -42,9 +47,49 @@ services:
   # ===== REDIS =====
   redis_medista:
     image: redis:7-alpine
-    container_name: redis_name
+    container_name: redis_medista
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6380:6379"
+    volumes:
+      - medista_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
+  # ===== PROMETHEUS =====
+  prometheus_medista:
+    image: prom/prometheus:latest
+    container_name: prometheus_medista
+    restart: unless-stopped
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - medista_prometheus_data:/prometheus
+    
+  # ===== GRAFANA =====
+  grafana_medista:
+    image: grafana/grafana:latest
+    container_name: grafana_medista
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - medista_grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus_medista
+  
 
 volumes:
-  postgres_data:
+  medista_postgres_data:
+  medista_redis_data:
+  medista_prometheus_data:
+  medista_grafana_data:
     
