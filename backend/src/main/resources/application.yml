@@ -20,7 +20,6 @@ spring:
         show-sql: false
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
                 format_sql: true
                 default_schema: public
                 org:
@@ -30,6 +29,7 @@ spring:
                             store_data_at_delete: true
                             default_schema: public
                          
+        open-in-view: false
     
     # ===== FLYWAY =====
     flyway:
