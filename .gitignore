@@ -1,0 +1,181 @@
+# =============================================================================
+# MEDISTA — .gitignore
+# Monorepo: backend (Java/Maven) + frontend (Angular) + mobile (Kotlin/Android)
+#            + infrastructure (Docker Compose)
+# =============================================================================
+
+
+# =============================================================================
+# SECRETOS Y CONFIGURACIÓN LOCAL — NUNCA al repositorio
+# =============================================================================
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.jks
+secrets/
+config/local/
+
+
+# =============================================================================
+# BACKEND — Java 21 / Maven / Spring Boot
+# =============================================================================
+
+# Compilación Maven
+backend/target/
+backend/**/*.class
+backend/**/*.jar
+backend/**/*.war
+
+# Maven wrapper (si no usas wrapper versionado)
+# backend/.mvn/wrapper/maven-wrapper.jar  ← descomenta si no lo commiteas
+
+# Spring Boot devtools restart files
+backend/.reloadtrigger
+
+# Logs de la aplicación
+backend/logs/
+backend/*.log
+
+# Archivos de subida local (binarios clínicos — van al filesystem, no al repo)
+backend/uploads/
+backend/storage/
+
+
+# =============================================================================
+# FRONTEND — Angular 19 / Node.js / npm
+# =============================================================================
+
+# Dependencias
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.angular/cache/
+
+# Caché de herramientas
+frontend/.cache/
+frontend/.npm/
+
+# Archivos de entorno con secretos
+frontend/src/environments/environment.prod.ts
+# Nota: environment.ts (dev) sí se commitea; environment.prod.ts NO si tiene secrets reales
+
+
+# =============================================================================
+# MOBILE — Kotlin / Android
+# =============================================================================
+
+# Build outputs
+mobile/.gradle/
+mobile/build/
+mobile/**/build/
+
+# Archivos locales de Android Studio
+mobile/local.properties
+mobile/**/*.iml
+
+# Keystore de firma (CRÍTICO — nunca al repo)
+mobile/**/*.jks
+mobile/**/*.keystore
+
+# Caché de Gradle
+mobile/.idea/gradle.xml
+mobile/.idea/workspace.xml
+
+
+# =============================================================================
+# INFRAESTRUCTURA — Docker Compose
+# =============================================================================
+
+# Volúmenes persistentes locales
+infrastructure/volumes/
+infrastructure/data/
+infrastructure/postgres-data/
+infrastructure/redis-data/
+
+# Overrides locales de Docker Compose
+infrastructure/docker-compose.override.yml
+
+# Certificados SSL locales
+infrastructure/nginx/certs/
+
+
+# =============================================================================
+# IDEs Y EDITORES
+# =============================================================================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+
+# =============================================================================
+# TESTING Y COBERTURA
+# =============================================================================
+
+# JaCoCo
+backend/jacoco.exec
+backend/**/jacoco/
+
+# Reportes de test generados
+backend/**/surefire-reports/
+backend/**/failsafe-reports/
+
+
+# =============================================================================
+# DOCUMENTACIÓN GENERADA (artifacts de build, no fuente)
+# =============================================================================
+
+# Javadoc generado
+backend/apidocs/
+
+# Swagger exportado como archivo (el fuente .yml sí va al repo)
+docs/generated/
+
+
+# =============================================================================
+# ARCHIVOS TEMPORALES Y MISCELÁNEOS
+# =============================================================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.orig
+*.rej
