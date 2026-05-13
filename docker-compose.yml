@@ -1,0 +1,50 @@
+services:
+
+  # ===== Backend =====
+  backend_medista:
+    build:
+      context:  ./backend
+      dockerfile: Dockerfile
+    container_name: backend_medista
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8000/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ===== POSTGRESQL =====
+  postgres_medista:
+    image: postgres:16-alpine
+    container_name: postgres_medista
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medista_user -d medista_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  
+  # ===== REDIS =====
+  redis_medista:
+    image: redis:7-alpine
+    container_name: redis_name
+
+
+volumes:
+  postgres_data:
+    
