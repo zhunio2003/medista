@@ -13,10 +13,10 @@
         <relativePath/>
     </parent>
 
-    <groupId>ec.tecazuay</groupId>
+    <groupId>ec.insti</groupId>
     <artifactId>medista</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MEDISTA-V2</name>
+    <name>MEDISTA</name>
     <description>Sistema de Gestión de Atención Médica</description>
 
     <properties>
