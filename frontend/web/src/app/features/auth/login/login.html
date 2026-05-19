@@ -1,0 +1,42 @@
+<div class="login-wrapper">
+
+  <div class="login-card">
+
+    <!-- Panel izquierdo -->
+    <div class="login-left">
+      <div class="login-left__content">
+        <img src="caduceus.svg">
+      </div>
+    </div>
+
+    <!-- Panel derecho -->
+    <div class="login-right">
+      <div class="login-form-container">
+        <div class="login-header">
+          <h2 class="login-title">¡Bienvenido de vuelta!</h2>
+          <p class="login-subtitle">Ingresa tus credenciales institucionales para continuar</p>
+        </div>
+        <form class="login-form">
+          <mat-form-field appearance="outline" class="login-field">
+            <mat-label>Correo institucional</mat-label>
+            <input matInput type="email" placeholder="usuario@tecazuay.edu.ec" autocomplete="email">
+            <mat-icon matPrefix>email</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="login-field">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" autocomplete="current-password">
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+          <div class="login-forgot">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+          <button mat-flat-button class="login-btn" type="submit">
+            Iniciar sesión
+          </button>
+        </form>
+        <p class="login-footer">Cuenca, Ecuador · INSTITUCION © 2026</p>
+      </div>
+    </div>
+
+  </div>
+</div>
