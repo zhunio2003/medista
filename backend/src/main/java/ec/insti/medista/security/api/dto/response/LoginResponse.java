@@ -1,4 +1,4 @@
-package ec.insti.medista.security.api.dto;
+package ec.insti.medista.security.api.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package ec.insti.medista.security.internal.dto;
+package ec.insti.medista.security.api.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
