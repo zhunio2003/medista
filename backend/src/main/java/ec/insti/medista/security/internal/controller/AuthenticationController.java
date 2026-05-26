@@ -9,6 +9,8 @@ import ec.insti.medista.security.api.dto.request.LogoutRequest;
 import ec.insti.medista.security.api.dto.request.RefreshTokenRequest;
 import ec.insti.medista.security.api.dto.response.LoginResponse;
 import ec.insti.medista.security.api.dto.response.RefreshTokenResponse;
+import ec.insti.medista.security.internal.service.impl.ratelimit.LoginRateLimiter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -24,9 +26,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final LoginRateLimiter loginRateLimiter;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
+
+        String ip = httpRequest.getRemoteAddr();
+
+        if (!loginRateLimiter.isAllowed(ip)) {
+            return ResponseEntity.status(429).build();
+        }
 
         LoginResponse response = authenticationService.login(request);
         return ResponseEntity.ok().body(response);
@@ -40,6 +49,7 @@ public class AuthenticationController {
 
     @PostMapping("/refresh")
     public ResponseEntity<RefreshTokenResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+        
         RefreshTokenResponse response = authenticationService.refresh(request);        
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
