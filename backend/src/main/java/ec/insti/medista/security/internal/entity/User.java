@@ -49,15 +49,15 @@ public class User implements UserDetails{
     @Column(nullable = false, length = 255, unique = true)
     private  String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "role_enum")
     private Role role;
 
-    @Column(nullable = false)
-    private boolean isActive;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     @Column(nullable = false, updatable = false)
     private OffsetDateTime createdAt;
@@ -101,7 +101,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return isActive != null && isActive;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return isActive != null && isActive;
     }
 
 }

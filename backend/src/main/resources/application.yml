@@ -63,7 +63,7 @@ management:
 # ===== JWT =====
 app:
     jwt:
-        secret: ${JWT_SECRET:cambiar-en-produccion-minimo-256-bits-xxxxxxxxxxx}
+        secret: ${JWT_SECRET:nRLFeE/X315kQcFVRta6VsPwm9Hod6Z3S04dDe4uFmc=}
         expiration-ms: 3600000
         refresh-expiration-ms: 86400000
 
@@ -78,5 +78,5 @@ jasypt:
 logging:
   level:
     ec.tecazuay.medista: DEBUG
-    org.springframework.security: INFO
+    org.springframework.security: DEBUG
     org.flywaydb: INFO

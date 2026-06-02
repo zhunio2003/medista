@@ -2,8 +2,6 @@ package ec.insti.medista.security.internal.service.impl;
 
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

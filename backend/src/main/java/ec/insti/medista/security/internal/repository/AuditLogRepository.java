@@ -2,8 +2,8 @@ package ec.insti.medista.security.internal.repository;
 
 import java.time.OffsetDateTime;
 
-import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
