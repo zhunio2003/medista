@@ -1,12 +1,12 @@
 package ec.insti.medista.patient.internal.entity.enums;
 
 public enum BloodType {
-    A_POS,
-    A_NEG,
-    B_POS,
-    B_NEG,
-    AB_POS,
-    AB_NEG,
-    O_POS,
-    O_NEG
+    A_POSITIVE,
+    A_NEGATIVE,
+    B_POSITIVE,
+    B_NEGATIVE,
+    AB_POSITIVE,
+    AB_NEGATIVE,
+    O_POSITIVE,
+    O_NEGATIVE
 }
