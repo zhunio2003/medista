@@ -26,6 +26,7 @@
         <jasypt.version>3.0.5</jasypt.version>
         <bucket4j.version>8.10.1</bucket4j.version>
         <testcontainers.version>1.19.8</testcontainers.version>
+        <lombok.version>1.18.42</lombok.version>
     </properties>
 
     <dependencies>
