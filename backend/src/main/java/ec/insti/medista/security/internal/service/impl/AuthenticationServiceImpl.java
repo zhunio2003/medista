@@ -47,9 +47,9 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
     @Override
     public LoginResponse login(LoginRequest request) {
 
-        UserDetails userEncontrado = loadUserByUsername(request.getEmail());
+        UserDetails userEncontrado = loadUserByUsername(request.email());
 
-        if (!passwordEncoder.matches(request.getPassword(),userEncontrado.getPassword())) {
+        if (!passwordEncoder.matches(request.password(),userEncontrado.getPassword())) {
             throw new BadCredentialsException("Credenciales inválidas");
         }
 
@@ -66,28 +66,28 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
     @Override
     public void logout(LogoutRequest request) {
         
-        jwtBlackistService.blacklistToken(request.getAccessToken());
-        jwtBlackistService.blacklistToken(request.getRefreshToken());
+        jwtBlackistService.blacklistToken(request.accessToken());
+        jwtBlackistService.blacklistToken(request.refreshToken());
         
     }
 
     @Override
     public RefreshTokenResponse refresh(RefreshTokenRequest request) {
         
-        if (!jwtTokenProvider.validateToken(request.getRefreshToken()) ||
-            jwtBlackistService.isBlacklisted(request.getRefreshToken()) || 
-            !jwtTokenProvider.extractClaim(request.getRefreshToken(), "type").equals("refresh")) {
+        if (!jwtTokenProvider.validateToken(request.refreshToken()) ||
+            jwtBlackistService.isBlacklisted(request.refreshToken()) ||
+            !jwtTokenProvider.extractClaim(request.refreshToken(), "type").equals("refresh")) {
             throw new JwtException("TOKEN INVALIDO");
         }
 
-        String username = jwtTokenProvider.extractUsername(request.getRefreshToken());
+        String username = jwtTokenProvider.extractUsername(request.refreshToken());
 
         UserDetails userEncontrado = loadUserByUsername(username);
 
         String accessToken = jwtTokenProvider.generateAccessToken(userEncontrado);
         String refreshToken = jwtTokenProvider.generateRefreshToken(userEncontrado);
 
-        jwtBlackistService.blacklistToken(request.getRefreshToken());
+        jwtBlackistService.blacklistToken(request.refreshToken());
 
         return RefreshTokenResponse.builder()
                 .accessToken(accessToken)

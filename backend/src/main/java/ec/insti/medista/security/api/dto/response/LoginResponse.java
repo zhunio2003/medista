@@ -3,11 +3,10 @@ package ec.insti.medista.security.api.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
 @Builder
-public class LoginResponse {
+public record LoginResponse (
 
-    private String accessToken;
-    private String refreshToken;
+    String accessToken,
+    String refreshToken
 
-}
+){}
