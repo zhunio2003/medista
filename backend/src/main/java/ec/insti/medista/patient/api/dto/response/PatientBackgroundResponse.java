@@ -1,20 +1,15 @@
 package ec.insti.medista.patient.api.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.OffsetDateTime;
+import lombok.Builder;
 
-@Getter
 @Builder
-public class PatientBackgroundResponse {
-
-    private String allergies;
-    private String clinical;
-    private String gynecological;
-    private String traumatological;
-    private String surgical;
-    private String pharmacological;
-    private OffsetDateTime updatedAt;
-
-}
+public record PatientBackgroundResponse(
+        String allergies,
+        String clinical,
+        String gynecological,
+        String traumatological,
+        String surgical,
+        String pharmacological,
+        OffsetDateTime updatedAt
+) {}
