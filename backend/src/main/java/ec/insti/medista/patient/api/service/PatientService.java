@@ -1,4 +1,4 @@
-package ec.insti.medista.patient.api;
+package ec.insti.medista.patient.api.service;
 
 import ec.insti.medista.common.dto.PageResponse;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
