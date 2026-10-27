@@ -1,8 +1,7 @@
 # MEDISTA — Backend
 
-REST API for MEDISTA-V2, the medical attention management system of
-Instituto Superior Universitario TEC Azuay. Modular monolith built with
-Java 21 and Spring Boot 3.3.
+REST API for MEDISTA, the medical attention management system. Modular monolith built with
+Java 21 and Spring Boot 4.0.4.
 
 ## Table of Contents
 1. Overview
