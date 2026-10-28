@@ -10,7 +10,7 @@ public record ErrorResponse(
         String message,
         String path,
         String traceId,
-        List<FieldErrorDetails> fieldErrors
+        List<FieldErrorDetail> fieldErrors
 ) {
-    public record FieldErrorDetails(String field, String message) {}
+    public record FieldErrorDetail(String field, String message) {}
 }
