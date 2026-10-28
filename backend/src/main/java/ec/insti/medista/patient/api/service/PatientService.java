@@ -14,10 +14,10 @@ import java.util.List;
 
 public interface PatientService {
 
-    PatientResponse create(CreatePatientRequest request);
+    PatientResponse create(CreatePatientRequest request, Long createdBy);
     PatientResponse findById(Long id);
     PageResponse<PatientSummaryResponse> findAll(Long careerId, String gender, Boolean isActive, Pageable pageable);
-    List<PatientSearchResponse> search(String text, int limit);
+    List<PatientSearchResponse> search(String query, int limit);
     PatientResponse update(Long id, UpdatePatientRequest request);
     void deactivate(Long id);
     PatientBackgroundResponse getBackground(Long patientId);
