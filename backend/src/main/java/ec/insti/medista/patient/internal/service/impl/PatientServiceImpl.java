@@ -86,8 +86,22 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public PatientResponse update(Long id, UpdatePatientRequest request) {
-        return null;
+
+        Patient patient = getPatientOrThrow(id);
+
+        boolean careerChanged = !patient.getCareerId().equals(request.careerId());
+        if (careerChanged && !careerCatalogService.existsActiveById(request.careerId())) {
+            throw new BusinessRuleViolationException("La carrera no existe o está inactiva");
+        }
+
+        patientMapper.updatePatient(request, patient);
+        patientRepository.saveAndFlush(patient);
+
+        String careerName = careerCatalogService.findNameById(request.careerId());
+
+        return patientMapper.toPatientResponse(patient, careerName);
     }
 
     @Override
