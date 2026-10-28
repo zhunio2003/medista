@@ -4,6 +4,7 @@ import ec.insti.medista.administration.api.service.CareerCatalogService;
 import ec.insti.medista.common.dto.PageResponse;
 import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
+import ec.insti.medista.common.exception.ResourceNotFoundException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientBackgroundRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
@@ -66,7 +67,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientResponse findById(Long id) {
-        return null;
+
+        Patient patient = getPatientOrThrow(id);
+
+        String careerName = careerCatalogService.findNameById(patient.getCareerId());
+
+        return patientMapper.toPatientResponse(patient, careerName);
     }
 
     @Override
@@ -85,8 +91,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public void deactivate(Long id) {
 
+        Patient patient = getPatientOrThrow(id);
+
+        if (!patient.getIsActive()) {
+            throw new ConflictException("El paciente ya está desactivado");
+        }
+
+        patient.setIsActive(false);
     }
 
     @Override
@@ -97,5 +111,9 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientBackgroundResponse updateBackground(Long patientId, UpdatePatientBackgroundRequest request, Long updatedBy) {
         return null;
+    }
+
+    private Patient getPatientOrThrow(Long id) {
+        return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente no encontrado" + id));
     }
 }
