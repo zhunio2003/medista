@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -119,7 +120,15 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientBackgroundResponse getBackground(Long patientId) {
-        return null;
+
+        if (!patientBackgroundRepository.existsById(patientId)) {
+            throw new ResourceNotFoundException("Paciente no encontrado");
+        }
+
+        return patientBackgroundRepository.findByPatientId(patientId)
+                .map(patientMapper::toBackgroundResponse)
+                .orElseGet(() -> PatientBackgroundResponse.builder().build());
+
     }
 
     @Override
