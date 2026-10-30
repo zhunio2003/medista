@@ -1,6 +1,7 @@
 package ec.insti.medista.patient.internal.mapper;
 
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
+import ec.insti.medista.patient.api.dto.request.UpdatePatientBackgroundRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
 import ec.insti.medista.patient.api.dto.response.PatientBackgroundResponse;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
@@ -39,6 +40,12 @@ public interface PatientMapper {
     @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "birthCountry", nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE)
     void updatePatient(UpdatePatientRequest request, @MappingTarget Patient patient);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "patientId", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void  updateBackground(UpdatePatientBackgroundRequest request, @MappingTarget PatientBackground background);
 
     @Named("calculateAge")
     default int calculateAge(LocalDate birthDate) {
