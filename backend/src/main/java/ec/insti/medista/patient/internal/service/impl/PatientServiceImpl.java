@@ -15,6 +15,7 @@ import ec.insti.medista.patient.api.dto.response.PatientSummaryResponse;
 import ec.insti.medista.patient.api.service.PatientService;
 import ec.insti.medista.patient.internal.entity.Patient;
 import ec.insti.medista.patient.internal.entity.PatientBackground;
+import ec.insti.medista.patient.internal.entity.enums.Gender;
 import ec.insti.medista.patient.internal.mapper.PatientMapper;
 import ec.insti.medista.patient.internal.repository.PatientBackgroundRepository;
 import ec.insti.medista.patient.internal.repository.PatientRepository;
@@ -132,8 +133,25 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public PatientBackgroundResponse updateBackground(Long patientId, UpdatePatientBackgroundRequest request, Long updatedBy) {
-        return null;
+
+        Patient patient = getPatientOrThrow(patientId);
+
+        boolean hasGynecological = request.gynecological() != null && !request.gynecological().isBlank();
+        if (hasGynecological && patient.getGender() != Gender.FEMALE) {
+            throw new BusinessRuleViolationException("Los antecedentes ginecológicos solo aplican a pacientes de género femenino");
+        }
+
+        PatientBackground background = patientBackgroundRepository.findByPatientId(patientId)
+                .orElseGet(() -> PatientBackground.builder().patientId(patientId).build());
+
+        patientMapper.updateBackground(request, background);
+        background.setUpdatedBy(updatedBy);
+
+        PatientBackground saved = patientBackgroundRepository.saveAndFlush(background);
+
+        return patientMapper.toBackgroundResponse(saved);
     }
 
     private Patient getPatientOrThrow(Long id) {
