@@ -16,7 +16,7 @@ public final class PatientSpecifications {
         return (root, query, cb) -> gender == null ? null  : cb.equal(root.get("gender"), gender);
     }
 
-    public static Specification<Patient> isActiv(Boolean isActive) {
+    public static Specification<Patient> hasActiveStatus(Boolean isActive) {
         return (root, query, cb) -> isActive == null ? null  : cb.equal(root.get("isActive"), isActive);
     }
 
