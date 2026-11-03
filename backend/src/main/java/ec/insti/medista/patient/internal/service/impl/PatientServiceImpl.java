@@ -20,12 +20,18 @@ import ec.insti.medista.patient.internal.mapper.PatientMapper;
 import ec.insti.medista.patient.internal.repository.PatientBackgroundRepository;
 import ec.insti.medista.patient.internal.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static ec.insti.medista.patient.internal.repository.PatientSpecifications.*;
 
 @Service
 @RequiredArgsConstructor
@@ -79,7 +85,24 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PageResponse<PatientSummaryResponse> findAll(Long careerId, String gender, Boolean isActive, Pageable pageable) {
-        return null;
+
+        Gender genderEnum = gender == null ? null : Gender.valueOf(gender);
+
+        Specification<Patient> specs = Specification.allOf(hasCareer(careerId), hasGender(genderEnum), hasActiveStatus(isActive));
+
+        Page<Patient> page = patientRepository.findAll(specs, pageable);
+
+        Set<Long> careerIds = page.getContent().stream()
+                .map(Patient::getCareerId)
+                .collect(Collectors.toSet());
+
+        Map<Long, String> careerNames = careerCatalogService.findNamesByIds(careerIds);
+
+        Page<PatientSummaryResponse> result = page.map(
+                patient -> patientMapper.toSummaryResponse(patient, careerNames.get(patient.getCareerId()))
+        );
+
+        return PageResponse.from(result);
     }
 
     @Override
