@@ -1,12 +1,14 @@
 package ec.insti.medista.patient.internal.repository;
 
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Page;
 import ec.insti.medista.patient.internal.entity.Patient;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface PatientRepository extends JpaRepository<Patient, Long> {
+public interface PatientRepository extends JpaRepository<Patient, Long>, JpaSpecificationExecutor<Patient> {
 
     // RF-M1-02 - validar cédula duplicado
     boolean existsByCedula(String cedula);
