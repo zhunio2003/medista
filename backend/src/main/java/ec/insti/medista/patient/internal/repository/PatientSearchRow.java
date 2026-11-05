@@ -3,9 +3,9 @@ package ec.insti.medista.patient.internal.repository;
 public interface PatientSearchRow {
 
     Long getId();
-    Long getCedula();
+    String getCedula();
     String getFirstName();
     String getLastName();
-    String getCareerId();
+    Long getCareerId();
     Double getSimilarity();
 }
