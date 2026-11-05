@@ -15,7 +15,7 @@
  
 **Proyecto:** MEDISTA
  
-**Departamento:** Departamento Médico — Instituto Superior Universitario TEC Azuay
+**Departamento:** Departamento Médico
  
 **Versión:** 1.0
  
@@ -44,7 +44,7 @@
 
 ## 1. Introducción
 
-El presente documento constituye el Estudio de Factibilidad del sistema **MEDISTA**, desarrollado para el Departamento Médico del Instituto Superior Universitario TEC Azuay. Su propósito es evaluar de manera integral y objetiva la viabilidad del proyecto desde las dimensiones técnica, operativa, económica, legal y temporal, proporcionando los fundamentos necesarios para respaldar la decisión de desarrollo e implementación del sistema.
+El presente documento constituye el Estudio de Factibilidad del sistema **MEDISTA**, desarrollado para el Departamento Médico de cualquier institucion. Su propósito es evaluar de manera integral y objetiva la viabilidad del proyecto desde las dimensiones técnica, operativa, económica, legal y temporal, proporcionando los fundamentos necesarios para respaldar la decisión de desarrollo e implementación del sistema.
 
 **MEDISTA** es un sistema de gestión de atención médica que digitaliza completamente el proceso de atención clínica del instituto, el cual opera actualmente de forma manual mediante formularios en papel. El sistema contempla una plataforma web para el personal médico y administrativo, y una aplicación móvil para los estudiantes, sirviendo a una población de aproximadamente 500 estudiantes distribuidos en 16 carreras.
 
@@ -54,7 +54,7 @@ Este estudio analiza cada dimensión de factibilidad con base en los requerimien
 
 ## 2. Descripción del Problema
 
-El Departamento Médico del Instituto Superior Universitario TEC Azuay gestiona actualmente la totalidad de sus atenciones médicas de forma manual, mediante el llenado físico de un formulario en papel diseñado por el personal médico de la institución. Este formulario recoge, en cada atención, los datos completos de filiación del paciente — nombres, apellidos, cédula, carrera, dirección, entre otros — independientemente de si el estudiante ha sido atendido con anterioridad, lo que genera redundancia sistemática de información y consumo innecesario de tiempo clínico en cada consulta.
+El Departamento Médico gestiona actualmente la totalidad de sus atenciones médicas de forma manual, mediante el llenado físico de un formulario en papel diseñado por el personal médico de la institución. Este formulario recoge, en cada atención, los datos completos de filiación del paciente — nombres, apellidos, cédula, carrera, dirección, entre otros — independientemente de si el estudiante ha sido atendido con anterioridad, lo que genera redundancia sistemática de información y consumo innecesario de tiempo clínico en cada consulta.
 
 Una vez completados, los formularios son almacenados en archivadores físicos, sin ningún mecanismo de organización, búsqueda o análisis. Esta modalidad de almacenamiento expone la información clínica de los estudiantes a riesgos de deterioro, pérdida o acceso no autorizado, comprometiendo la confidencialidad e integridad de datos de salud protegidos por la normativa ecuatoriana vigente.
 
@@ -65,7 +65,7 @@ Las consecuencias de este modelo se manifiestan en tres niveles. A nivel operati
 ## 3. Objetivos del Proyecto
 
 ### 3.1 Objetivo General
-Desarrollar e implementar **MEDISTA**, un sistema de gestión de atención médica web y móvil para el Departamento Médico del Instituto Superior Universitario **TEC Azuay**, que digitalice, centralice y estructure los procesos clínicos actualmente gestionados en papel, mejorando la eficiencia operativa, la seguridad de la información y la capacidad de análisis institucional en materia de salud estudiantil.
+Desarrollar e implementar **MEDISTA**, un sistema de gestión de atención médica web y móvil para el Departamento Médico, que digitalice, centralice y estructure los procesos clínicos actualmente gestionados en papel, mejorando la eficiencia operativa, la seguridad de la información y la capacidad de análisis institucional en materia de salud estudiantil.
 
 ### 3.2 Objetivos Específicos
 1. Digitalizar el formulario de atención médica eliminando la redundancia de datos mediante el registro único de información de filiación por paciente.
@@ -127,7 +127,7 @@ Los siguientes elementos quedan explícitamente excluidos de la presente versió
 
 ### 5.1 Hardware
  
-El sistema será desplegado en el servidor local del Instituto Superior Universitario TEC Azuay, administrado por el área de tecnología de la institución. Para efectos de este estudio se consideran las especificaciones mínimas recomendadas para el despliegue de MEDISTA-V2:
+El sistema será desplegado en el servidor local de las instituciones, administrado por el área de tecnología de la institución. Para efectos de este estudio se consideran las especificaciones mínimas recomendadas para el despliegue de MEDISTA-V2:
  
 | Componente | Especificación Mínima Recomendada |
 |------------|-----------------------------------|
@@ -156,7 +156,7 @@ El stack tecnológico de MEDISTA fue seleccionado en función de los requerimien
  
 ### 5.3 Conocimiento Técnico
  
-El sistema es desarrollado por un único desarrollador con formación en el programa de Desarrollo de Software del Instituto Superior Universitario TEC Azuay. El desarrollador cuenta con conocimiento del stack tecnológico definido y la capacidad de adquirir las competencias específicas requeridas durante el proceso de desarrollo. La arquitectura de monolito modular fue elegida deliberadamente para reducir la complejidad operativa frente a alternativas como microservicios, alineando el alcance técnico del sistema con las capacidades del equipo de desarrollo.
+El sistema es desarrollado por un único desarrollador con formación en el programa de Desarrollo de Software. El desarrollador cuenta con conocimiento del stack tecnológico definido y la capacidad de adquirir las competencias específicas requeridas durante el proceso de desarrollo. La arquitectura de monolito modular fue elegida deliberadamente para reducir la complejidad operativa frente a alternativas como microservicios, alineando el alcance técnico del sistema con las capacidades del equipo de desarrollo.
 
 ---
 
@@ -165,7 +165,7 @@ El sistema es desarrollado por un único desarrollador con formación en el prog
 ### 6.1 Disposición de los Usuarios
 El proyecto cuenta con una condición operativa favorable desde su origen: el sistema responde a una necesidad identificada y solicitada directamente por la usuaria principal. La médico del Departamento Médico ha manifestado interés en la digitalización del proceso de atención clínica con anterioridad al inicio del proyecto, lo que garantiza una disposición activa hacia la adopción del sistema y elimina la resistencia al cambio como factor de riesgo operativo.
 
-El Decano y las autoridades institucionales del Instituto Superior Universitario TEC Azuay tienen pleno conocimiento del proyecto y han expresado su aprobación formal. Este respaldo institucional es determinante para garantizar las condiciones necesarias de despliegue, acceso al servidor y coordinación con el área de tecnología de la institución.
+El Decano y las autoridades institucionales tienen pleno conocimiento del proyecto y han expresado su aprobación formal. Este respaldo institucional es determinante para garantizar las condiciones necesarias de despliegue, acceso al servidor y coordinación con el área de tecnología de la institución.
 
 Los estudiantes, como usuarios de la aplicación móvil, interactuarán con una interfaz de solo lectura de diseño simple e intuitivo, limitada a la consulta de su historial clínico personal y la recepción de notificaciones. El nivel de complejidad de interacción es mínimo, por lo que no se anticipa resistencia ni dificultad de adopción en este grupo.
 
@@ -187,7 +187,7 @@ La capacitación necesaria para la operación de MEDISTA-V2 se limita al uso fun
 
 ### 7.1 Costos del Proyecto
 
-MEDISTA-V2 es desarrollado en el marco del programa académico de Desarrollo de Software del Instituto Superior Universitario TEC Azuay, lo que determina una estructura de costos significativamente reducida frente a un proyecto de desarrollo comercial equivalente.
+MEDISTA-V2 es desarrollado en el marco del programa académico de Desarrollo de Software, lo que determina una estructura de costos significativamente reducida frente a un proyecto de desarrollo comercial equivalente.
 
 **Costos de desarrollo:**
 
@@ -201,7 +201,7 @@ MEDISTA-V2 es desarrollado en el marco del programa académico de Desarrollo de 
 
 | Rubro | Detalle | Costo |
 |-------|---------|-------|
-| Servidor de producción | Servidor local institucional existente del TEC Azuay. Sin costo adicional. | $0.00 |
+| Servidor de producción | Servidor local institucional. Sin costo adicional. | $0.00 |
 | Hosting o servicios en la nube | No aplica. El sistema se despliega en infraestructura local del instituto. | $0.00 |
 | Dominio o certificado SSL | Uso de certificado institucional o Let's Encrypt (gratuito). | $0.00 |
 | Mantenimiento técnico | A cargo del área de tecnología de la institución. | $0.00 |
@@ -245,7 +245,7 @@ MEDISTA maneja datos de salud de personas naturales, clasificados como datos sen
 |-----------|-------------|
 | Ley Orgánica de Protección de Datos Personales (LOPDP) | Regula la recopilación, almacenamiento, procesamiento y protección de datos personales en Ecuador, con disposiciones especiales para datos sensibles de salud. |
 | Acuerdo Ministerial MSP No. 00000125 | Regula el manejo de historias clínicas en formato electrónico, estableciendo requisitos de integridad, trazabilidad, confidencialidad e inmutabilidad de los registros clínicos. |
-| Reglamento Interno Institucional — TEC Azuay | Establece las políticas de manejo y acceso a datos de los estudiantes dentro de la institución. |
+| Reglamento Interno Institucional | Establece las políticas de manejo y acceso a datos de los estudiantes dentro de la institución. |
 
 ### 8.2 Cumplimiento por Normativa
 
@@ -270,10 +270,10 @@ MEDISTA cumple con la LOPDP mediante las siguientes medidas implementadas en el 
 | Registro de accesos y acciones | Log de auditoría que almacena cada acción realizada en el sistema: usuario, acción ejecutada, timestamp e IP de origen. |
 | Integridad, fecha y firma del profesional | Cada atención médica registra automáticamente la fecha y hora de creación, el nombre del profesional responsable y su código MSP, garantizando la trazabilidad del acto médico. |
 
-**Reglamento Interno Institucional — TEC Azuay**
+**Reglamento Interno Institucional**
 
-| Requerimiento Institucional | Implementación en MEDISTA-V2 |
-|----------------------------|------------------------------|
+| Requerimiento Institucional | Implementación en MEDISTA |
+|----------------------------|---------------------------|
 | Acceso restringido a datos de estudiantes | Los datos clínicos individuales son accesibles únicamente por el Médico. El Decano y el Administrador del Sistema no tienen acceso a expedientes clínicos individuales. |
 | Gestión de usuarios institucionales | El Administrador del Sistema gestiona las cuentas de acceso, garantizando que solo personal autorizado por la institución tenga credenciales activas en el sistema. |
 
@@ -356,7 +356,7 @@ Los siguientes riesgos comunes en proyectos de software fueron evaluados y desca
 
 ### 11.1 Metodología de Evaluación
 
-Previo a la decisión de desarrollar MEDISTA como sistema a medida, se evaluaron conceptualmente tres alternativas para resolver la problemática del Departamento Médico del Instituto Superior Universitario TEC Azuay. Cada alternativa fue analizada en función de cinco criterios: adaptabilidad al contexto institucional, cumplimiento normativo ecuatoriano, costo, viabilidad operativa y sostenibilidad a largo plazo.
+Previo a la decisión de desarrollar MEDISTA como sistema a medida, se evaluaron conceptualmente tres alternativas para resolver la problemática del Departamento Médico. Cada alternativa fue analizada en función de cinco criterios: adaptabilidad al contexto institucional, cumplimiento normativo ecuatoriano, costo, viabilidad operativa y sostenibilidad a largo plazo.
 
 ### 11.2 Alternativas
 
@@ -376,7 +376,7 @@ Previo a la decisión de desarrollar MEDISTA como sistema a medida, se evaluaron
 
 **Alternativa 2 — Adoptar un sistema médico genérico existente**
 
-Existen soluciones de gestión médica disponibles en el mercado, tanto de pago como de código abierto. Sin embargo, su evaluación frente al contexto específico del TEC Azuay revela limitaciones críticas:
+Existen soluciones de gestión médica disponibles en el mercado, tanto de pago como de código abierto. Sin embargo, su evaluación frente al contexto específico de la institucion revela limitaciones críticas:
 
 | Criterio | Evaluación |
 |----------|------------|
@@ -386,7 +386,7 @@ Existen soluciones de gestión médica disponibles en el mercado, tanto de pago 
 | Viabilidad operativa | Media. Requeriría capacitación en una herramienta externa y adaptación de los procesos institucionales al sistema, en lugar de que el sistema se adapte a los procesos. |
 | Sostenibilidad | Dependiente del proveedor. Actualizaciones, soporte y continuidad quedan fuera del control institucional. |
 
-**Veredicto:** Descartada. Ningún sistema genérico disponible replica el formulario institucional específico de la doctora, cumple con la normativa ecuatoriana de forma nativa, ni se adapta a la estructura de roles del TEC Azuay sin un desarrollo adicional equivalente al de una solución a medida.
+**Veredicto:** Descartada. Ningún sistema genérico disponible replica el formulario institucional específico de la doctora, cumple con la normativa ecuatoriana de forma nativa, ni se adapta a la estructura de roles de la institucion sin un desarrollo adicional equivalente al de una solución a medida.
 
 ---
 
@@ -394,7 +394,7 @@ Existen soluciones de gestión médica disponibles en el mercado, tanto de pago 
 
 | Criterio | Evaluación |
 |----------|------------|
-| Adaptabilidad | Alta. El sistema es diseñado específicamente para el Departamento Médico del TEC Azuay, replicando el formulario institucional existente y respetando los procesos ya establecidos. |
+| Adaptabilidad | Alta. El sistema es diseñado específicamente para el Departamento Médico, replicando el formulario institucional existente y respetando los procesos ya establecidos. |
 | Cumplimiento normativo | Alto. La arquitectura incorpora desde su base los requerimientos de la LOPDP y el Acuerdo Ministerial MSP No. 00000125. |
 | Costo | Nulo. Desarrollado como proyecto académico con stack de código abierto y despliegue en infraestructura institucional existente. |
 | Viabilidad operativa | Alta. La usuaria principal solicitó el sistema y está disponible para validaciones durante el desarrollo. |
@@ -434,7 +434,7 @@ El presente estudio evaluó MEDISTA desde seis dimensiones de factibilidad, obte
 
 MEDISTA-V2 es un proyecto técnica, operativa, económica, legal y temporalmente viable. Las seis dimensiones evaluadas arrojan resultados favorables, sin que ninguna represente un impedimento para su desarrollo e implementación.
 
-Más allá de su viabilidad, el proyecto responde a una necesidad institucional real, concreta y urgente. El Departamento Médico del Instituto Superior Universitario TEC Azuay opera hoy con un proceso completamente manual que expone a la institución a riesgos normativos crecientes, limita la capacidad de análisis y toma de decisiones en materia de salud estudiantil, y consume tiempo clínico valioso en tareas administrativas repetitivas. MEDISTA resuelve cada uno de estos problemas de forma integral, sostenible y sin costo para la institución.
+Más allá de su viabilidad, el proyecto responde a una necesidad institucional real, concreta y urgente. El Departamento Médico opera hoy con un proceso completamente manual que expone a la institución a riesgos normativos crecientes, limita la capacidad de análisis y toma de decisiones en materia de salud estudiantil, y consume tiempo clínico valioso en tareas administrativas repetitivas. MEDISTA resuelve cada uno de estos problemas de forma integral, sostenible y sin costo para la institución.
 
 La evaluación de alternativas confirma que el desarrollo a medida es la única solución que combina adaptabilidad al contexto institucional específico, cumplimiento nativo de la normativa ecuatoriana y viabilidad económica plena.
 
@@ -442,7 +442,7 @@ La evaluación de alternativas confirma que el desarrollo a medida es la única 
 
 Se recomienda proceder con el desarrollo e implementación de MEDISTA de forma inmediata, siguiendo la metodología Waterfall definida y el cronograma establecido en el presente estudio.
 
-La ejecución del proyecto no solo es viable — es estratégicamente necesaria para que el Instituto Superior Universitario TEC Azuay cumpla con sus obligaciones normativas en materia de protección de datos de salud, modernice la gestión de su Departamento Médico y establezca las bases de un sistema de información clínica escalable y sostenible a largo plazo.
+La ejecución del proyecto no solo es viable — es estratégicamente necesaria para que la institucion cumpla con sus obligaciones normativas en materia de protección de datos de salud, modernice la gestión de su Departamento Médico y establezca las bases de un sistema de información clínica escalable y sostenible a largo plazo.
 
 ---
 
