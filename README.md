@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>MEDISTA-V2</h1>
+    <h1>MEDISTA</h1>
     <strong> Sistema de Gestión de Atención Médica</strong>
     <img src="docs/brand/medista-logo.png" alt="medista" width="900">
     <br/><br/>
@@ -61,9 +61,9 @@
 
 ## Descripción
 
-<!-- Elevator pitch técnico: qué es, para quién, qué problema resuelve (3-4 líneas máximo) -->
-
+MEDISTA es un sistema de gestión de atención médica que digitaliza completamente el proceso de atención clínica de las instituciones educativas, el cual opera mayormente de forma manual mediante formularios en papel. El sistema contempla una plataforma web para el personal médico y administrativo, y una aplicación móvil para los estudiantes.
 ## Capturas de Pantalla
+
 
 <!-- 2-4 screenshots clave del sistema funcionando -->
 <!-- Screenshots coming soon -->
