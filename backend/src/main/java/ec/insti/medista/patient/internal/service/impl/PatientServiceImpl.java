@@ -19,6 +19,7 @@ import ec.insti.medista.patient.internal.entity.enums.Gender;
 import ec.insti.medista.patient.internal.mapper.PatientMapper;
 import ec.insti.medista.patient.internal.repository.PatientBackgroundRepository;
 import ec.insti.medista.patient.internal.repository.PatientRepository;
+import ec.insti.medista.patient.internal.repository.PatientSearchRow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -107,7 +109,19 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientSearchResponse> search(String query, int limit) {
-        return List.of();
+
+        List<PatientSearchRow> rows = patientRepository.searchBySimilarity(query.trim(), Math.min(limit, 25));
+
+        Set<Long> careerIds = rows.stream()
+                .map(PatientSearchRow::getCareerId)
+                .collect(Collectors.toSet());
+
+        Map<Long, String> careerNames = careerCatalogService.findNamesByIds(careerIds);
+
+        return rows.stream()
+                .map(row -> patientMapper.toSearchResponse(row, careerNames.get(row.getCareerId())))
+                .toList();
+
     }
 
     @Override
