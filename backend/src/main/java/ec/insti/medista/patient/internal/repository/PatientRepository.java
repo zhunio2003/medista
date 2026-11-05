@@ -42,6 +42,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long>, JpaSpec
         ORDER BY "similarity" DESC
         LIMIT :limit
     """, nativeQuery = true)
-    List<PatientSearchRow> search(@Param("query") String query, @Param("limit") int limit);
+    List<PatientSearchRow> searchBySimilarity(@Param("query") String query, @Param("limit") int limit);
 
 }
