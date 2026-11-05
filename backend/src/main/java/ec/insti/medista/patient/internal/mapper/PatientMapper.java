@@ -5,9 +5,11 @@ import ec.insti.medista.patient.api.dto.request.UpdatePatientBackgroundRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
 import ec.insti.medista.patient.api.dto.response.PatientBackgroundResponse;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
+import ec.insti.medista.patient.api.dto.response.PatientSearchResponse;
 import ec.insti.medista.patient.api.dto.response.PatientSummaryResponse;
 import ec.insti.medista.patient.internal.entity.Patient;
 import ec.insti.medista.patient.internal.entity.PatientBackground;
+import ec.insti.medista.patient.internal.repository.PatientSearchRow;
 import org.mapstruct.*;
 
 import java.time.LocalDate;
@@ -46,6 +48,11 @@ public interface PatientMapper {
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     void  updateBackground(UpdatePatientBackgroundRequest request, @MappingTarget PatientBackground background);
+
+    @Mapping(target = "fullName", expression = "java(row.getFirstName() + \" \" + row.getLastName())")
+    @Mapping(target = "careerName", source = "careerName")
+    PatientSearchResponse toSearchResponse(PatientSearchRow row, String careerName);
+
 
     @Named("calculateAge")
     default int calculateAge(LocalDate birthDate) {
