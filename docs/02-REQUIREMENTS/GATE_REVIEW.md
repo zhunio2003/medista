@@ -1,7 +1,6 @@
 # Acta de Revisión de Fase — Gate Review Fase 1: Requisitos
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
 **Versión:** 1.0  
 **Fecha de revisión:** 16 de abril de 2026 
 **Fase revisada:** Fase 1 — Requisitos
@@ -53,4 +52,3 @@ Con la aprobación de los entregables de la Fase 1, el proyecto queda habilitado
 ---
 
 *MEDISTA — Gate Review Fase 1 v1.0*  
-*Instituto Superior Universitario TEC Azuay — Abril 2026*

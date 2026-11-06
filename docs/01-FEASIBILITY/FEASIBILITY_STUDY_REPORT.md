@@ -81,7 +81,7 @@ Desarrollar e implementar **MEDISTA**, un sistema de gestión de atención médi
 
 ### 4.1 Dentro del Alcance
  
-MEDISTA-V2 comprende el desarrollo e implementación de los siguientes módulos y componentes:
+MEDISTA comprende el desarrollo e implementación de los siguientes módulos y componentes:
  
 **Módulos funcionales:**
  
@@ -118,7 +118,7 @@ Los siguientes elementos quedan explícitamente excluidos de la presente versió
 | Módulo de Agenda y Citas | La arquitectura queda preparada para incorporarlo en una versión futura. |
 | Integración con sistemas externos (MSP, IESS, sistema académico) | Fuera del alcance del departamento médico institucional. |
 | Gestión de farmacia o inventario de medicamentos | El sistema se limita a la gestión clínica de atenciones médicas. |
-| Facturación y gestión de cobros | MEDISTA-V2 no incluye ningún componente financiero. |
+| Facturación y gestión de cobros | MEDISTA no incluye ningún componente financiero. |
 | Telemedicina o consultas virtuales | El sistema gestiona atenciones presenciales únicamente. |
  
 ---
@@ -127,7 +127,7 @@ Los siguientes elementos quedan explícitamente excluidos de la presente versió
 
 ### 5.1 Hardware
  
-El sistema será desplegado en el servidor local de las instituciones, administrado por el área de tecnología de la institución. Para efectos de este estudio se consideran las especificaciones mínimas recomendadas para el despliegue de MEDISTA-V2:
+El sistema será desplegado en el servidor local de las instituciones, administrado por el área de tecnología de la institución. Para efectos de este estudio se consideran las especificaciones mínimas recomendadas para el despliegue de MEDISTA:
  
 | Componente | Especificación Mínima Recomendada |
 |------------|-----------------------------------|
@@ -170,7 +170,7 @@ El Decano y las autoridades institucionales tienen pleno conocimiento del proyec
 Los estudiantes, como usuarios de la aplicación móvil, interactuarán con una interfaz de solo lectura de diseño simple e intuitivo, limitada a la consulta de su historial clínico personal y la recepción de notificaciones. El nivel de complejidad de interacción es mínimo, por lo que no se anticipa resistencia ni dificultad de adopción en este grupo.
 
 ### 6.2 Capacitación Requerida
-La capacitación necesaria para la operación de MEDISTA-V2 se limita al uso funcional del sistema y no involucra conocimientos técnicos de desarrollo, configuración o mantenimiento de software. Se contempla la entrega de los siguientes recursos:
+La capacitación necesaria para la operación de MEDISTA se limita al uso funcional del sistema y no involucra conocimientos técnicos de desarrollo, configuración o mantenimiento de software. Se contempla la entrega de los siguientes recursos:
 
 | Recurso | Destinatario | Contenido |
 |---|---|---|
@@ -187,7 +187,7 @@ La capacitación necesaria para la operación de MEDISTA-V2 se limita al uso fun
 
 ### 7.1 Costos del Proyecto
 
-MEDISTA-V2 es desarrollado en el marco del programa académico de Desarrollo de Software, lo que determina una estructura de costos significativamente reducida frente a un proyecto de desarrollo comercial equivalente.
+MEDISTA es desarrollado en el marco del programa académico de Desarrollo de Software, lo que determina una estructura de costos significativamente reducida frente a un proyecto de desarrollo comercial equivalente.
 
 **Costos de desarrollo:**
 
@@ -253,8 +253,8 @@ MEDISTA maneja datos de salud de personas naturales, clasificados como datos sen
 
 MEDISTA cumple con la LOPDP mediante las siguientes medidas implementadas en el sistema:
 
-| Requerimiento LOPDP | Implementación en MEDISTA-V2 |
-|--------------------|------------------------------|
+| Requerimiento LOPDP | Implementación en MEDISTA |
+|--------------------|-----------------------------|
 | Cifrado de datos sensibles de salud | Cifrado a nivel de columna mediante pgcrypto (AES-256) para diagnósticos, antecedentes y datos obstétricos almacenados en la base de datos. |
 | Control de acceso y gestión de roles | Sistema de autenticación con JWT y control de acceso por roles (Médico, Decano, Administrador, Estudiante) mediante Spring Security. Cada rol accede únicamente a la información que le corresponde. |
 | Derecho del titular a acceder a sus datos | Los estudiantes pueden consultar su historial clínico personal desde la aplicación móvil, autenticándose con su correo institucional. |
@@ -263,8 +263,8 @@ MEDISTA cumple con la LOPDP mediante las siguientes medidas implementadas en el 
 
 **Acuerdo Ministerial MSP No. 00000125 — Historia Clínica Electrónica**
 
-| Requerimiento MSP | Implementación en MEDISTA-V2 |
-|------------------|------------------------------|
+| Requerimiento MSP | Implementación en MEDISTA |
+|------------------|-----------------------------|
 | Inmutabilidad de registros clínicos | Las atenciones médicas no se eliminan físicamente de la base de datos. Se implementa soft delete mediante campo de estado en todas las entidades, preservando la integridad del historial clínico. |
 | Trazabilidad completa de cambios | Auditoría automática mediante Hibernate Envers, que registra cada modificación sobre entidades clínicas: qué cambió, quién lo cambió y cuándo. |
 | Registro de accesos y acciones | Log de auditoría que almacena cada acción realizada en el sistema: usuario, acción ejecutada, timestamp e IP de origen. |
@@ -432,7 +432,7 @@ El presente estudio evaluó MEDISTA desde seis dimensiones de factibilidad, obte
 
 ### 12.2 Conclusión General
 
-MEDISTA-V2 es un proyecto técnica, operativa, económica, legal y temporalmente viable. Las seis dimensiones evaluadas arrojan resultados favorables, sin que ninguna represente un impedimento para su desarrollo e implementación.
+MEDISTA es un proyecto técnica, operativa, económica, legal y temporalmente viable. Las seis dimensiones evaluadas arrojan resultados favorables, sin que ninguna represente un impedimento para su desarrollo e implementación.
 
 Más allá de su viabilidad, el proyecto responde a una necesidad institucional real, concreta y urgente. El Departamento Médico opera hoy con un proceso completamente manual que expone a la institución a riesgos normativos crecientes, limita la capacidad de análisis y toma de decisiones en materia de salud estudiantil, y consume tiempo clínico valioso en tareas administrativas repetitivas. MEDISTA resuelve cada uno de estos problemas de forma integral, sostenible y sin costo para la institución.
 
