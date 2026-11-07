@@ -65,6 +65,7 @@ MEDISTA es un sistema de gestión de atención médica que digitaliza completame
 ## Capturas de Pantalla
 
 
+
 <!-- 2-4 screenshots clave del sistema funcionando -->
 <!-- Screenshots coming soon -->
 
