@@ -2,9 +2,6 @@ package ec.insti.medista.security.internal.entity;
 
 import java.time.OffsetDateTime;
 
-import org.hibernate.annotations.ManyToAny;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
-
 import ec.insti.medista.security.internal.entity.enums.AuditAction;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
