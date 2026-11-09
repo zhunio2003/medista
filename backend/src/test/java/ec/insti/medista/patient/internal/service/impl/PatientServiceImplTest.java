@@ -1,6 +1,7 @@
 package ec.insti.medista.patient.internal.service.impl;
 
 import ec.insti.medista.administration.api.service.CareerCatalogService;
+import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
 import ec.insti.medista.patient.internal.mapper.PatientMapper;
@@ -53,6 +54,22 @@ class PatientServiceImplTest {
             .hasMessageContaining("0102030405");
 
         verify(patientRepository, never()).save(any());
+    }
+
+    @Test
+    void create_whenCareerIsInactive_throwsBusinessRuleAndSavesNothing() {
+        CreatePatientRequest request = validCreateRequest();
+
+        when(patientRepository.existsByCedula("0102030405")).thenReturn(false);
+        when(careerCatalogService.existsActiveById(request.careerId())).thenReturn(false);
+
+        assertThatThrownBy(() -> patientService.create(request, request.careerId()))
+                .isInstanceOf(BusinessRuleViolationException.class)
+                .hasMessageContaining("inactiva");
+
+        verify(patientRepository, never()).save(any());
+        verifyNoInteractions(patientBackgroundRepository);
+
     }
 
 
