@@ -42,6 +42,15 @@ class PatientServiceImplTest {
         );
     }
 
+    private CreatePatientRequest validCreateRequestWithUser(Long userId) {
+        return new CreatePatientRequest(
+                userId, 3L, "0102030405", "Carlos", "Vásquez", "Quinto",
+                "Av. Solano", "El Vergel", "Sucre", "Cuenca", "Azuay",
+                "0987654321", LocalDate.of(2003, 8, 14), "Cuenca", "Ecuador",
+                "MALE", "SINGLE", "O_POSITIVE"
+        );
+    }
+
     @Test
     void create_whenCedulaAlreadyExists_throwsConflictAndSavesNothing() {
 
@@ -66,6 +75,24 @@ class PatientServiceImplTest {
         assertThatThrownBy(() -> patientService.create(request, request.careerId()))
                 .isInstanceOf(BusinessRuleViolationException.class)
                 .hasMessageContaining("inactiva");
+
+        verify(patientRepository, never()).save(any());
+        verifyNoInteractions(patientBackgroundRepository);
+
+    }
+
+    @Test
+    void create_whenUserIdAlreadyLinked_throwsConflictAndSavesNothing() {
+
+        CreatePatientRequest request = validCreateRequestWithUser(123L);
+
+        when(patientRepository.existsByCedula(request.cedula())).thenReturn(false);
+        when(careerCatalogService.existsActiveById(request.careerId())).thenReturn(true);
+        when(patientRepository.existsByUserId(request.userId())).thenReturn(true);
+
+        assertThatThrownBy(() -> patientService.create(request, 1L))
+            .isInstanceOf(ConflictException.class)
+            .hasMessageContaining("vinculado");
 
         verify(patientRepository, never()).save(any());
         verifyNoInteractions(patientBackgroundRepository);
