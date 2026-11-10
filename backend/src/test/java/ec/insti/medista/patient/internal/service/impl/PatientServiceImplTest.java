@@ -4,17 +4,22 @@ import ec.insti.medista.administration.api.service.CareerCatalogService;
 import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
+import ec.insti.medista.patient.api.dto.response.PatientResponse;
+import ec.insti.medista.patient.internal.entity.Patient;
+import ec.insti.medista.patient.internal.entity.PatientBackground;
 import ec.insti.medista.patient.internal.mapper.PatientMapper;
 import ec.insti.medista.patient.internal.repository.PatientBackgroundRepository;
 import ec.insti.medista.patient.internal.repository.PatientRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
@@ -96,6 +101,34 @@ class PatientServiceImplTest {
 
         verify(patientRepository, never()).save(any());
         verifyNoInteractions(patientBackgroundRepository);
+
+    }
+
+    @Test
+    void create_whenDataIsValid_savesPatientAndEmptyBackground() {
+
+        CreatePatientRequest request = validCreateRequest();
+        Patient entity = new Patient();
+        Patient saved = Patient.builder().id(7L).build();
+        PatientResponse expected = PatientResponse.builder().id(7L).build();
+
+        when(patientRepository.existsByCedula(request.cedula())).thenReturn(false);
+        when(careerCatalogService.existsActiveById(request.careerId())).thenReturn(true);
+        when(patientMapper.toEntity(request)).thenReturn(entity);
+        when(patientRepository.save(entity)).thenReturn(saved);
+        when(careerCatalogService.findNameById(request.careerId())).thenReturn("Desarrollo de Software");
+        when(patientMapper.toPatientResponse(saved, "Desarrollo de Software")).thenReturn(expected);
+
+        PatientResponse result = patientService.create(request, 1L);
+
+        assertThat(result).isSameAs(expected);
+
+        ArgumentCaptor<PatientBackground> captor = ArgumentCaptor.forClass(PatientBackground.class);
+        verify(patientBackgroundRepository).save(captor.capture());
+        assertThat(captor.getValue().getPatientId()).isEqualTo(7L);
+        assertThat(captor.getValue().getUpdatedBy()).isEqualTo(1L);
+
+        verify(patientRepository, never()).existsByUserId(any());
 
     }
 
