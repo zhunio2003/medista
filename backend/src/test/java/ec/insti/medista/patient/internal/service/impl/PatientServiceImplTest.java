@@ -72,7 +72,7 @@ class PatientServiceImplTest {
         when(patientRepository.existsByCedula("0102030405")).thenReturn(false);
         when(careerCatalogService.existsActiveById(request.careerId())).thenReturn(false);
 
-        assertThatThrownBy(() -> patientService.create(request, request.careerId()))
+        assertThatThrownBy(() -> patientService.create(request, 1L))
                 .isInstanceOf(BusinessRuleViolationException.class)
                 .hasMessageContaining("inactiva");
 
