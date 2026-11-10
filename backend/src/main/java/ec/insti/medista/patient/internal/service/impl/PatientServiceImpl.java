@@ -61,8 +61,7 @@ public class PatientServiceImpl implements PatientService {
             throw new ConflictException("El usuario ya está vinculado a otro paciente");
         }
 
-        Patient saved = patientMapper.toEntity(request);
-        patientRepository.save(saved);
+        Patient saved = patientRepository.save(patientMapper.toEntity(request));
 
         PatientBackground background = PatientBackground.builder()
                 .patientId(saved.getId())
