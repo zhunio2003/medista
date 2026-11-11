@@ -3,6 +3,7 @@ package ec.insti.medista.patient.internal.service.impl;
 import ec.insti.medista.administration.api.service.CareerCatalogService;
 import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
+import ec.insti.medista.common.exception.ResourceNotFoundException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
 import ec.insti.medista.patient.internal.entity.Patient;
@@ -146,5 +147,14 @@ class PatientServiceImplTest {
 
     }
 
+    @Test
+    void deactivate_whenPatientDoesNotExist_throwsNotFound() {
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> patientService.deactivate(5L))
+            .isInstanceOf(ResourceNotFoundException.class);
+
+    }
 
 }
