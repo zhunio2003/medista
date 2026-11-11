@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -129,6 +130,19 @@ class PatientServiceImplTest {
         assertThat(captor.getValue().getUpdatedBy()).isEqualTo(1L);
 
         verify(patientRepository, never()).existsByUserId(any());
+
+    }
+
+    @Test
+    void deactivate_whenPatientIsActive_setsIsActiveToFalse() {
+
+        Patient patient = Patient.builder().id(5L).isActive(true).build();
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.of(patient));
+
+        patientService.deactivate(5L);
+
+        assertThat(patient.getIsActive()).isFalse();
 
     }
 
