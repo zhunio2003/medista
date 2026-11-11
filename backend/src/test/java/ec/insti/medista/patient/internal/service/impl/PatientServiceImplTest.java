@@ -157,4 +157,19 @@ class PatientServiceImplTest {
 
     }
 
+    @Test
+    void deactivate_whenPatientIsAlreadyInactive_throwsConflict() {
+
+        Patient patient = Patient.builder().id(5L).isActive(false).build();
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.of(patient));
+
+        assertThatThrownBy(() -> patientService.deactivate(5L))
+                .isInstanceOf(ConflictException.class)
+                .hasMessageContaining("desactivado");
+
+        assertThat(patient.getIsActive()).isFalse();
+
+    }
+
 }
