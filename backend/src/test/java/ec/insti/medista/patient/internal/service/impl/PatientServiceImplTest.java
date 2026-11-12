@@ -216,7 +216,24 @@ class PatientServiceImplTest {
     }
 
 
-    // @Test
-    // void update_when
+    @Test
+    void update_whenCareerUnchanged_doesNotValidateCareerAndSaves() {
+
+        Patient patient = Patient.builder().id(5L).careerId(3L).build();
+        UpdatePatientRequest request = validUpdateRequest(patient.getCareerId());
+        PatientResponse expected = PatientResponse.builder().id(5L).build();
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.of(patient));
+        when(careerCatalogService.findNameById(patient.getCareerId())).thenReturn("Desarrollo de Software");
+        when(patientMapper.toPatientResponse(patient, "Desarrollo de Software")).thenReturn(expected);
+
+        PatientResponse result =  patientService.update(5L, request);
+
+        assertThat(result).isSameAs(expected);
+        verify(careerCatalogService, never()).existsActiveById(any());
+        verify(patientMapper).updatePatient(request, patient);
+        verify(patientRepository).saveAndFlush(patient);
+
+    }
 
 }
