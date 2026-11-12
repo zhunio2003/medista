@@ -186,6 +186,23 @@ class PatientServiceImplTest {
             .hasMessageContaining("5");
 
         verifyNoInteractions(careerCatalogService);
+
+    }
+
+    @Test
+    void findById_whenPatientExists_returnsResponseWithCareerName() {
+
+        Patient patient = Patient.builder().id(5L).careerId(3L).build();
+        PatientResponse expected = PatientResponse.builder().id(5L).build();
+
+        when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
+        when(careerCatalogService.findNameById(3L)).thenReturn("Desarrollo de Software");
+        when(patientMapper.toPatientResponse(patient, "Desarrollo de Software")).thenReturn(expected);
+
+        PatientResponse result = patientService.findById(5L);
+
+        assertThat(result).isSameAs(expected);
+
     }
 
 }
