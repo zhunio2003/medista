@@ -273,6 +273,18 @@ class PatientServiceImplTest {
         verify(patientMapper, never()).updatePatient(any(), any());
         verify(patientRepository, never()).saveAndFlush(any());
 
+    }
+
+    @Test
+    void update_whenPatientDoesNotExist_throwsNotFoundAndTouchesNothing() {
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> patientService.update(5L, validUpdateRequest(3L)))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Paciente no encontrado");
+
+        verifyNoInteractions(careerCatalogService, patientMapper);
 
     }
 
