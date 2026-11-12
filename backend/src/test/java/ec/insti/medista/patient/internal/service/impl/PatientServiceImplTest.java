@@ -13,12 +13,16 @@ import ec.insti.medista.patient.internal.repository.PatientBackgroundRepository;
 import ec.insti.medista.patient.internal.repository.PatientRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -170,6 +174,18 @@ class PatientServiceImplTest {
 
         assertThat(patient.getIsActive()).isFalse();
 
+    }
+
+    @Test
+    void findById_whenPatientDoesNotExist_throwsNotFoundWithoutCallingCatalog() {
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> patientService.findById(5L))
+            .isInstanceOf(ResourceNotFoundException.class)
+            .hasMessageContaining("5");
+
+        verifyNoInteractions(careerCatalogService);
     }
 
 }
