@@ -5,6 +5,7 @@ import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
 import ec.insti.medista.common.exception.ResourceNotFoundException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
+import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
 import ec.insti.medista.patient.internal.entity.Patient;
 import ec.insti.medista.patient.internal.entity.PatientBackground;
@@ -56,6 +57,15 @@ class PatientServiceImplTest {
     private CreatePatientRequest validCreateRequestWithUser(Long userId) {
         return new CreatePatientRequest(
                 userId, 3L, "0102030405", "Carlos", "Vásquez", "Quinto",
+                "Av. Solano", "El Vergel", "Sucre", "Cuenca", "Azuay",
+                "0987654321", LocalDate.of(2003, 8, 14), "Cuenca", "Ecuador",
+                "MALE", "SINGLE", "O_POSITIVE"
+        );
+    }
+
+    private UpdatePatientRequest validUpdateRequest(Long careerId) {
+        return new UpdatePatientRequest(
+                careerId, "Carlos", "Vásquez", "Sexto",
                 "Av. Solano", "El Vergel", "Sucre", "Cuenca", "Azuay",
                 "0987654321", LocalDate.of(2003, 8, 14), "Cuenca", "Ecuador",
                 "MALE", "SINGLE", "O_POSITIVE"
@@ -204,5 +214,9 @@ class PatientServiceImplTest {
         assertThat(result).isSameAs(expected);
 
     }
+
+
+    // @Test
+    // void update_when
 
 }
