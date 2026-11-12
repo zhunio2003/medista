@@ -257,4 +257,23 @@ class PatientServiceImplTest {
 
     }
 
+    @Test
+    void update_whenCareerChangedAndInactive_throwsBusinessRuleAndChangedNothing() {
+
+        Patient patient = Patient.builder().id(5L).careerId(3L).build();
+        UpdatePatientRequest request = validUpdateRequest(8L);
+
+        when(patientRepository.findById(5L)).thenReturn(Optional.of(patient));
+        when(careerCatalogService.existsActiveById(request.careerId())).thenReturn(false);
+
+        assertThatThrownBy(() -> patientService.update(5L, request))
+                .isInstanceOf(BusinessRuleViolationException.class)
+                .hasMessageContaining("inactiva");
+
+        verify(patientMapper, never()).updatePatient(any(), any());
+        verify(patientRepository, never()).saveAndFlush(any());
+
+
+    }
+
 }
