@@ -1,40 +1,221 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// =============================================================================
+// Estilos globales de MEDISTA
+// -----------------------------------------------------------------------------
+// Aquí viven tres cosas que TODA la app comparte:
+//   1. Los tokens del design system (docs/03-DESIGN/DESIGN_SYSTEM.md §12)
+//      como variables CSS. Los componentes usan var(--color-primary) en vez
+//      de escribir #1E3A8A a mano: si mañana cambia el azul, se cambia aquí.
+//   2. El tema de Angular Material, para que sus componentes (inputs,
+//      botones) hablen el mismo idioma que nuestros tokens.
+//   3. Detalles del navegador que nadie dibuja pero todos ven: selección
+//      de texto, cursor de escritura (caret) y anillo de foco.
+// =============================================================================
+
+// `mat` trae los mixins de theming de Angular Material.
 @use '@angular/material' as mat;
 
-@use "tailwindcss";
+// Tailwind 4 se importa como un módulo más (lo procesa el plugin de Vite).
+@use 'tailwindcss';
 
+// -----------------------------------------------------------------------------
+// 1. Tokens del design system
+// -----------------------------------------------------------------------------
+// :root = el elemento <html>. Las variables definidas aquí se heredan en
+// toda la página, incluso dentro de los componentes con estilos encapsulados.
+:root {
+  /* Marca */
+  --color-primary: #1e3a8a; // azul marino institucional
+  --color-primary-hover: #1e3580; // hover/pressed de lo que es primary
+  --color-primary-light: #eef2ff; // fondos suaves (ítem activo, highlights)
+  --color-primary-deep: #011237; // navy profundo del panel del login
+  --color-accent: #f5c518; // dorado institucional: máx. 5% de la pantalla
+
+  /* Fondos */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f1f5f9;
+
+  /* Texto */
+  --color-text-primary: #1a202c;
+  --color-text-secondary: #64748b;
+  --color-text-disabled: #94a3b8;
+  --color-text-on-primary: #ffffff;
+  --color-text-on-accent: #1a202c;
+
+  /* Bordes */
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1; // borde de inputs en reposo (§8.2)
+  --color-border-focus: #1e3a8a;
+  --color-border-error: #dc2626;
+
+  /* Semánticos */
+  --color-success: #16a34a;
+  --color-success-light: #f0fdf4;
+  --color-error: #dc2626;
+  --color-error-light: #fef2f2;
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-info: #2563eb;
+  --color-info-light: #eff6ff;
+
+  /* Espaciado (base 4px) */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+
+  /* Radios */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Sombras: siempre con desplazamiento + desenfoque suave */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(30, 58, 138, 0.08);
+
+  /* Tipografía */
+  --font-family: 'Inter', system-ui, sans-serif;
+  --font-size-display: 28px;
+  --font-size-h1: 24px;
+  --font-size-h2: 20px;
+  --font-size-h3: 16px;
+  --font-size-body-lg: 15px;
+  --font-size-body: 14px;
+  --font-size-label: 13px;
+  --font-size-caption: 12px;
+  --font-size-badge: 11px;
+}
+
+// -----------------------------------------------------------------------------
+// 2. Tema de Angular Material
+// -----------------------------------------------------------------------------
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  // mat.theme genera las variables --mat-sys-* que usan los componentes de
+  // Material. Le pasamos Inter como tipografía y una paleta
+  // azul de base…
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$blue-palette,
+      ),
+      typography: Inter,
+      density: 0,
+    )
+  );
+
+  // …y luego sobrescribimos los colores "de sistema" con NUESTROS tokens.
+  // Así el borde enfocado, el label flotante y el botón usan el navy exacto
+  // del design system y no el azul genérico de Material.
+  @include mat.theme-overrides(
+    (
+      primary: var(--color-primary),
+      on-primary: var(--color-text-on-primary),
+      error: var(--color-error),
+      surface: var(--color-surface),
+      on-surface: var(--color-text-primary),
+      on-surface-variant: var(--color-text-secondary),
+      outline: var(--color-border-strong),
+    )
+  );
+
+  // Inputs de toda la app según DESIGN_SYSTEM §8.2. Los "overrides" son la
+  // API oficial de Material para ajustar un componente: generan variables
+  // CSS, sin ::ng-deep y sin !important.
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: var(--radius-md),
+      outlined-outline-color: var(--color-border-strong),
+      outlined-hover-outline-color: var(--color-text-secondary),
+      outlined-focus-outline-color: var(--color-border-focus),
+      outlined-label-text-color: var(--color-text-secondary),
+      outlined-input-text-placeholder-color: var(--color-text-disabled),
+      outlined-caret-color: var(--color-primary),
+      leading-icon-color: var(--color-text-secondary),
+      trailing-icon-color: var(--color-text-secondary),
+      // Material separa mucho las letras del mensaje de error; lo normalizamos.
+      subscript-text-tracking: normal,
+    )
+  );
+
+  // Botones "flat" (acción principal) según DESIGN_SYSTEM §8.1.
+  @include mat.button-overrides(
+    (
+      filled-container-shape: var(--radius-md),
+      filled-container-color: var(--color-primary),
+      filled-label-text-color: var(--color-text-on-primary),
+      filled-label-text-size: var(--font-size-body),
+      filled-label-text-weight: 500,
+      filled-container-height: 42px,
+    )
+  );
+}
+
+// El DS pide que el hover de un botón primario OSCUREZCA el fondo (§8.1);
+// Material por defecto lo aclara con una capa encima.
+.mat-mdc-unelevated-button:not(:disabled):hover {
+  background-color: var(--color-primary-hover);
+}
+
+// -----------------------------------------------------------------------------
+// 3. Base de la página
+// -----------------------------------------------------------------------------
+html,
+body {
+  height: 100%;
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
+  color-scheme: light; // el sistema es light mode (DESIGN_SYSTEM §1)
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  // Suaviza el renderizado de Inter en macOS; en otros sistemas no afecta.
+  -webkit-font-smoothing: antialiased;
 }
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// Texto seleccionado: azul hielo con texto navy en vez del azul del sistema
+// operativo. Es un detalle mínimo, pero hace que la app se sienta "hecha".
+::selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+// El cursor de escritura de los inputs también usa el color de marca.
+input,
+textarea {
+  caret-color: var(--color-primary);
+}
+
+// Anillo de foco para elementos que NO son de Material (links, botones
+// propios). :focus-visible solo aparece al navegar con teclado, no al hacer
+// clic con el mouse.
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+// -----------------------------------------------------------------------------
+// 4. Compatibilidad Tailwind ↔ Angular Material
+// -----------------------------------------------------------------------------
+// El "preflight" (reset) de Tailwind le pone `border: 0 solid` a TODOS los
+// elementos. En los campos outline de Material eso hace aparecer una línea
+// vertical a la derecha del label flotante (el "notch" es el hueco del borde
+// donde se apoya el label). El notch solo debe tener borde arriba y abajo,
+// así que le quitamos los laterales. Va aquí, global, porque afecta a todos
+// los campos de la app y así no hace falta ::ng-deep en cada componente.
+.mdc-notched-outline__notch {
+  border-left: none;
+  border-right: none;
+}
