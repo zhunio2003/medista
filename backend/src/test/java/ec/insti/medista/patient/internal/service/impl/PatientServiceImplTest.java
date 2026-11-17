@@ -314,4 +314,21 @@ class PatientServiceImplTest {
 
     }
 
+    @Test
+    void getBackground_whenPatientHasBackground_returnsMapperResponse() {
+
+        PatientBackground background = PatientBackground.builder().patientId(5L).allergies("Penicilina").build();
+        PatientBackgroundResponse expected = PatientBackgroundResponse.builder().allergies("Penicilina").build();
+
+
+        when(patientRepository.existsById(5L)).thenReturn(true);
+        when(patientBackgroundRepository.findByPatientId(5L)).thenReturn(Optional.of(background));
+        when((patientMapper.toBackgroundResponse(background))).thenReturn(expected);
+
+        PatientBackgroundResponse result = patientService.getBackground(5L);
+
+        assertThat(result).isSameAs(expected);
+
+    }
+
 }
