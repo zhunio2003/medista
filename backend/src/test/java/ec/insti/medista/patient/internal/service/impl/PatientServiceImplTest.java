@@ -6,6 +6,7 @@ import ec.insti.medista.common.exception.ConflictException;
 import ec.insti.medista.common.exception.ResourceNotFoundException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
+import ec.insti.medista.patient.api.dto.response.PatientBackgroundResponse;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
 import ec.insti.medista.patient.internal.entity.Patient;
 import ec.insti.medista.patient.internal.entity.PatientBackground;
@@ -298,6 +299,19 @@ class PatientServiceImplTest {
                 .hasMessageContaining("Paciente no encontrado");
 
         verifyNoInteractions(patientBackgroundRepository);
+    }
+
+    @Test
+    void getBackground_whenPatientHasNoBackground_returnsEmptyResponse() {
+
+        when(patientRepository.existsById(5L)).thenReturn(true);
+        when(patientBackgroundRepository.findByPatientId(5L)).thenReturn(Optional.empty());
+
+        PatientBackgroundResponse result = patientService.getBackground(5L);
+
+        assertThat(result).isEqualTo(PatientBackgroundResponse.builder().build());
+        verifyNoInteractions(patientMapper);
+
     }
 
 }
