@@ -288,4 +288,16 @@ class PatientServiceImplTest {
 
     }
 
+    @Test
+    void getBackground_whenPatientDoesNotExist_throwsNotFoundWithoutQueryingBackground() {
+
+        when(patientRepository.existsById(5L)).thenReturn(false);
+
+        assertThatThrownBy(() -> patientService.getBackground(5L))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Paciente no encontrado");
+
+        verifyNoInteractions(patientBackgroundRepository);
+    }
+
 }
