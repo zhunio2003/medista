@@ -158,8 +158,8 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientBackgroundResponse getBackground(Long patientId) {
 
-        if (!patientBackgroundRepository.existsById(patientId)) {
-            throw new ResourceNotFoundException("Paciente no encontrado");
+        if (!patientRepository.existsById(patientId)) {
+            throw new ResourceNotFoundException("Paciente no encontrado" + patientId);
         }
 
         return patientBackgroundRepository.findByPatientId(patientId)
