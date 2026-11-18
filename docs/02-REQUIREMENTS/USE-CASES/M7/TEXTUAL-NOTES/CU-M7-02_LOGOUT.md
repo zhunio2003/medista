@@ -71,4 +71,4 @@ Permite a cualquier usuario del sistema cerrar su sesión activa de forma manual
 
 ---
 
-*MEDISTA-V2 — Casos de Uso M7 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA-V2 — Casos de Uso M7 v1.0 — Instituto de Educación Superior — Abril 2026*

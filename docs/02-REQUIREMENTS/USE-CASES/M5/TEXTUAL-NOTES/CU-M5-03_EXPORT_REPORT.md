@@ -8,7 +8,7 @@
 
 ## Descripción
 
-Permite al Decano exportar los datos estadísticos del dashboard en formato PDF institucional o Excel para su análisis y presentación ante autoridades del Instituto Superior Universitario TEC Azuay.
+Permite al Decano exportar los datos estadísticos del dashboard en formato PDF institucional o Excel para su análisis y presentación ante autoridades de la institución.
 
 ---
 
@@ -66,11 +66,11 @@ Permite al Decano exportar los datos estadísticos del dashboard en formato PDF 
 | ID | Regla |
 |---|---|
 | RN-01 | El reporte exportado contiene únicamente datos estadísticos agregados — nunca expedientes clínicos individuales de ningún estudiante. |
-| RN-02 | El PDF exportado debe tener formato institucional del Instituto Superior Universitario TEC Azuay, apto para presentación ante autoridades. |
+| RN-02 | El PDF exportado debe tener formato institucional, apto para presentación ante autoridades. |
 | RN-03 | El Excel exportado debe tener estructura organizada con encabezados claros para facilitar el análisis externo de los datos. |
 | RN-04 | El reporte refleja los datos con los filtros activos al momento de la exportación — si no hay filtros activos, incluye todos los datos disponibles. |
 | RN-05 | Solo el Decano puede exportar reportes desde el dashboard estadístico. |
 
 ---
 
-*MEDISTA — Casos de Uso M5 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M5 v1.0 — Instituto de Educación Superior — Abril 2026*

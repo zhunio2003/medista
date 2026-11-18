@@ -1,7 +1,7 @@
 # Estructura de Paquetes del Backend — MEDISTA
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
+**Institución:** Instituto de Educación Superior  
 **Versión:** 1.0  
 **Fecha:** 6 de mayo de 2026  
 **Fase:** Fase 2 — Diseño del Sistema (Diseño de Bajo Nivel)  
@@ -50,9 +50,9 @@ El documento asume que el lector está familiarizado con los siguientes entregab
 
 ### 2.1 Group ID y Paquete Raíz
 
-El identificador de grupo Maven del proyecto es `ec.tecazuay.medista`. Este valor sigue la convención de dominio invertido recomendada por Oracle, utilizando el dominio educativo de Ecuador (`ec`) seguido del identificador institucional (`tecazuay`) y el nombre del producto (`medista`).
+El identificador de grupo Maven del proyecto es `ec.insti.medista`. Este valor sigue la convención de dominio invertido recomendada por Oracle, utilizando el dominio educativo de Ecuador (`ec`) seguido del identificador institucional genérico (`insti`) y el nombre del producto (`medista`).
 
-Todo el código fuente del backend reside bajo el paquete raíz `ec.tecazuay.medista`. La clase principal de arranque, `MedistaApplication`, se ubica directamente en este paquete raíz para que Spring Boot detecte automáticamente todos los componentes mediante *component scanning*.
+Todo el código fuente del backend reside bajo el paquete raíz `ec.insti.medista`. La clase principal de arranque, `MedistaApplication`, se ubica directamente en este paquete raíz para que Spring Boot detecte automáticamente todos los componentes mediante *component scanning*.
 
 ### 2.2 Convención de Nombrado de Clases
 
@@ -127,7 +127,7 @@ Cada módulo del sistema sigue exactamente la misma estructura interna de dos zo
 
 La regla del aislamiento del backend se enuncia formalmente así:
 
-> Ninguna clase fuera del módulo `X` puede importar directa o transitivamente ningún tipo declarado bajo el paquete `ec.tecazuay.medista.X.internal`. Las únicas dependencias inter-módulo permitidas son hacia tipos declarados bajo `ec.tecazuay.medista.X.api`.
+> Ninguna clase fuera del módulo `X` puede importar directa o transitivamente ningún tipo declarado bajo el paquete `ec.insti.medista.X.internal`. Las únicas dependencias inter-módulo permitidas son hacia tipos declarados bajo `ec.insti.medista.X.api`.
 
 Esta regla es absoluta y se aplica a entidades JPA, repositorios, implementaciones de service, controladores, mappers y DTOs de petición. Ningún módulo accede a la base de datos de otro módulo a través de su repositorio: lo hace invocando al `XxxService` expuesto en su `api/`.
 
@@ -146,7 +146,7 @@ La regla de selección entre ambos mecanismos es la siguiente: si el flujo requi
 La regla del aislamiento se *enforce* mediante una batería de tests de **ArchUnit** que se ejecutan como parte del pipeline de build estándar de Maven. La violación de cualquier regla detiene el build y previene el merge.
 
 ```java
-@AnalyzeClasses(packages = "ec.tecazuay.medista")
+@AnalyzeClasses(packages = "ec.insti.medista")
 class PackageStructureTest {
 
     @ArchTest
@@ -154,7 +154,7 @@ class PackageStructureTest {
         noClasses()
             .that().resideInAPackage("..internal..")
             .should().dependOnClassesThat()
-            .resideInAPackage("ec.tecazuay.medista.(*)..internal..")
+            .resideInAPackage("ec.insti.medista.(*)..internal..")
             .as("internal de un módulo no debe ser importado desde otro módulo");
 
     @ArchTest
@@ -189,7 +189,7 @@ backend/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── ec/tecazuay/medista/
+│   │   │   └── ec/insti/medista/
 │   │   │       ├── MedistaApplication.java
 │   │   │       │
 │   │   │       ├── config/                  ← Configuración Spring transversal
@@ -214,7 +214,7 @@ backend/
 │   │       └── static/
 │   │
 │   └── test/
-│       ├── java/ec/tecazuay/medista/
+│       ├── java/ec/insti/medista/
 │       │   ├── architecture/                ← Tests ArchUnit (enforce api/internal)
 │       │   ├── patient/                     ← Tests unitarios e integración por módulo
 │       │   ├── medicalattendance/
@@ -223,7 +223,7 @@ backend/
 │           └── application-test.yml
 ```
 
-El directorio del backend contiene tres bloques bajo `src/main/java/ec/tecazuay/medista/`: la clase de arranque `MedistaApplication`, los tres paquetes transversales (`config/`, `common/`, `exception/`) y los ocho paquetes de módulos funcionales. Los paquetes están organizados en orden de dependencia conceptual: primero los transversales que todos los módulos consumen, después los módulos en orden de aparición en el sistema.
+El directorio del backend contiene tres bloques bajo `src/main/java/ec/insti/medista/`: la clase de arranque `MedistaApplication`, los tres paquetes transversales (`config/`, `common/`, `exception/`) y los ocho paquetes de módulos funcionales. Los paquetes están organizados en orden de dependencia conceptual: primero los transversales que todos los módulos consumen, después los módulos en orden de aparición en el sistema.
 
 El directorio `src/main/resources/` contiene la configuración por perfil de Spring Boot, los scripts de migración Flyway, las plantillas JasperReports y los recursos estáticos servidos por la aplicación. El directorio `src/test/` espeja la estructura de paquetes de `main` y añade el paquete `architecture/` con los tests de ArchUnit.
 
@@ -981,10 +981,10 @@ La regla fundamental que preserva la ausencia de ciclos es la siguiente: **un m�
 
 ## 9. Estructura de Tests
 
-El directorio `src/test/java/ec/tecazuay/medista/` espeja la estructura de paquetes de `src/main/java`, con un sub-paquete dedicado por módulo y un sub-paquete adicional `architecture/` que contiene los tests de ArchUnit que enforzan las reglas estructurales documentadas en este documento.
+El directorio `src/test/java/ec/insti/medista/` espeja la estructura de paquetes de `src/main/java`, con un sub-paquete dedicado por módulo y un sub-paquete adicional `architecture/` que contiene los tests de ArchUnit que enforzan las reglas estructurales documentadas en este documento.
 
 ```
-src/test/java/ec/tecazuay/medista/
+src/test/java/ec/insti/medista/
 ├── architecture/
 │   ├── PackageStructureTest.java       ← enforce api/internal aislamiento
 │   ├── LayerDependencyTest.java        ← enforce capas (controller→service→repository)

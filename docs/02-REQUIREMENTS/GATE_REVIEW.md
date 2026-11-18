@@ -30,7 +30,7 @@
 
 **Resultado:** ✅ APROBADO
 
-La Dra. de la institucion revisó los entregables de la Fase 1 y confirmó que los requisitos documentados reflejan correctamente el proceso médico actual del Departamento Médico del Instituto Superior Universitario TEC Azuay, incluyendo el flujo de atención, los datos recopilados en el formulario físico, y las necesidades operativas del departamento.
+La Dra. de la institucion revisó los entregables de la Fase 1 y confirmó que los requisitos documentados reflejan correctamente el proceso médico actual del Departamento Médico de la institución, incluyendo el flujo de atención, los datos recopilados en el formulario físico, y las necesidades operativas del departamento.
 
 ---
 
@@ -38,7 +38,7 @@ La Dra. de la institucion revisó los entregables de la Fase 1 y confirmó que l
 
 ## 4. Observaciones
 
-Durante la revisión, la Dra.  destacó el requisito RF-M7-03 referente a la validación del dominio institucional `@tecazuay.edu.ec` para todos los usuarios del sistema. Este aspecto no había sido discutido en reuniones anteriores y fue identificado directamente en la revisión de la ERS. La doctora no presentó objeciones al respecto y reconoció su importancia como medida de seguridad para garantizar que únicamente 
+Durante la revisión, la Dra.  destacó el requisito RF-M7-03 referente a la validación del dominio institucional `@institucion.edu.ec` para todos los usuarios del sistema. Este aspecto no había sido discutido en reuniones anteriores y fue identificado directamente en la revisión de la ERS. La doctora no presentó objeciones al respecto y reconoció su importancia como medida de seguridad para garantizar que únicamente 
 personal y estudiantes de la institución puedan acceder al sistema.
 
 No se realizaron modificaciones a los requisitos como resultado de esta observación.

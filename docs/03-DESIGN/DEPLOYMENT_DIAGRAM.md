@@ -1,7 +1,7 @@
 # Diagrama de Despliegue — MEDISTA
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
+**Institución:** Instituto de Educación Superior  
 **Versión:** 1.0  
 **Fecha:** 5 de mayo de 2026  
 **Fase:** Fase 2 — Diseño del Sistema
@@ -48,7 +48,7 @@ El diagrama visual de despliegue se encuentra en el archivo `docs/02-DESIGN/diag
 
 | # | Nodo | Tipo | Ubicación | Descripción |
 |---|------|------|-----------|-------------|
-| N1 | Servidor Local del Instituto | Servidor físico on-premise | Instalaciones del TEC Azuay | Ejecuta la totalidad de los contenedores Docker del sistema |
+| N1 | Servidor Local del Instituto | Servidor físico on-premise | Instalaciones de la institución | Ejecuta la totalidad de los contenedores Docker del sistema |
 | N2 | PC / Laptop Institucional | Dispositivo cliente | Red LAN del instituto | Equipo de escritorio o portátil desde el que opera el personal institucional |
 | N3 | Dispositivo Android del Estudiante | Dispositivo móvil | Red LAN o red móvil (internet) | Smartphone Android del estudiante con la app instalada |
 | N4 | Infraestructura Google (FCM) | Servicio en la nube externo | Servidores de Google (internet) | Servicio de entrega de notificaciones push gestionado por Google |
@@ -59,7 +59,7 @@ El diagrama visual de despliegue se encuentra en el archivo `docs/02-DESIGN/diag
 
 ### 3.1 Servidor Local del Instituto
 
-Servidor físico administrado por el departamento de TI del Instituto Superior Universitario TEC Azuay. Constituye el nodo central del sistema: aloja y ejecuta todos los contenedores Docker que componen la infraestructura interna de MEDISTA.
+Servidor físico administrado por el departamento de TI de la institución. Constituye el nodo central del sistema: aloja y ejecuta todos los contenedores Docker que componen la infraestructura interna de MEDISTA.
 
 El servidor está conectado a la red LAN institucional y es accesible desde los equipos del instituto a través del nombre de host o dirección IP asignada internamente. El único puerto expuesto a la red LAN es el 443 (HTTPS), a través del contenedor Nginx. Todos los demás puertos de los servicios internos están restringidos a la red Docker privada.
 

@@ -79,4 +79,4 @@ Permite al Administrador del Sistema configurar los umbrales numéricos que cont
 
 ---
 
-*MEDISTA — Casos de Uso M6 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M6 v1.0 — Instituto de Educación Superior — Abril 2026*

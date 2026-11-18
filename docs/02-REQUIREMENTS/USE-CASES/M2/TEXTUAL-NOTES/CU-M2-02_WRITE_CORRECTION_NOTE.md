@@ -85,4 +85,4 @@ Permite al médico agregar una nota de corrección sobre una atención médica y
 
 ---
 
-*MEDISTA — Casos de Uso M2 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M2 v1.0 — Instituto de Educación Superior — Abril 2026*

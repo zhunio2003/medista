@@ -90,4 +90,4 @@ Permite al Administrador del Sistema gestionar los catálogos institucionales de
 
 ---
 
-*MEDISTA — Casos de Uso M8 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M8 v1.0 — Instituto de Educación Superior — Abril 2026*

@@ -3,7 +3,7 @@
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
 **Versión:** 1.0  
 **Autor:** Miguel Angel Zhunio Remache  
-**Institución:** Instituto Superior Universitario TEC Azuay · Cuenca, Ecuador  
+**Institución:** Instituto de Educación Superior  
 **Fecha:** Mayo 2026  
 
 ---
@@ -13,7 +13,7 @@
 MEDISTA es un sistema de gestión médica institucional dirigido a tres perfiles distintos: la médica del departamento (usuaria principal), el decano (acceso estadístico) y los estudiantes (consulta de historial). El sistema visual debe reflejar los valores de un entorno clínico real: **confianza, claridad y seriedad profesional**.
 
 - **Light mode como base:** Un entorno médico requiere máxima legibilidad. El fondo claro reduce la fatiga visual en jornadas largas y transmite limpieza e higiene, valores inherentes al contexto de salud.
-- **Azul marino institucional como primario:** Tomado directamente del logo de TEC Azuay. Transmite autoridad, confianza y seriedad. Es el color que el usuario ya asocia con la institución.
+- **Azul marino institucional como primario:** Tomado directamente del logo institucional. Transmite autoridad, confianza y seriedad. Es el color que el usuario ya asocia con la institución.
 - **Amarillo dorado como acento:** También extraído del logo institucional. Se usa exclusivamente en badges, indicadores de estado y elementos de énfasis puntual. Nunca como fondo de componentes grandes.
 - **Tipografía Inter:** Sans-serif diseñada específicamente para interfaces digitales. Excelente legibilidad en tamaños pequeños, ideal para formularios médicos con mucha densidad de información.
 - **Accesibilidad primero:** Todos los colores de texto sobre fondo cumplen mínimo WCAG AA (4.5:1). Los colores semánticos (éxito, error, advertencia) son reconocibles para personas con daltonismo de tipo común por usar variaciones de matiz además de luminosidad.
@@ -512,4 +512,4 @@ La app es de solo lectura para estudiantes. El patrón de pantalla principal sig
 ---
 
 *MEDISTA — Design System v1.0*  
-*Instituto Superior Universitario TEC Azuay — Mayo 2026*
+*Instituto de Educación Superior — Mayo 2026*

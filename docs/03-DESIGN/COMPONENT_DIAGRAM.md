@@ -1,7 +1,7 @@
 # Diagrama de Componentes — MEDISTA
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
+**Institución:** Instituto de Educación Superior  
 **Versión:** 1.0  
 **Fecha:** 4 de mayo de 2026  
 **Fase:** Fase 2 — Diseño del Sistema

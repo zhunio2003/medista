@@ -8,7 +8,7 @@
 
 ## Descripción
 
-Permite al médico descargar el documento PDF de una referencia médica con formato idéntico al formulario físico actual del Departamento Médico del Instituto Superior Universitario TEC Azuay.
+Permite al médico descargar el documento PDF de una referencia médica con formato idéntico al formulario físico actual del Departamento Médico de la institución.
 
 ---
 
@@ -69,4 +69,4 @@ Permite al médico descargar el documento PDF de una referencia médica con form
 
 ---
 
-*MEDISTA — Casos de Uso M3 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M3 v1.0 — Instituto de Educación Superior — Abril 2026*

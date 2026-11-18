@@ -8,7 +8,7 @@
 
 ## Descripción
 
-Permite al estudiante consultar desde la aplicación móvil un resumen simplificado de sus propias atenciones médicas registradas en el Departamento Médico del Instituto Superior Universitario TEC Azuay.
+Permite al estudiante consultar desde la aplicación móvil un resumen simplificado de sus propias atenciones médicas registradas en el Departamento Médico de la institución.
 
 ---
 
@@ -26,7 +26,7 @@ Permite al estudiante consultar desde la aplicación móvil un resumen simplific
 
 ## Precondiciones
 
-1. El estudiante tiene sesión activa en la aplicación móvil autenticado con correo institucional @tecazuay.edu.ec.
+1. El estudiante tiene sesión activa en la aplicación móvil autenticado con correo institucional @institucion.edu.ec.
 2. El estudiante tiene al menos una atención médica registrada en el sistema.
 
 ---
@@ -67,8 +67,8 @@ Permite al estudiante consultar desde la aplicación móvil un resumen simplific
 | RN-01 | El estudiante solo puede visualizar sus propias atenciones médicas — el sistema nunca expone datos de otros estudiantes. |
 | RN-02 | La vista simplificada no expone signos vitales, examen físico por sistemas, datos obstétricos ni notas de corrección — solo fecha, motivo de consulta, diagnóstico y tratamiento. |
 | RN-03 | Es de solo lectura — el estudiante no puede crear, modificar ni eliminar ningún dato desde esta vista. |
-| RN-04 | Esta funcionalidad es accesible exclusivamente desde la aplicación móvil con autenticación por correo institucional @tecazuay.edu.ec. |
+| RN-04 | Esta funcionalidad es accesible exclusivamente desde la aplicación móvil con autenticación por correo institucional @institucion.edu.ec. |
 
 ---
 
-*MEDISTA-V2 — Casos de Uso M4 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA-V2 — Casos de Uso M4 v1.0 — Instituto de Educación Superior — Abril 2026*

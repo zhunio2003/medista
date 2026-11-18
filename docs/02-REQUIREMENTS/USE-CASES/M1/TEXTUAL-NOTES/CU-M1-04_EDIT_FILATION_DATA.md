@@ -87,4 +87,4 @@ Permite al médico actualizar los datos de filiación de un paciente ya registra
 
 ---
 
-*MEDISTA-V2 — Casos de Uso M1 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA-V2 — Casos de Uso M1 v1.0 — Instituto de Educación Superior — Abril 2026*

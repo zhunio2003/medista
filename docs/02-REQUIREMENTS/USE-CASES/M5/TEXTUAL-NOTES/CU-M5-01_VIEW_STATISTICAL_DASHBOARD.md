@@ -70,4 +70,4 @@ Permite al Decano visualizar los indicadores estadísticos agregados de las aten
 
 ---
 
-*MEDISTA — Casos de Uso M5 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M5 v1.0 — Instituto de Educación Superior — Abril 2026*

@@ -15,7 +15,7 @@
 
 **Proyecto:** MEDISTA
 
-**Departamento:** Departamento Médico — Instituto Superior Universitario TEC Azuay
+**Departamento:** Departamento Médico — Instituto de Educación Superior
 
 **Estándar base:** IEEE 830 (adaptado)
 
@@ -79,11 +79,11 @@
 ### 1.1 Propósito
 
 El presente documento constituye la Especificación de Requisitos de Software (ERS) del sistema MEDISTA. Su propósito es definir de forma completa, precisa y verificable los requisitos funcionales y no funcionales del sistema, estableciendo el contrato formal entre el equipo de desarrollo y los stakeholders de la institución respecto a qué debe hacer el sistema, bajo qué condiciones y con qué restricciones.
-Este documento está dirigido a la médico del Departamento Médico del Instituto Superior Universitario TEC Azuay, al Decano de la institución, y al desarrollador responsable del sistema. Sirve como referencia base para las fases de diseño, implementación, verificación y aceptación del proyecto.
+Este documento está dirigido a la médico del Departamento Médico de la institución, al Decano de la institución, y al desarrollador responsable del sistema. Sirve como referencia base para las fases de diseño, implementación, verificación y aceptación del proyecto.
 
 ### 1.2 Alcance
 
-**MEDISTA** es un sistema de gestión de atención médica web y móvil desarrollado para el Departamento Médico del Instituto Superior Universitario TEC Azuay. El sistema digitaliza completamente el proceso de atención clínica actualmente gestionado en papel, permitiendo el registro centralizado de datos de filiación y datos clínicos de los estudiantes, el seguimiento del historial médico por paciente, la generación de referencias médicas en formato institucional, y el análisis estadístico de las atenciones para apoyar la toma de decisiones y la detección temprana de tendencias epidemiológicas.
+**MEDISTA** es un sistema de gestión de atención médica web y móvil desarrollado para el Departamento Médico de la institución. El sistema digitaliza completamente el proceso de atención clínica actualmente gestionado en papel, permitiendo el registro centralizado de datos de filiación y datos clínicos de los estudiantes, el seguimiento del historial médico por paciente, la generación de referencias médicas en formato institucional, y el análisis estadístico de las atenciones para apoyar la toma de decisiones y la detección temprana de tendencias epidemiológicas.
 
 **MEDISTA** se limita exclusivamente a la gestión de atenciones médicas del departamento. Quedan fuera del alcance de la presente versión: el módulo de agenda y citas médicas, la gestión de inventario de medicamentos, la integración con sistemas externos del Ministerio de Salud Pública o del IESS, la gestión financiera o de cobros, y cualquier otra área del departamento médico no relacionada directamente con el proceso de atención clínica.
 
@@ -94,8 +94,8 @@ Este documento está dirigido a la médico del Departamento Médico del Institut
 | Término | Definición |
 |---------|------------|
 | ERS / SRS | Especificación de Requisitos de Software (*Software Requirements Specification*). Documento formal que define qué debe hacer un sistema de software. |
-| MEDISTA-V2 | Sistema de Gestión de Atención Médica, versión 2. Sistema desarrollado para el Departamento Médico del Instituto Superior Universitario TEC Azuay. |
-| TEC Azuay | Instituto Superior Universitario TEC Azuay. Institución educativa de nivel superior en Cuenca, Ecuador. |
+| MEDISTA-V2 | Sistema de Gestión de Atención Médica, versión 2. Sistema desarrollado para el Departamento Médico de la institución. |
+| Institución | Instituto de educación superior para el cual se desarrolla el sistema. |
 | IEEE 830 | Estándar internacional del Instituto de Ingenieros Eléctricos y Electrónicos para la elaboración de especificaciones de requisitos de software. |
  
 #### Acrónimos Médicos y Clínicos
@@ -159,7 +159,7 @@ Este documento está dirigido a la médico del Departamento Médico del Institut
 | MEDISTA — Visión del Sistema v1.0 | Define los módulos, roles, flujos de operación y reglas de negocio del sistema. Base funcional de este ERS. |
 | MEDISTA — Arquitectura Técnica v1.0 | Define el stack tecnológico completo y las justificaciones de cada decisión técnica. |
 | MEDISTA — Estudio de Factibilidad v1.0 | Evalúa la viabilidad técnica, operativa, económica, legal y temporal del proyecto. |
-| Formulario de Atención Médica — Departamento Médico TEC Azuay | Formulario físico actual diseñado por la médico de la institución. Referencia directa para la digitalización del Módulo de Atención Médica y la generación de PDFs institucionales. |
+| Formulario de Atención Médica — Departamento Médico institucional | Formulario físico actual diseñado por la médico de la institución. Referencia directa para la digitalización del Módulo de Atención Médica y la generación de PDFs institucionales. |
 
 ### 1.5 Visión General del Documento
 
@@ -171,7 +171,7 @@ El presente documento se organiza en siete secciones. La Sección 2 presenta la 
 
 ### 2.1 Perspectiva del Producto
 
-MEDISTA es un sistema nuevo que reemplaza completamente el proceso manual de atención médica del Departamento Médico del Instituto Superior Universitario TEC Azuay, actualmente gestionado mediante formularios en papel. El sistema se despliega en el servidor local de la institución y opera de forma autónoma, sin integrarse ni compartir datos con el sistema académico institucional ni con ningún sistema externo en la presente versión.
+MEDISTA es un sistema nuevo que reemplaza completamente el proceso manual de atención médica del Departamento Médico de la institución, actualmente gestionado mediante formularios en papel. El sistema se despliega en el servidor local de la institución y opera de forma autónoma, sin integrarse ni compartir datos con el sistema académico institucional ni con ningún sistema externo en la presente versión.
  
 El sistema está compuesto por tres componentes de software independientes que operan de forma coordinada: una aplicación web para el personal médico y administrativo, una aplicación móvil para los estudiantes, y un backend centralizado que gestiona la lógica de negocio, la base de datos y las comunicaciones entre componentes. Toda la información clínica generada por el sistema reside exclusivamente en la base de datos institucional, separada físicamente de cualquier otro sistema del instituto. 
 
@@ -202,8 +202,8 @@ Las siguientes restricciones condicionan el diseño e implementación del sistem
 |---|-------------|-------------|
 | RG-01 | Cumplimiento LOPDP | El sistema maneja datos de salud clasificados como datos sensibles bajo la Ley Orgánica de Protección de Datos Personales del Ecuador. Todo tratamiento, almacenamiento y acceso a estos datos debe cumplir con las disposiciones de esta ley, incluyendo cifrado, control de acceso y auditoría. |
 | RG-02 | Cumplimiento Acuerdo MSP No. 00000125 | Los registros clínicos electrónicos deben cumplir con los requisitos de integridad, trazabilidad, confidencialidad e inmutabilidad establecidos por el Ministerio de Salud Pública del Ecuador. Las atenciones médicas no pueden eliminarse físicamente del sistema. |
-| RG-03 | Despliegue en infraestructura local | El sistema debe desplegarse exclusivamente en el servidor local del Instituto Superior Universitario TEC Azuay. No se permite el uso de servicios de nube pública para el almacenamiento de datos clínicos en la presente versión. |
-| RG-04 | Autenticación de estudiantes por dominio institucional | Los estudiantes solo pueden autenticarse en la aplicación móvil mediante una dirección de correo electrónico con dominio @tecazuay.edu.ec. Cualquier otro dominio debe ser rechazado automáticamente por el sistema. |
+| RG-03 | Despliegue en infraestructura local | El sistema debe desplegarse exclusivamente en el servidor local de la institución. No se permite el uso de servicios de nube pública para el almacenamiento de datos clínicos en la presente versión. |
+| RG-04 | Autenticación de estudiantes por dominio institucional | Los estudiantes solo pueden autenticarse en la aplicación móvil mediante una dirección de correo electrónico con dominio @institucion.edu.ec. Cualquier otro dominio debe ser rechazado automáticamente por el sistema. |
 | RG-05 | Separación de datos por rol | El Decano y el Administrador del Sistema no tienen acceso a expedientes clínicos individuales. El acceso a datos clínicos detallados está restringido exclusivamente al rol Médico. |
 | RG-06 | Registro de estudiantes a cargo del médico | Los estudiantes no pueden autoregistrarse en el sistema. El médico es el único responsable de crear el perfil de un estudiante en su primera visita al departamento. |
 | RG-07 | Stack tecnológico definido | El sistema debe desarrollarse utilizando el stack tecnológico establecido en el documento MEDISTA-V2 — Arquitectura Técnica v1.0. No se permite la incorporación de tecnologías fuera de este stack sin una revisión formal del documento de arquitectura. |
@@ -225,10 +225,10 @@ Las siguientes suposiciones se consideran verdaderas para el desarrollo e implem
  
 | # | Suposición |
 |---|------------|
-| SI-01 | El Instituto Superior Universitario TEC Azuay dispone de un servidor local con las especificaciones mínimas requeridas para el despliegue del sistema. |
+| SI-01 | El Instituto de Educación Superior dispone de un servidor local con las especificaciones mínimas requeridas para el despliegue del sistema. |
 | SI-02 | El área de tecnología de la institución otorga al equipo de desarrollo acceso al servidor para el despliegue y configuración inicial del sistema. |
 | SI-03 | El mantenimiento técnico del servidor — actualizaciones de sistema operativo, disponibilidad de red y respaldo de hardware — es responsabilidad del área de tecnología de la institución, no del desarrollador. |
-| SI-04 | Todos los usuarios del sistema — Médico, Decano, Administrador del Sistema y Estudiante — cuentan con una dirección de correo electrónico institucional activa bajo el dominio @tecazuay.edu.ecs. |
+| SI-04 | Todos los usuarios del sistema — Médico, Decano, Administrador del Sistema y Estudiante — cuentan con una dirección de correo electrónico institucional activa bajo el dominio @institucion.edu.ec. |
  
 #### Suposiciones de Negocio
  
@@ -236,7 +236,7 @@ Las siguientes suposiciones se consideran verdaderas para el desarrollo e implem
 |---|------------|
 | SN-01 | El médico es el único responsable de generar datos clínicos en el sistema. Ningún otro rol puede crear ni modificar atenciones médicas, referencias o historiales clínicos. |
 | SN-02 | El médico es el único responsable de registrar a los estudiantes en el sistema durante su primera visita al departamento. Los estudiantes no tienen capacidad de autoregistro. |
-| SN-03 | El dominio de correo institucional @tecazuay.edu.ec permanece vigente y sin cambios durante el ciclo de vida del sistema. Cualquier cambio de dominio requerirá una actualización formal de la configuración del sistema. |
+| SN-03 | El dominio de correo institucional @institucion.edu.ec permanece vigente y sin cambios durante el ciclo de vida del sistema. Cualquier cambio de dominio requerirá una actualización formal de la configuración del sistema. |
 | SN-04 | Durante el período de implementación inicial, el Departamento Médico opera con un único médico. Si se incorporan más médicos en el futuro, el sistema está diseñado para soportarlo sin cambios estructurales. |
  
 ---
@@ -288,12 +288,12 @@ Este módulo gestiona las derivaciones médicas cuando el paciente necesita ser 
 | ID | Nombre | Descripción | Prioridad |
 |----|--------|-------------|-----------|
 | RF-M3-01 | Creación de referencia desde atención médica | El sistema debe permitir al médico generar una referencia médica únicamente desde una atención médica existente. No es posible crear una referencia médica de forma independiente. | Alta |
-| RF-M3-02 | Precarga automática de datos | Al iniciar la creación de una referencia, el sistema debe precargar automáticamente los siguientes campos desde la atención médica y la sesión activa: nombre de la institución (Instituto Superior Universitario TEC Azuay), número de cédula del paciente, servicio (Departamento Médico), nombre del profesional y código MSP. El médico no debe ingresar estos datos manualmente. | Alta |
+| RF-M3-02 | Precarga automática de datos | Al iniciar la creación de una referencia, el sistema debe precargar automáticamente los siguientes campos desde la atención médica y la sesión activa: nombre oficial de la institución, número de cédula del paciente, servicio (Departamento Médico), nombre del profesional y código MSP. El médico no debe ingresar estos datos manualmente. | Alta |
 | RF-M3-03 | Registro de datos del establecimiento destino | El sistema debe permitir al médico completar los siguientes campos del establecimiento de salud al que se deriva al paciente: entidad del sistema, nombre del establecimiento de salud, servicio y especialidad. | Alta |
 | RF-M3-04 | Selección de motivo de referencia | El sistema debe permitir al médico seleccionar el motivo de la referencia entre las siguientes tres opciones predefinidas: Limitada capacidad resolutiva, Falta de profesional, u Otros. | Alta |
 | RF-M3-05 | Registro de resumen clínico y hallazgos | El sistema debe permitir al médico ingresar mediante texto libre el resumen del cuadro clínico del paciente y los hallazgos relevantes que justifican la derivación. | Alta |
 | RF-M3-06 | Registro de diagnósticos con CIE-10 | El sistema debe permitir registrar hasta dos diagnósticos en la referencia médica, cada uno con su código CIE-10 y clasificación como Presuntivo o Definitivo. El médico puede importar los diagnósticos directamente desde la atención médica vinculada o buscarlos nuevamente en el catálogo CIE-10. | Alta |
-| RF-M3-07 | Generación de PDF institucional | El sistema debe generar un documento PDF de la referencia médica con formato idéntico al formulario de referencia físico actual del Departamento Médico del Instituto Superior Universitario TEC Azuay, incluyendo el logo institucional y todos los campos definidos en el formulario oficial. | Alta |
+| RF-M3-07 | Generación de PDF institucional | El sistema debe generar un documento PDF de la referencia médica con formato idéntico al formulario de referencia físico actual del Departamento Médico de la institución, incluyendo el logo institucional y todos los campos definidos en el formulario oficial. | Alta |
 | RF-M3-08 | Notificación automática al generar referencia | Al guardar una referencia médica, el sistema debe notificar automáticamente al estudiante referido con los detalles del establecimiento de salud destino, y al Decano con un aviso de que se ha generado una nueva referencia. | Media |
 
 ### 3.4 M4 — Historial Clínico
@@ -320,7 +320,7 @@ Este módulo proporciona inteligencia de datos al Decano y al médico para la to
 | RF-M5-01 | Dashboard interactivo en tiempo real | El sistema debe mostrar un dashboard interactivo con métricas actualizadas en tiempo real, incluyendo: total de atenciones por período, enfermedades más frecuentes, distribución de atenciones por carrera y ciclo, distribución por género y grupo etario, promedio de IMC general y por carrera, cantidad de referencias médicas generadas, picos de demanda por día o semana, y tasa de recurrencia de pacientes. | Alta |
 | RF-M5-02 | Detección de anomalías e incrementos inusuales | El sistema debe identificar y destacar visualmente en el dashboard incrementos inusuales en el volumen de atenciones o en la frecuencia de un diagnóstico específico, alertando sobre posibles anomalías epidemiológicas que requieran atención institucional. | Alta |
 | RF-M5-03 | Filtros inteligentes cruzados | El sistema debe permitir al Decano aplicar múltiples filtros de forma simultánea y combinada sobre las métricas del dashboard: por carrera, ciclo, período o semestre, género, rango de edad, diagnóstico CIE-10 y tipo de atención. El sistema debe permitir además comparar los resultados filtrados contra períodos anteriores. | Alta |
-| RF-M5-04 | Exportación de reportes a PDF institucional | El sistema debe permitir exportar las métricas visualizadas en el dashboard a un documento PDF con formato institucional del Instituto Superior Universitario TEC Azuay, apto para presentación ante autoridades. | Alta |
+| RF-M5-04 | Exportación de reportes a PDF institucional | El sistema debe permitir exportar las métricas visualizadas en el dashboard a un documento PDF con formato institucional, apto para presentación ante autoridades. | Alta |
 | RF-M5-05 | Exportación de datos a Excel | El sistema debe permitir exportar los datos estadísticos a un archivo Excel (.xlsx) con formato estructurado, permitiendo al Decano manipular y analizar los datos fuera del sistema. | Media |
 | RF-M5-06 | Reportes automáticos periódicos | El sistema debe generar y enviar automáticamente reportes de actividad del departamento al Decano por correo electrónico en los intervalos configurados: semanal, mensual o semestral. El intervalo debe ser configurable por el Administrador del Sistema. | Media |
 | RF-M5-07 | Restricción a datos agregados | El Decano y el médico acceden exclusivamente a datos estadísticos agregados desde este módulo. Ningún indicador, gráfica ni reporte debe permitir identificar o acceder al expediente clínico de un estudiante individual. | Alta |
@@ -352,7 +352,7 @@ Este módulo garantiza la protección de los datos clínicos y la trazabilidad c
 |----|--------|-------------|-----------|
 | RF-M7-01 | Autenticación mediante JWT | El sistema debe implementar autenticación basada en JSON Web Tokens. Los tokens de acceso deben tener una duración máxima de 15 minutos. Los refresh tokens deben tener una duración de 7 días y permitir renovar el token de acceso sin requerir que el usuario inicie sesión nuevamente. | Alta |
 | RF-M7-02 | Cifrado de contraseñas con BCrypt | Las contraseñas de los usuarios Médico, Decano y Administrador del Sistema deben almacenarse en la base de datos cifradas mediante el algoritmo BCrypt con factor de trabajo 12. Ninguna contraseña debe almacenarse en texto plano. | Alta |
-| RF-M7-03 | Validación de dominio institucional | El sistema debe validar que todos los usuarios se autentiquen exclusivamente con una dirección de correo electrónico bajo el dominio @tecazuay.edu.ec. Cualquier intento de autenticación con un dominio diferente debe ser rechazado automáticamente. | Alta |
+| RF-M7-03 | Validación de dominio institucional | El sistema debe validar que todos los usuarios se autentiquen exclusivamente con una dirección de correo electrónico bajo el dominio @institucion.edu.ec. Cualquier intento de autenticación con un dominio diferente debe ser rechazado automáticamente. | Alta |
 | RF-M7-04 | Expiración de sesión por inactividad | El sistema debe cerrar automáticamente la sesión de cualquier usuario que permanezca inactivo durante un período configurable, requiriendo que el usuario se autentique nuevamente para continuar. | Alta |
 | RF-M7-05 | Control de acceso por roles | El sistema debe garantizar que cada rol acceda únicamente a los recursos y funcionalidades que le corresponden. Ningún endpoint del sistema debe ser accesible sin autenticación válida. Un usuario autenticado no puede acceder a recursos de un rol diferente al suyo. | Alta |
 | RF-M7-06 | Cifrado de datos sensibles en reposo | Los datos clínicos sensibles almacenados en la base de datos — incluyendo diagnósticos, antecedentes médicos y datos obstétricos — deben estar cifrados mediante AES-256 a nivel de columna. | Alta |
@@ -370,7 +370,7 @@ Este módulo permite configurar y mantener el sistema en operación. Es accesibl
 |----|--------|-------------|-----------|
 | RF-M8-01 | Gestión de usuarios | El sistema debe permitir al Administrador crear, editar y desactivar cuentas de usuarios para los roles Médico, Decano y Administrador del Sistema. Los usuarios no se eliminan físicamente — solo se desactivan para preservar la trazabilidad de las acciones registradas en el log de auditoría. | Alta |
 | RF-M8-02 | Gestión de roles y permisos | El sistema debe permitir al Administrador asignar y modificar el rol de cada usuario, controlando los recursos y funcionalidades a los que tiene acceso dentro del sistema. | Alta |
-| RF-M8-03 | Gestión de catálogo de carreras y ciclos | El sistema debe permitir al Administrador gestionar el catálogo de las carreras del Instituto Superior Universitario TEC Azuay y sus ciclos correspondientes, con la posibilidad de agregar, editar y desactivar registros cuando la oferta académica institucional cambie. | Media |
+| RF-M8-03 | Gestión de catálogo de carreras y ciclos | El sistema debe permitir al Administrador gestionar el catálogo de las carreras de la institución y sus ciclos correspondientes, con la posibilidad de agregar, editar y desactivar registros cuando la oferta académica institucional cambie. | Media |
 | RF-M8-04 | Gestión de catálogo de establecimientos de salud | El sistema debe permitir al Administrador gestionar el catálogo de establecimientos de salud disponibles como destino en las referencias médicas, con la posibilidad de agregar, editar y desactivar registros. | Media |
 | RF-M8-05 | Gestión del catálogo CIE-10 | El sistema debe permitir al Administrador gestionar el catálogo de códigos CIE-10, incluyendo la carga masiva inicial de los más de 14.000 códigos y la posibilidad de agregar o desactivar códigos individualmente. | Media |
 | RF-M8-06 | Configuración de umbrales de notificaciones | El sistema debe permitir al Administrador configurar los umbrales que activan las alertas automáticas del módulo de notificaciones, incluyendo: número máximo de visitas por paciente en un período, frecuencia de diagnósticos que activa alerta epidemiológica, y volumen de atenciones que activa alerta institucional. | Alta |
@@ -460,7 +460,7 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
  
 | Componente | Descripción |
 |------------|-------------|
-| Servidor institucional | Servidor local de gama media del Instituto Superior Universitario TEC Azuay, con sistema operativo Linux, mínimo 4 núcleos, 8 GB de RAM y 100 GB de almacenamiento SSD. El sistema se despliega sobre este servidor mediante Docker Compose. |
+| Servidor institucional | Servidor local de gama media de la institución, con sistema operativo Linux, mínimo 4 núcleos, 8 GB de RAM y 100 GB de almacenamiento SSD. El sistema se despliega sobre este servidor mediante Docker Compose. |
 | Computadora de escritorio o portátil | Dispositivo desde el cual el Médico, el Decano y el Administrador del Sistema acceden a la aplicación web mediante un navegador moderno. No requiere hardware especializado. |
 | Dispositivo móvil | Smartphone Android desde el cual el estudiante accede a la aplicación móvil. No se requieren especificaciones de hardware particulares más allá de las requeridas por el sistema operativo del dispositivo. |
  
@@ -494,12 +494,12 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
 | RS-01 | Tecnológica | El stack tecnológico del sistema es fijo para la presente versión. El backend debe desarrollarse en Java 21 con Spring Boot 4.0.0, el frontend web en Angular 19, la aplicación móvil en Kotlin nativo para Android, la base de datos principal en PostgreSQL 16 y la caché en Redis 7. No se permite la incorporación de tecnologías alternativas sin una revisión formal del documento de arquitectura. |
 | RS-02 | Tecnológica | El despliegue del sistema en la presente versión se realiza exclusivamente mediante Docker Compose en el servidor local del instituto. No se contempla el uso de Kubernetes ni de servicios de infraestructura en la nube pública. |
 | RS-03 | Tecnológica | Firebase Cloud Messaging es el único servicio externo permitido en el sistema, limitado exclusivamente al envío de notificaciones push a dispositivos móviles. Ningún dato clínico es transmitido a servicios externos. |
-| RS-04 | De datos | Todos los datos clínicos del sistema residen exclusivamente en el servidor local del Instituto Superior Universitario TEC Azuay. No se permite la transferencia, replicación ni exportación de datos clínicos individuales fuera de la infraestructura institucional bajo ninguna circunstancia. |
+| RS-04 | De datos | Todos los datos clínicos del sistema residen exclusivamente en el servidor local de la institución. No se permite la transferencia, replicación ni exportación de datos clínicos individuales fuera de la infraestructura institucional bajo ninguna circunstancia. |
 | RS-05 | De datos | Todos los datos clínicos almacenados en la base de datos deben estar cifrados mediante AES-256 a nivel de columna, dada la naturaleza sensible de la información de salud y las obligaciones impuestas por la LOPDP. |
 | RS-06 | De datos | Ningún registro clínico del sistema puede ser eliminado físicamente de la base de datos. Las atenciones médicas, referencias y registros de auditoría son inmutables. Los datos que deban dejarse fuera de uso se desactivan mediante un campo de estado, preservando íntegra la trazabilidad histórica. |
 | RS-07 | De datos | Los datos de filiación de los pacientes y los registros de usuarios pueden ser editados únicamente por los roles autorizados. Sin embargo, el historial de cada modificación debe quedar registrado en el log de auditoría, garantizando que ningún cambio sea anónimo ni irrastreable. |
 | RS-08 | De infraestructura | El sistema depende exclusivamente del servidor local del instituto para su operación. No existe redundancia de infraestructura en la presente versión — si el servidor no está disponible, el sistema no es accesible. Esta restricción debe ser considerada en el plan de mantenimiento institucional. |
-| RS-09 | De negocio | El acceso de estudiantes al sistema está restringido a cuentas con dirección de correo electrónico bajo el dominio @tecazuay.edu.ec. No se permite el registro ni la autenticación de estudiantes con dominios de correo externos. |
+| RS-09 | De negocio | El acceso de estudiantes al sistema está restringido a cuentas con dirección de correo electrónico bajo el dominio @institucion.edu.ec. No se permite el registro ni la autenticación de estudiantes con dominios de correo externos. |
 | RS-10 | De negocio | La generación de datos clínicos en el sistema — registro de pacientes, atenciones médicas y referencias — es responsabilidad exclusiva del rol Médico. Ningún otro rol puede crear ni modificar información clínica. |
 
 ---
@@ -508,7 +508,7 @@ El sistema provee dos tipos de interfaz gráfica según el rol del usuario:
 
 ### 7.1 Apéndice A — Formato del Formulario de Atención Médica Actual
  
-El formulario físico de atención médica del Departamento Médico del Instituto Superior Universitario TEC Azuay, diseñado por la médico de la institución, constituye la referencia visual principal para la digitalización del Módulo de Atención Médica (M2) y para la generación de PDFs institucionales de los módulos M2 y M3.
+El formulario físico de atención médica del Departamento Médico de la institución, diseñado por la médico de la institución, constituye la referencia visual principal para la digitalización del Módulo de Atención Médica (M2) y para la generación de PDFs institucionales de los módulos M2 y M3.
  
 El formulario físico está compuesto por dos páginas:
  
@@ -541,4 +541,4 @@ La siguiente tabla resume el acceso de cada rol a los módulos del sistema. Sirv
 ---
 
 *MEDISTA — Especificación de Requisitos de Software v1.0*
-*Instituto Superior Universitario TEC Azuay — Abril 2026*
+*Instituto de Educación Superior — Abril 2026*

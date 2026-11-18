@@ -1,7 +1,7 @@
 # Modelo de Datos — MEDISTA
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
+**Institución:** Instituto de Educación Superior  
 **Versión:** 1.0  
 **Fecha:** 21 Abril 2026  
 **Fase:** Fase 2 — Diseño del Sistema  
@@ -402,7 +402,7 @@ Registra las referencias médicas generadas cuando un paciente requiere atenció
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, DEFAULT now() | Marca de tiempo de creación del registro |
 | `is_active` | `BOOLEAN` | NOT NULL, DEFAULT true | Indicador de eliminación lógica |
 
-**Notas:** El nombre de la institución ("Instituto Superior Universitario TEC Azuay") y la etiqueta de servicio ("Departamento Médico") son constantes del sistema inyectadas en el momento de la generación del PDF. No se persisten en esta tabla.
+**Notas:** El nombre oficial de la institución y la etiqueta de servicio ("Departamento Médico") son constantes del sistema inyectadas en el momento de la generación del PDF. No se persisten en esta tabla.
 
 ---
 

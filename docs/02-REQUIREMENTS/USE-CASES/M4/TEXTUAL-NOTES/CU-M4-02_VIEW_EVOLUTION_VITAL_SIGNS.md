@@ -69,4 +69,4 @@ Permite al médico visualizar gráficas interactivas de la evolución de los sig
 
 ---
 
-*MEDISTA — Casos de Uso M4 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M4 v1.0 — Instituto de Educación Superior — Abril 2026*

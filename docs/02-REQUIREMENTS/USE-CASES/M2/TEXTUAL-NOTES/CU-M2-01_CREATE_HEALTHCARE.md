@@ -8,7 +8,7 @@
 
 ## Descripción
 
-Permite al médico registrar una atención médica completa para un paciente existente, digitalizando el formulario físico actual del Departamento Médico del Instituto Superior Universitario TEC Azuay.
+Permite al médico registrar una atención médica completa para un paciente existente, digitalizando el formulario físico actual del Departamento Médico de la institución.
 
 ---
 
@@ -114,4 +114,4 @@ Permite al médico registrar una atención médica completa para un paciente exi
 
 ---
 
-*MEDISTA — Casos de Uso M2 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M2 v1.0 — Instituto de Educación Superior — Abril 2026*

@@ -1,6 +1,6 @@
 # MEDISTA-V2 — Sistema de Gestión de Atención Médica
 
-## Instituto Superior Universitario TEC Azuay
+## Instituto de Educación Superior
 
 ### Departamento Médico
 
@@ -10,7 +10,7 @@
 
 **Nombre del sistema:** MEDISTA-V2 — Sistema de Gestión de Atención Médica
 
-**Institución:** Instituto Superior Universitario TEC Azuay
+**Institución:** Instituto de Educación Superior
 
 **Departamento:** Departamento Médico
 
@@ -53,7 +53,7 @@
 ### 3.3 Estudiante
 
 - **Plataforma:** App móvil
-- **Autenticación:** Correo institucional (@tecazuay.edu.ec, formato: nombre.apellido.est@tecazuay.edu.ec). Solo se permite este dominio; cualquier otro correo es rechazado.
+- **Autenticación:** Correo institucional (@institucion.edu.ec, formato: nombre.apellido.est@institucion.edu.ec). Solo se permite este dominio; cualquier otro correo es rechazado.
 - **Acceso:** Solo lectura de sus propias atenciones médicas.
 - **Funciones:** Ver historial simplificado de atenciones (fecha, motivo, diagnóstico, tratamiento), recibir notificaciones.
 - **Restricción:** No edita nada, no llena datos. El médico es quien registra al estudiante en su primera visita.
@@ -213,7 +213,7 @@
 
 - Generar referencia médica desde una atención médica existente.
 - Campos precargados:
-  - Nombre de la institución (TEC Azuay)
+  - Nombre de la institución
   - Cédula del paciente
   - Servicio (Departamento Médico)
 - Campos de la referencia:
@@ -335,7 +335,7 @@ El decano puede combinar múltiples filtros simultáneamente:
 
 **Seguridad:**
 
-- Autenticación por correo institucional para estudiantes (solo @tecazuay.edu.ec).
+- Autenticación por correo institucional para estudiantes (solo @institucion.edu.ec).
 - Autenticación por credenciales para médico y decano (contraseñas encriptadas).
 - Control de acceso por roles (cada rol solo ve lo que le corresponde).
 - Cifrado de datos sensibles de salud en la base de datos.
@@ -366,7 +366,7 @@ El decano puede combinar múltiples filtros simultáneamente:
 
 - Gestión de usuarios (crear, editar, desactivar cuentas de médicos y administradores).
 - Gestión de catálogos:
-  - Carreras (las 16 del TEC Azuay)
+  - Carreras (las ofertadas por la institución)
   - Ciclos
   - Códigos CIE-10
   - Establecimientos de salud para referencias
@@ -432,7 +432,7 @@ El decano puede combinar múltiples filtros simultáneamente:
 ## 10. Tipo de Proyecto
 
 - **Origen:** Proyecto de fin de ciclo.
-- **Institución:** Instituto Superior Universitario TEC Azuay.
+- **Institución:** Instituto de Educación Superior.
 - **Alcance:** Implementación real en el departamento médico.
 
 ---

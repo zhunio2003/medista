@@ -102,4 +102,4 @@ Permite al médico registrar un nuevo estudiante en el sistema con todos sus dat
 
 ---
 
-*MEDISTA — Casos de Uso M1 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M1 v1.0 — Instituto de Educación Superior — Abril 2026*

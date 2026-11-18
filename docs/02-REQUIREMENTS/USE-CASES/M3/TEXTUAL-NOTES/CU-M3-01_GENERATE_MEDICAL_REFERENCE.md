@@ -44,7 +44,7 @@ Permite al médico generar una referencia médica para derivar a un paciente a o
 | Paso | Actor | Acción |
 |---|---|---|
 | 1 | Médico | Selecciona la opción "Generar referencia médica" desde una atención médica existente. |
-| 2 | Sistema | Precarga automáticamente los datos fijos: nombre de la institución (Instituto Superior Universitario TEC Azuay), cédula del paciente, servicio (Departamento Médico), nombre del profesional y código MSP desde la sesión activa. *[include: Precargar datos]* |
+| 2 | Sistema | Precarga automáticamente los datos fijos: nombre oficial de la institución, cédula del paciente, servicio (Departamento Médico), nombre del profesional y código MSP desde la sesión activa. *[include: Precargar datos]* |
 | 3 | Médico | Completa los datos del establecimiento de salud destino: entidad del sistema, nombre del establecimiento, servicio y especialidad. |
 | 4 | Médico | Selecciona el motivo de referencia entre las opciones predefinidas: Limitada capacidad resolutiva, Falta de profesional u Otros. |
 | 5 | Médico | Ingresa el resumen del cuadro clínico y los hallazgos relevantes mediante texto libre. |
@@ -87,4 +87,4 @@ Permite al médico generar una referencia médica para derivar a un paciente a o
 
 ---
 
-*MEDISTA — Casos de Uso M3 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M3 v1.0 — Instituto de Educación Superior — Abril 2026*

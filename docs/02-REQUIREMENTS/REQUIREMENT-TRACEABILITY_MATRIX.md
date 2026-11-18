@@ -15,7 +15,7 @@
 | ENT | Entrevista con la médico del Departamento Médico (usuaria principal) |
 | LOPDP | Ley Orgánica de Protección de Datos Personales del Ecuador |
 | MSP | Acuerdo Ministerial MSP No. 00000125 — Historia Clínica Electrónica |
-| FORM | Formulario físico de atención médica del Departamento Médico TEC Azuay |
+| FORM | Formulario físico de atención médica del Departamento Médico institucional |
 
 ---
 
@@ -126,7 +126,7 @@
 |---|---|---|---|
 | RF-M7-01 | Autenticación JWT con tokens de acceso (15 min) y refresh tokens (7 días) | VIS, LOPDP | CU-M7-01 |
 | RF-M7-02 | Cifrado de contraseñas con BCrypt factor 12 | VIS, LOPDP | CU-M7-01 |
-| RF-M7-03 | Validación de dominio @tecazuay.edu.ec para todos los usuarios | VIS, LOPDP | CU-M7-01 |
+| RF-M7-03 | Validación de dominio @institucion.edu.ec para todos los usuarios | VIS, LOPDP | CU-M7-01 |
 | RF-M7-04 | Expiración automática de sesión por inactividad | VIS, LOPDP | CU-M7-02 |
 | RF-M7-05 | Control de acceso por roles en todos los endpoints | VIS, LOPDP | CU-M7-01 |
 | RF-M7-06 | Cifrado AES-256 de datos clínicos sensibles en reposo | VIS, LOPDP | CU-M7-01 |
@@ -170,4 +170,4 @@
 ---
 
 *MEDISTA — Matriz de Trazabilidad de Requisitos v1.0*  
-*Instituto Superior Universitario TEC Azuay — Abril 2026*
+*Instituto de Educación Superior — Abril 2026*

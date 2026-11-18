@@ -1,7 +1,7 @@
 # Diagramas de Secuencia — MEDISTA
 
 **Proyecto:** MEDISTA — Sistema de Gestión de Atención Médica  
-**Institución:** Instituto Superior Universitario TEC Azuay  
+**Institución:** Instituto de Educación Superior  
 **Versión:** 1.0  
 **Fecha:** 6 de mayo de 2026  
 **Fase:** Fase 2 — Diseño del Sistema
@@ -357,7 +357,7 @@ sequenceDiagram
 ### 5.4 Notas Técnicas
 
 - **Persistencia antes de generación:** Los datos de la referencia se insertan en `medical_referrals` y `referral_diagnoses` antes de llamar a JasperReports. Si la generación del PDF falla, el rollback de la transacción garantiza que no queden referencias huérfanas en la base de datos.
-- **Template `.jrxml`:** JasperReports utiliza un archivo de template que replica el formato exacto del Formulario de Referencia Médica físico del Departamento Médico TEC Azuay. El template se compila en tiempo de inicialización del backend y se reutiliza en cada generación para evitar overhead.
+- **Template `.jrxml`:** JasperReports utiliza un archivo de template que replica el formato exacto del Formulario de Referencia Médica físico del Departamento Médico institucional. El template se compila en tiempo de inicialización del backend y se reutiliza en cada generación para evitar overhead.
 - **Entrega del PDF:** El controlador responde con `Content-Type: application/pdf` y `Content-Disposition: inline`. El header `inline` instruye al navegador a mostrar el PDF dentro de una nueva pestaña en lugar de forzar la descarga. Angular construye un `Blob URL` desde los bytes recibidos y lo abre con `window.open()`.
 - **Timeout en Nginx:** La generación de PDFs complejos puede superar el timeout por defecto de Nginx. Se configura un `proxy_read_timeout` extendido específicamente para los endpoints de generación de reportes.
 
@@ -444,4 +444,4 @@ sequenceDiagram
 
 ---
 
-*MEDISTA — Diagramas de Secuencia v1.0 — Instituto Superior Universitario TEC Azuay — Mayo 2026*
+*MEDISTA — Diagramas de Secuencia v1.0 — Instituto de Educación Superior — Mayo 2026*

@@ -5,7 +5,7 @@
 **Fase:** 2 — Diseño del Sistema
 **Tipo de entregable:** Diseño de Bajo Nivel (LLD)
 **Autor:** Joseph Zhunio
-**Institución:** Instituto Superior Universitario TEC Azuay
+**Institución:** Instituto de Educación Superior
 
 ---
 
@@ -157,7 +157,7 @@ Para errores de validación (`400 Bad Request`), la estructura se extiende con u
   "path": "/api/v1/auth/login",
   "traceId": "a3f1b2c4-9e8d-4a7b-b6c5-1d2e3f4a5b6c",
   "fieldErrors": [
-    { "field": "email", "message": "Debe pertenecer al dominio @tecazuay.edu.ec" },
+    { "field": "email", "message": "Debe pertenecer al dominio @institucion.edu.ec" },
     { "field": "password", "message": "La contraseña no puede estar vacía" }
   ]
 }
@@ -232,12 +232,12 @@ Los contratos se agrupan en tres sub-recursos: `/api/v1/auth/*` para autenticaci
 
 | Campo | Tipo | Obligatorio | Validaciones |
 |-------|------|-------------|--------------|
-| `email` | String | Sí | Formato email válido. Debe terminar en `@tecazuay.edu.ec`. Longitud máxima 255. |
+| `email` | String | Sí | Formato email válido. Debe terminar en `@institucion.edu.ec`. Longitud máxima 255. |
 | `password` | String | Sí | No vacío. Longitud entre 8 y 72 caracteres (límite de BCrypt). |
 
 ```json
 {
-  "email": "doctora.medico@tecazuay.edu.ec",
+  "email": "doctora.medico@institucion.edu.ec",
   "password": "P@ssw0rd2026!"
 }
 ```
@@ -267,7 +267,7 @@ Los contratos se agrupan en tres sub-recursos: `/api/v1/auth/*` para autenticaci
     "id": 1,
     "firstName": "María",
     "lastName": "Pérez",
-    "email": "doctora.medico@tecazuay.edu.ec",
+    "email": "doctora.medico@institucion.edu.ec",
     "role": "ROLE_DOCTOR"
   }
 }
@@ -422,7 +422,7 @@ Sin body. El éxito se comunica mediante el código de estado.
 
 | Campo | Tipo | Obligatorio | Validaciones |
 |-------|------|-------------|--------------|
-| `email` | String | Sí | Formato email válido. Debe terminar en `@tecazuay.edu.ec`. |
+| `email` | String | Sí | Formato email válido. Debe terminar en `@institucion.edu.ec`. |
 
 **Response body (éxito — `202 Accepted`)**
 
@@ -1273,7 +1273,7 @@ El módulo M3 expone los endpoints para generar referencias médicas a otros est
 | `clinicalSummary` `relevantFindings` | String | — |
 | `diagnoses` | Array | Cada uno con `cie10Code: {code, description}`. |
 | `referredBy` | Object | `{id, fullName, mspCode}` del médico (precargado). |
-| `institutionName` | String | Constante `"Instituto Superior Universitario TEC Azuay"`. |
+| `institutionName` | String | Constante con el nombre oficial de la institución (configurable). |
 | `serviceLabel` | String | Constante `"Departamento Médico"`. |
 | `createdAt` | String | Timestamp. |
 
@@ -1931,7 +1931,7 @@ Acceso restringido exclusivamente al `ROLE_ADMIN` salvo lecturas de catálogos r
 |-------|------|-------------|--------------|
 | `firstName` | String | Sí | 1-100 caracteres. |
 | `lastName` | String | Sí | 1-100 caracteres. |
-| `email` | String | Sí | Formato email. Debe terminar en `@tecazuay.edu.ec`. Único en `users`. |
+| `email` | String | Sí | Formato email. Debe terminar en `@institucion.edu.ec`. Único en `users`. |
 | `role` | String (enum) | Sí | `ROLE_DOCTOR`, `ROLE_DEAN`, `ROLE_ADMIN`, `ROLE_STUDENT`. |
 
 **Response body (éxito — `201 Created`)**
@@ -2449,4 +2449,4 @@ Todos los demás endpoints requieren autenticación válida y autorización por 
 ---
 
 *MEDISTA — Contratos de API REST v1.0*
-*Instituto Superior Universitario TEC Azuay — Mayo 2026*
+*Instituto de Educación Superior — Mayo 2026*

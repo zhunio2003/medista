@@ -78,4 +78,4 @@ Permite al Decano aplicar múltiples filtros simultáneos sobre el dashboard est
 
 ---
 
-*MEDISTA — Casos de Uso M5 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M5 v1.0 — Instituto de Educación Superior — Abril 2026*

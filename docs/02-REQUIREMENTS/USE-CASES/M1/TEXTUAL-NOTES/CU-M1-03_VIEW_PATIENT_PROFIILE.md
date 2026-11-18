@@ -76,4 +76,4 @@ Permite al médico visualizar el perfil completo de un paciente registrado, incl
 
 ---
 
-*MEDISTA — Casos de Uso M1 v1.0 — Instituto Superior Universitario TEC Azuay — Abril 2026*
+*MEDISTA — Casos de Uso M1 v1.0 — Instituto de Educación Superior — Abril 2026*
