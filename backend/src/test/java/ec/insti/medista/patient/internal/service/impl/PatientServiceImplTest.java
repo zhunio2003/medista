@@ -5,6 +5,7 @@ import ec.insti.medista.common.exception.BusinessRuleViolationException;
 import ec.insti.medista.common.exception.ConflictException;
 import ec.insti.medista.common.exception.ResourceNotFoundException;
 import ec.insti.medista.patient.api.dto.request.CreatePatientRequest;
+import ec.insti.medista.patient.api.dto.request.UpdatePatientBackgroundRequest;
 import ec.insti.medista.patient.api.dto.request.UpdatePatientRequest;
 import ec.insti.medista.patient.api.dto.response.PatientBackgroundResponse;
 import ec.insti.medista.patient.api.dto.response.PatientResponse;
@@ -328,6 +329,12 @@ class PatientServiceImplTest {
         PatientBackgroundResponse result = patientService.getBackground(5L);
 
         assertThat(result).isSameAs(expected);
+
+    }
+
+    private UpdatePatientBackgroundRequest backgroundRequest(String gynecological){
+
+        return new UpdatePatientBackgroundRequest("Penicilina", "Asma", gynecological, null, null, null);
 
     }
 
