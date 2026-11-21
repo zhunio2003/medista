@@ -79,7 +79,17 @@ Las capturas se agregarán a medida que el panel web tenga pantallas navegables.
 
 ## Características Principales
 
-<!-- Listado conciso de features diferenciadores del sistema -->
+- **Formulario de atención digitalizado** — motivo, antecedentes, signos vitales, examen físico por sistemas, diagnóstico y tratamiento en un solo flujo.
+- **Cálculos automáticos** — IMC (peso / talla²), total de Glasgow y edad del paciente; se persisten para que el historial no cambie si cambia la fórmula.
+- **Diagnóstico con CIE-10** — buscador con autocompletado sobre +14.000 códigos (búsqueda difusa con `pg_trgm`), marcado como presuntivo o definitivo.
+- **Sección obstétrica condicional** — aparece solo cuando aplica al paciente.
+- **Antecedentes acumulativos** — lo registrado en una consulta se precarga en las siguientes.
+- **Atenciones inmutables** — una atención guardada no se edita ni se borra; se corrige con notas adjuntas, como exige el MSP.
+- **Referencias médicas en PDF** — con el mismo formato del formulario físico del departamento.
+- **Historial clínico** — línea de tiempo del paciente y gráficas de evolución de signos vitales.
+- **Dashboard con filtros cruzados** — carrera, ciclo, periodo, género, edad y diagnóstico combinados; exportación a PDF y Excel.
+- **Alertas inteligentes** — paciente frecuente, posibles brotes y picos de demanda, con umbrales configurables.
+- **Auditoría completa** — registro inmutable de quién hizo qué, cuándo y desde dónde.
 
 ## Arquitectura
 
