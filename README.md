@@ -62,12 +62,20 @@
 ## Descripción
 
 MEDISTA es un sistema de gestión de atención médica que digitaliza completamente el proceso de atención clínica de las instituciones educativas, el cual opera mayormente de forma manual mediante formularios en papel. El sistema contempla una plataforma web para el personal médico y administrativo, y una aplicación móvil para los estudiantes.
+
+Nace en el **Departamento Médico del Instituto Superior Universitario TEC Azuay** (Cuenca, Ecuador), que atiende a ~500 estudiantes de 16 carreras con una sola médica. El objetivo es reemplazar el formulario en papel, centralizar el historial clínico, dar datos para la toma de decisiones y cumplir con la normativa ecuatoriana de protección de datos de salud.
+
+| Rol | Plataforma | Qué hace |
+| --- | ---------- | -------- |
+| **Médico** | Web | Registra pacientes, crea atenciones y referencias, consulta historiales y recibe alertas clínicas. |
+| **Decano / Administrador** | Web | Ve dashboards y reportes **agregados** (nunca expedientes individuales), gestiona usuarios y catálogos. |
+| **Estudiante** | App móvil | Consulta en solo lectura sus propias atenciones y recibe notificaciones. |
+
+> **Estado:** en desarrollo. La fase de requisitos y diseño está cerrada (ver [`docs/`](docs/)); la implementación avanza por módulos empezando por M7 (Seguridad) y M1 (Pacientes).
+
 ## Capturas de Pantalla
 
-
-
-<!-- 2-4 screenshots clave del sistema funcionando -->
-<!-- Screenshots coming soon -->
+Las capturas se agregarán a medida que el panel web tenga pantallas navegables.
 
 ## Características Principales
 
