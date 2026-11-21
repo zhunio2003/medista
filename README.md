@@ -199,11 +199,18 @@ Todo corre con Docker Compose en el servidor local del instituto. Solo Nginx se 
 
 ## Módulos del Sistema
 
-<!-- Tabla o listado: nombre del módulo + descripción de una línea -->
-
 | Módulo | Descripción |
 | ------ | ----------- |
-|        |             |
+| **M1 — Gestión de Pacientes** | Registro, búsqueda (cédula, nombres, apellidos) y edición de los datos de filiación del estudiante. |
+| **M2 — Atención Médica** | El formulario clínico completo: el corazón del sistema. Atenciones inmutables con notas de corrección. |
+| **M3 — Referencia Médica** | Derivación a otro establecimiento de salud con PDF descargable en el formato institucional. |
+| **M4 — Historial Clínico** | Línea de tiempo del paciente, evolución de signos vitales y diagnósticos recurrentes. |
+| **M5 — Dashboard y Reportes** | Indicadores con filtros cruzados y reportes exportables a PDF/Excel, manuales o automáticos. |
+| **M6 — Notificaciones** | Alertas en la bandeja del sistema, por correo y push móvil, con umbrales configurables. |
+| **M7 — Seguridad y Auditoría** | Login, control de acceso por rol, sesiones con expiración y log de auditoría inmutable. |
+| **M8 — Administración** | Usuarios, catálogos (carreras, CIE-10, establecimientos), umbrales, reportes automáticos y respaldos. |
+
+Cada módulo tiene sus casos de uso en [`docs/02-REQUIREMENTS/USE-CASES/`](docs/02-REQUIREMENTS/USE-CASES/). La agenda de citas queda como módulo futuro.
 
 ## Modelo de Datos
 
