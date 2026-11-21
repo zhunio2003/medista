@@ -391,7 +391,33 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
 
 ## Seguridad y Cumplimiento Normativo
 
-<!-- Medidas de seguridad implementadas y normativa que cumple -->
+MEDISTA maneja datos de salud, la categoría más sensible de datos personales. Las medidas se agrupan así:
+
+**Autenticación y sesiones**
+- Login con correo institucional `@tecazuay.edu.ec`; cualquier otro dominio se rechaza.
+- Contraseñas con hash BCrypt (coste 12).
+- Token de acceso JWT de 1 hora y token de refresh de 24 horas; al cerrar sesión el token pasa a una lista negra en Redis.
+- Máximo 5 intentos de login cada 5 minutos por IP (Bucket4j); al excederlo se responde `429`.
+
+**Autorización**
+- Control de acceso por rol (`MEDICO`, `DECANO`, `ADMINISTRADOR`, `ESTUDIANTE`) en cada endpoint.
+- El decano/administrador solo ve datos agregados, nunca expedientes individuales.
+- El estudiante solo puede leer sus propias atenciones.
+
+**Protección de datos**
+- Cifrado a nivel de campo de datos clínicos sensibles con `pgcrypto`.
+- Secretos de configuración cifrados con Jasypt; credenciales fuera del repositorio (`.env`).
+- HTTPS obligatorio; PostgreSQL y Redis no se exponen fuera de la red Docker.
+
+**Trazabilidad**
+- Log de auditoría inmutable: usuario, acción, entidad, IP, user agent y fecha, con integridad por HMAC-SHA256 encadenado.
+- Historial de revisiones de cada entidad con Hibernate Envers.
+- Las atenciones no se eliminan ni se editan: solo se corrigen con notas.
+
+**Normativa aplicable**
+- Ley Orgánica de Protección de Datos Personales (**LOPDP**) del Ecuador.
+- Normativa del Ministerio de Salud Pública (**MSP**) sobre la historia clínica.
+- Principios de confidencialidad, integridad y disponibilidad de los datos de salud.
 
 ## Testing
 
