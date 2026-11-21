@@ -485,4 +485,12 @@ La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están 
 
 ## Autor
 
-<!-- Nombre, rol, LinkedIn, portfolio -->
+**Miguel Angel Zhunio Remache** — desarrollo full stack
+
+[![GitHub](https://img.shields.io/badge/GitHub-zhunio2003-181717?logo=github&logoColor=white)](https://github.com/zhunio2003)
+
+Proyecto desarrollado para el Departamento Médico del Instituto Superior Universitario TEC Azuay.
+
+## Licencia
+
+Distribuido bajo la licencia MIT. Ver [`LICENSE`](LICENSE).
