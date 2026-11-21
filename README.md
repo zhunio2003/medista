@@ -363,7 +363,31 @@ medista/
 
 ## Documentación de API
 
-<!-- Cómo acceder a Swagger UI + endpoints representativos -->
+El contrato completo de la API (todos los endpoints de M1–M8 con request, response, roles y códigos de estado) está en [`API_CONTRACT_SPECIFICATIONS.md`](docs/03-DESIGN/API_CONTRACT_SPECIFICATIONS.md). La documentación interactiva con Swagger UI (SpringDoc OpenAPI) se agregará al backend en una próxima iteración.
+
+**Convenciones:** prefijo `/api/v1/`, recursos en plural y kebab-case, JSON en camelCase, fechas ISO 8601 en UTC, paginación estándar y un formato de error único para toda la API.
+
+Todos los endpoints requieren `Authorization: Bearer <accessToken>` salvo los públicos de autenticación.
+
+| Método | Endpoint | Descripción | Estado |
+| ------ | -------- | ----------- | ------ |
+| `POST` | `/api/v1/auth/login` | Inicia sesión y emite tokens de acceso y refresh | ✅ |
+| `POST` | `/api/v1/auth/refresh` | Renueva el token de acceso | ✅ |
+| `POST` | `/api/v1/auth/logout` | Cierra sesión e invalida el token | ✅ |
+| `POST` | `/api/v1/patients` | Registra un paciente | 🕓 |
+| `GET` | `/api/v1/patients/search` | Busca pacientes por cédula o nombre | 🕓 |
+| `PUT` | `/api/v1/patients/{id}/background` | Actualiza los antecedentes | 🕓 |
+| `POST` | `/api/v1/medical-attendances` | Crea una atención médica | 🕓 |
+| `POST` | `/api/v1/medical-attendances/{id}/corrections` | Agrega una nota de corrección | 🕓 |
+| `GET` | `/api/v1/medical-attendances/{id}/pdf` | Descarga la atención en PDF | 🕓 |
+
+Ejemplo de login:
+
+```bash
+curl -X POST http://localhost:8000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "doctora.medico@tecazuay.edu.ec", "password": "********"}'
+```
 
 ## Seguridad y Cumplimiento Normativo
 
