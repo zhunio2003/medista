@@ -443,7 +443,27 @@ npm test -- --watch=false --browsers=ChromeHeadless   # una sola pasada
 
 ## Despliegue
 
-<!-- Cómo se despliega en producción -->
+MEDISTA se despliega **on-premise** en el servidor local del instituto, sin depender de la nube (la única salida a internet es hacia Firebase para las notificaciones push).
+
+| Aspecto | Decisión |
+| ------- | -------- |
+| Servidor | Físico, Linux (Ubuntu Server recomendado) |
+| Orquestación | Docker Compose |
+| Punto de entrada | Nginx como reverse proxy; solo el puerto 443 (HTTPS) abierto a la red LAN |
+| Frontend web | Build estático de Angular servido por Nginx |
+| App móvil | APK instalado directamente (sin Google Play) |
+| Respaldos | `pg_dump` programado y cifrado con GPG sobre volumen persistente |
+| Monitoreo | Prometheus + Grafana sobre las métricas de Actuator |
+
+Pasos generales:
+
+```bash
+cp .env.example .env               # credenciales reales + JWT_SECRET y JASYPT_PASSWORD
+docker compose up -d --build
+cd frontend/web && npm ci && npm run build   # salida en dist/web/browser
+```
+
+La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están pendientes. La topología completa está en el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
 
 ## Roadmap
 
