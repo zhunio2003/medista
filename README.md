@@ -253,21 +253,68 @@ Maven no hace falta instalarlo: el backend trae el wrapper `./mvnw`.
 
 ## Instalación y Configuración
 
+Clona el repositorio y crea tu archivo de entorno a partir de la plantilla:
+
+```bash
+git clone https://github.com/zhunio2003/medista.git
+cd medista
+cp .env.example .env   # completa las credenciales; .env nunca se sube al repo
+```
+
+| Variable | Dónde se usa |
+| -------- | ------------ |
+| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASS` | Base de datos y backend |
+| `REDIS_PASSWORD` | Redis y backend |
+| `GRAFANA_PASSWORD` | Usuario `admin` de Grafana |
+| `JWT_SECRET`, `JASYPT_PASSWORD` | Backend — **obligatorias en producción** (los valores por defecto de `application.yml` son solo para desarrollo) |
+
 ### Backend
 
-<!-- Pasos y comandos -->
+Levanta solo la base de datos y Redis con Docker, y ejecuta el backend en tu máquina:
+
+```bash
+docker compose up -d postgres_medista redis_medista
+
+cd backend
+set -a; source ../.env; set +a          # carga las variables de .env
+DB_HOST=localhost DB_PORT=5433 \
+REDIS_HOST=localhost REDIS_PORT=6380 \
+./mvnw spring-boot:run
+```
+
+Flyway aplica las migraciones al arrancar. La API queda en `http://localhost:8000/api` y el health check en `http://localhost:8000/api/actuator/health`.
 
 ### Frontend Web
 
-<!-- Pasos y comandos -->
+```bash
+cd frontend/web
+npm ci
+npm start
+```
+
+Abre `http://localhost:4200`.
 
 ### App Móvil
 
-<!-- Pasos y comandos -->
+La app Android (Kotlin) todavía no está en el repositorio. Esta sección se completará cuando se cree el proyecto en `mobile/`.
 
 ### Docker Compose
 
-<!-- Levantar todo el entorno con un solo comando -->
+Para levantar todo el entorno con un solo comando:
+
+```bash
+docker compose up -d --build
+```
+
+| Servicio | Contenedor | Puerto en tu máquina |
+| -------- | ---------- | -------------------- |
+| Backend | `backend_medista` | `8000` |
+| PostgreSQL | `postgres_medista` | `5433` |
+| Redis | `redis_medista` | `6380` |
+| Prometheus | `prometheus_medista` | `9091` |
+| Grafana | `grafana_medista` | `3001` |
+
+Para apagarlo: `docker compose down` (agrega `-v` solo si quieres borrar también los datos).
 
 ## Estructura del Proyecto
 
