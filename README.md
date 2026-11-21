@@ -241,7 +241,15 @@ El detalle de columnas, restricciones y enums está en [`DATA_MODEL.md`](docs/03
 
 ## Requisitos Previos
 
-<!-- Todo lo necesario para levantar el proyecto con versiones exactas -->
+| Herramienta | Versión | Para qué |
+| ----------- | ------- | -------- |
+| Git | 2.x | Clonar el repositorio |
+| Docker + Docker Compose | Docker 24+ / Compose v2 | PostgreSQL, Redis, Prometheus y Grafana |
+| JDK | 21 (Temurin recomendado) | Compilar y ejecutar el backend |
+| Node.js | 20.19+, 22.12+ o 24 | Frontend web (requisito de Angular 20) |
+| npm | 10+ | Dependencias del frontend |
+
+Maven no hace falta instalarlo: el backend trae el wrapper `./mvnw`.
 
 ## Instalación y Configuración
 
