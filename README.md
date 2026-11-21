@@ -421,7 +421,25 @@ MEDISTA maneja datos de salud, la categoría más sensible de datos personales. 
 
 ## Testing
 
-<!-- Tipos de tests, herramientas y comandos para ejecutarlos -->
+| Capa | Tipo | Herramientas | Estado |
+| ---- | ---- | ------------ | ------ |
+| Backend | Unitarios de servicios | JUnit 5 + Mockito | ✅ |
+| Backend | Integración con base real | Testcontainers (PostgreSQL) | 🕓 |
+| Backend | Reglas de arquitectura (`api`/`internal`) | ArchUnit | 🕓 |
+| Frontend web | Unitarios de componentes | Jasmine + Karma | ✅ |
+| Frontend web | End-to-end | Cypress | 🕓 |
+| Calidad | Análisis estático y cobertura | SonarQube | 🕓 |
+
+```bash
+# Backend
+cd backend
+./mvnw test
+
+# Frontend web
+cd frontend/web
+npm test                                   # modo watch en Chrome
+npm test -- --watch=false --browsers=ChromeHeadless   # una sola pasada
+```
 
 ## Despliegue
 
