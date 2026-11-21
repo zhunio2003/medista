@@ -1,0 +1,109 @@
+// =============================================================================
+// Escena de fondo del login: la foto del médico teñida de navy
+// -----------------------------------------------------------------------------
+// Capas (de abajo hacia arriba):
+//   .edge   la escena entera en dorado; solo asoma como filo en la diagonal
+//   .frame  el marco recortado en diagonal (no se mueve)
+//     .photo   la foto, con un acercamiento lentísimo
+//     .grain   grano fotográfico: textura real en vez de color digital plano
+// =============================================================================
+
+// Grano: ruido generado por un filtro SVG (feTurbulence) dentro de una
+// "data URI" (una imagen escrita directamente en el CSS, sin archivo aparte).
+$grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+// La diagonal, en un solo lugar. $edge = grosor del filo dorado.
+$edge: 3px;
+$scene-shape: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+$photo-shape: polygon(0 0, calc(100% - #{$edge}) 0, calc(85% - #{$edge}) 100%, 0 100%);
+
+// Mismo punto de corte que login.scss: por debajo, la escena es una franja.
+$stack-below: 900px;
+
+// Curva de frenado suave, la misma del caduceo.
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+:host {
+  position: absolute;
+  inset: 0 auto 0 0; // top 0, right auto, bottom 0, left 0
+  width: 70%;
+  pointer-events: none;
+  // Entrada: la escena se descubre de izquierda a derecha al cargar.
+  animation: scene-reveal 1.4s $ease-out both;
+}
+
+.edge {
+  position: absolute;
+  inset: 0;
+  clip-path: $scene-shape;
+  background-color: var(--color-accent);
+  opacity: 0.85;
+}
+
+// El marco recorta y NO se mueve; la foto de adentro sí. Si recortáramos la
+// foto misma, al hacer zoom la diagonal se movería con ella.
+.frame {
+  position: absolute;
+  inset: 0;
+  clip-path: $photo-shape;
+  overflow: hidden;
+  background-color: var(--color-primary-deep);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  background-image: url('/login-background.jpg');
+  // Velo navy suave: tiñe la foto con el color de marca pero la deja ver.
+  background-color: rgba(1, 18, 55, 0.45);
+  // multiply mezcla la foto con el navy: queda una foto teñida de azul.
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  // Acercamiento lentísimo (40 s ida, 40 s vuelta): se nota que está viva
+  // solo si te quedas mirando.
+  animation: photo-drift 40s ease-in-out infinite alternate;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: $grain;
+  opacity: 0.05;
+}
+
+@keyframes scene-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+
+@keyframes photo-drift {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.14) translate(-1.5%, 1%); }
+}
+
+// Pantallas angostas: franja arriba (45% del alto) con la diagonal hacia
+// abajo; la tarjeta queda montada sobre su borde.
+@media (max-width: $stack-below) {
+  :host {
+    width: 100%;
+    height: 45%;
+    bottom: auto;
+  }
+
+  .edge {
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+  }
+
+  .frame {
+    clip-path: polygon(0 0, 100% 0, 100% calc(70% - #{$edge}), 0 calc(100% - #{$edge}));
+  }
+}
+
+// Movimiento reducido: la escena aparece ya descubierta y quieta.
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  .photo {
+    animation: none;
+  }
+}
