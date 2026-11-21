@@ -214,7 +214,30 @@ Cada módulo tiene sus casos de uso en [`docs/02-REQUIREMENTS/USE-CASES/`](docs/
 
 ## Modelo de Datos
 
-<!-- Diagrama ER o referencia al archivo + entidades principales -->
+<div align="center">
+    <img src="docs/03-DESIGN/diagram/data-model.jpg" alt="Modelo entidad-relación de MEDISTA" width="900">
+</div>
+
+19 tablas en PostgreSQL 16, creadas con migraciones Flyway (`backend/src/main/resources/db/migration/`). Las entidades principales:
+
+| Grupo | Tablas |
+| ----- | ------ |
+| Identidad y seguridad | `users`, `audit_logs`, `backup_logs` |
+| Pacientes (M1) | `patients`, `patient_background`, `careers` |
+| Atención médica (M2) | `medical_attendances`, `physical_exam_findings`, `obstetric_emergency`, `complementary_exams`, `diagnoses`, `attendance_corrections`, `cie10_codes` |
+| Referencias (M3) | `medical_referrals`, `referral_diagnoses`, `health_establishments` |
+| Notificaciones (M6) | `notifications`, `notification_thresholds` |
+| Administración (M8) | `automatic_reports` |
+
+Principios clave:
+
+- **Identidad separada de los datos clínicos** — `users` solo autentica; los datos clínicos viven en `patients` ([ADR-001](docs/03-DESIGN/ADR/ADR-001_SEPARATION-USERS-PATIENTS.md)).
+- **Eliminación lógica** — ningún registro clínico se borra físicamente; se marca `is_active = false`.
+- **Campos calculados persistidos** — IMC y Glasgow se guardan para que el historial sea exacto ([ADR-005](docs/03-DESIGN/ADR/ADR-005_PERSISTENCE-CALCULATED-FILES.md)).
+- **Archivos fuera de la base** — los adjuntos van al sistema de ficheros; la base guarda solo la ruta ([ADR-007](docs/03-DESIGN/ADR/ADR-007_FILE-STORAGE-SYSTEM-FILE.md)).
+- **Auditoría automática** — Hibernate Envers genera una tabla `*_aud` por cada entidad auditada.
+
+El detalle de columnas, restricciones y enums está en [`DATA_MODEL.md`](docs/03-DESIGN/DATA_MODEL.md).
 
 ## Requisitos Previos
 
