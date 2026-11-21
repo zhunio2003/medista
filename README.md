@@ -93,7 +93,37 @@ Las capturas se agregarán a medida que el panel web tenga pantallas navegables.
 
 ## Arquitectura
 
-<!-- Patrón arquitectónico + diagrama (imagen o mermaid) -->
+**Monolito modular.** Una sola aplicación Spring Boot organizada *module-first*: cada módulo (M1–M8) es un paquete con dos zonas.
+
+- `api/` — el contrato público del módulo (servicios y DTOs). Es lo único que otros módulos pueden usar.
+- `internal/` — la implementación (controladores, entidades, repositorios, mappers). Ningún otro módulo la toca.
+
+Así los módulos quedan desacoplados y, si algún día hace falta, se pueden extraer a servicios independientes sin reescribir el sistema.
+
+```mermaid
+flowchart LR
+    web["Angular Web App<br/>(médico, decano)"]
+    app["App Android<br/>(estudiante)"]
+    nginx["Nginx<br/>reverse proxy · HTTPS :443"]
+    api["Spring Boot<br/>monolito modular"]
+    pg[("PostgreSQL 16")]
+    redis[("Redis 7")]
+    fcm["Firebase Cloud<br/>Messaging"]
+    prom["Prometheus"]
+    graf["Grafana"]
+
+    web -- "REST + WebSocket/STOMP" --> nginx
+    app -- REST --> nginx
+    nginx --> api
+    api -- JDBC --> pg
+    api -- "blacklist JWT · caché" --> redis
+    api -- "push" --> fcm
+    fcm -.-> app
+    prom -- "scrape /actuator/prometheus" --> api
+    graf --> prom
+```
+
+Todo corre con Docker Compose en el servidor local del instituto. Solo Nginx se expone a la red (puerto 443); PostgreSQL y Redis quedan dentro de la red Docker. El detalle está en el [diagrama de componentes](docs/03-DESIGN/COMPONENT_DIAGRAM.md) y el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
 
 ## Stack Tecnológico
 
