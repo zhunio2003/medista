@@ -319,8 +319,47 @@ Para apagarlo: `docker compose down` (agrega `-v` solo si quieres borrar tambié
 ## Estructura del Proyecto
 
 ```
-<!-- Árbol de directorios principales del repositorio -->
+medista/
+├── backend/                        # API REST — Spring Boot (Java 21)
+│   └── src/
+│       ├── main/java/ec/insti/medista/
+│       │   ├── config/             # configuración transversal (seguridad, etc.)
+│       │   ├── common/             # DTOs, excepciones y auditoría compartidos
+│       │   ├── exception/          # manejador global de errores
+│       │   ├── security/           # M7 — autenticación, JWT, auditoría
+│       │   ├── patient/            # M1 — pacientes y antecedentes
+│       │   └── administration/     # M8 — catálogos
+│       │       ├── api/            #   contrato público del módulo
+│       │       └── internal/       #   implementación privada
+│       ├── main/resources/
+│       │   ├── application.yml
+│       │   └── db/migration/       # migraciones Flyway (V1…V25)
+│       └── test/                   # tests unitarios y de integración
+├── frontend/
+│   └── web/                        # panel web — Angular 20
+│       └── src/app/
+│           ├── core/               # servicios, guards, interceptores, modelos
+│           ├── shared/             # componentes y pipes reutilizables
+│           └── features/           # pantallas por módulo
+├── infrastructure/
+│   └── prometheus/                 # configuración de scraping
+├── docs/                           # documentación del proyecto (ver abajo)
+│   ├── 01-FEASIBILITY/             # estudio de factibilidad
+│   ├── 02-REQUIREMENTS/            # ERS, matriz de trazabilidad, casos de uso
+│   ├── 03-DESIGN/                  # modelo de datos, API, diagramas, ADRs, design system
+│   ├── 04-IMPLEMENTATION/ … 07-MANUALS/
+│   └── brand/                      # logo
+├── docker-compose.yml
+└── .env.example
 ```
+
+| Documento | Contenido |
+| --------- | --------- |
+| [Visión del sistema](docs/MEDISTA-V2_VISION_DEL_SISTEMA.md) | Roles, módulos y reglas de negocio |
+| [Especificación de requisitos](docs/02-REQUIREMENTS/SOFTWARE_REQUIREMENT_ESPECIFICATION.md) | Requisitos funcionales y no funcionales |
+| [Estructura de paquetes](docs/03-DESIGN/BACKEND_PACKAGE_STRUCTURE.md) | Organización del backend y patrones |
+| [Design system](docs/03-DESIGN/DESIGN_SYSTEM.md) | Colores, tipografía e iconografía de la interfaz |
+| [ADRs](docs/03-DESIGN/ADR/) | Decisiones de arquitectura registradas |
 
 ## Documentación de API
 
