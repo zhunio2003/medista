@@ -467,8 +467,21 @@ La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están 
 
 ## Roadmap
 
-- [ ] <!-- Funcionalidad futura 1 -->
-- [ ] <!-- Funcionalidad futura 2 -->
+- [x] Fase 1 — Factibilidad y requisitos (ERS, casos de uso, matriz de trazabilidad)
+- [x] Fase 2 — Diseño (modelo de datos, contrato de API, diagramas, ADRs, design system)
+- [x] Esquema de base de datos con migraciones Flyway
+- [ ] M7 — Seguridad: login, refresh y logout ✅ · recuperación de contraseña · consulta de auditoría
+- [ ] M1 — Gestión de pacientes (servicio en progreso, faltan controladores)
+- [ ] M2 — Atención médica
+- [ ] M3 — Referencia médica con PDF (JasperReports)
+- [ ] M4 — Historial clínico
+- [ ] M5 — Dashboard estadístico y reportes
+- [ ] M6 — Notificaciones (WebSocket y FCM)
+- [ ] M8 — Administración
+- [ ] Panel web: login, layout y pantallas por módulo
+- [ ] App móvil Android para estudiantes
+- [ ] Nginx, CI/CD y despliegue en el servidor del instituto
+- [ ] Futuro — Agenda y citas de seguimiento
 
 ## Autor
 
