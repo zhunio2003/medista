@@ -63,7 +63,7 @@
 
 MEDISTA es un sistema de gestión de atención médica que digitaliza completamente el proceso de atención clínica de las instituciones educativas, el cual opera mayormente de forma manual mediante formularios en papel. El sistema contempla una plataforma web para el personal médico y administrativo, y una aplicación móvil para los estudiantes.
 
-Nace en el **Departamento Médico del Instituto Superior Universitario TEC Azuay** (Cuenca, Ecuador), que atiende a ~500 estudiantes de 16 carreras con una sola médica. El objetivo es reemplazar el formulario en papel, centralizar el historial clínico, dar datos para la toma de decisiones y cumplir con la normativa ecuatoriana de protección de datos de salud.
+Está pensado para el departamento médico de cualquier institución educativa, desde uno pequeño con un solo médico hasta uno que atiende a miles de estudiantes. El objetivo es reemplazar el formulario en papel, centralizar el historial clínico, dar datos para la toma de decisiones y cumplir con la normativa ecuatoriana de protección de datos de salud.
 
 | Rol | Plataforma | Qué hace |
 | --- | ---------- | -------- |
@@ -123,7 +123,7 @@ flowchart LR
     graf --> prom
 ```
 
-Todo corre con Docker Compose en el servidor local del instituto. Solo Nginx se expone a la red (puerto 443); PostgreSQL y Redis quedan dentro de la red Docker. El detalle está en el [diagrama de componentes](docs/03-DESIGN/COMPONENT_DIAGRAM.md) y el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
+Todo corre con Docker Compose en el servidor local de la institución. Solo Nginx se expone a la red (puerto 443); PostgreSQL y Redis quedan dentro de la red Docker. El detalle está en el [diagrama de componentes](docs/03-DESIGN/COMPONENT_DIAGRAM.md) y el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
 
 ## Stack Tecnológico
 
@@ -386,7 +386,7 @@ Ejemplo de login:
 ```bash
 curl -X POST http://localhost:8000/api/v1/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email": "doctora.medico@tecazuay.edu.ec", "password": "********"}'
+  -d '{"email": "medico@institucion.edu.ec", "password": "********"}'
 ```
 
 ## Seguridad y Cumplimiento Normativo
@@ -394,7 +394,7 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
 MEDISTA maneja datos de salud, la categoría más sensible de datos personales. Las medidas se agrupan así:
 
 **Autenticación y sesiones**
-- Login con correo institucional `@tecazuay.edu.ec`; cualquier otro dominio se rechaza.
+- Login con el correo del dominio de la institución; cualquier otro dominio se rechaza.
 - Contraseñas con hash BCrypt (coste 12).
 - Token de acceso JWT de 1 hora y token de refresh de 24 horas; al cerrar sesión el token pasa a una lista negra en Redis.
 - Máximo 5 intentos de login cada 5 minutos por IP (Bucket4j); al excederlo se responde `429`.
@@ -443,7 +443,7 @@ npm test -- --watch=false --browsers=ChromeHeadless   # una sola pasada
 
 ## Despliegue
 
-MEDISTA se despliega **on-premise** en el servidor local del instituto, sin depender de la nube (la única salida a internet es hacia Firebase para las notificaciones push).
+MEDISTA se despliega **on-premise** en el servidor local de la institución, sin depender de la nube (la única salida a internet es hacia Firebase para las notificaciones push).
 
 | Aspecto | Decisión |
 | ------- | -------- |
@@ -480,7 +480,7 @@ La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están 
 - [ ] M8 — Administración
 - [ ] Panel web: login, layout y pantallas por módulo
 - [ ] App móvil Android para estudiantes
-- [ ] Nginx, CI/CD y despliegue en el servidor del instituto
+- [ ] Nginx, CI/CD y despliegue on-premise
 - [ ] Futuro — Agenda y citas de seguimiento
 
 ## Autor
@@ -488,8 +488,6 @@ La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están 
 **Miguel Angel Zhunio Remache** — desarrollo full stack
 
 [![GitHub](https://img.shields.io/badge/GitHub-zhunio2003-181717?logo=github&logoColor=white)](https://github.com/zhunio2003)
-
-Proyecto desarrollado para el Departamento Médico del Instituto Superior Universitario TEC Azuay.
 
 ## Licencia
 
