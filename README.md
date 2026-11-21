@@ -127,33 +127,75 @@ Todo corre con Docker Compose en el servidor local del instituto. Solo Nginx se 
 
 ## Stack Tecnológico
 
+✅ = ya integrado en el código · 🕓 = definido en el diseño, pendiente de integrar
+
 ### Backend
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Java | 21 LTS | Lenguaje | ✅ |
+| Spring Boot | 4.0.6 | Framework base (Web, Validation, WebSocket) | ✅ |
+| Spring Data JPA + Hibernate | 7 | Persistencia | ✅ |
+| Hibernate Envers | 7 | Historial de revisiones de entidades (`*_aud`) | ✅ |
+| Flyway | 11 | Migraciones versionadas de la base de datos | ✅ |
+| MapStruct | 1.5.5 | Mapeo entidad ↔ DTO | ✅ |
+| Lombok | 1.18.42 | Reducción de código repetitivo | ✅ |
+| SpringDoc OpenAPI | 3 | Documentación interactiva de la API | 🕓 |
 
 ### Frontend Web
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Angular (standalone) | 20 | Framework SPA | ✅ |
+| Angular Material + CDK | 20 | Componentes accesibles | ✅ |
+| Tailwind CSS | 4 | Estilos utilitarios (plugin de Vite) | ✅ |
+| RxJS | 7.8 | Programación reactiva | ✅ |
+| TypeScript | 5.8 | Lenguaje | ✅ |
+| NgRx Signals | 20 | Estado de la aplicación | 🕓 |
+| Chart.js | 4 | Gráficas del dashboard | 🕓 |
 
 ### App Móvil
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Kotlin (Android nativo) | — | App del estudiante, distribuida como APK | 🕓 |
+| Android | 8.0+ (API 26) | Plataforma mínima | 🕓 |
+| Firebase Cloud Messaging | HTTP v1 | Notificaciones push | 🕓 |
 
 ### Base de Datos
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| PostgreSQL | 16 | Base de datos principal | ✅ |
+| pgcrypto | — | Cifrado a nivel de campo de datos clínicos | ✅ |
+| pg_trgm | — | Búsqueda difusa de pacientes y CIE-10 | ✅ |
+| Redis | 7 | Lista negra de tokens JWT y caché | ✅ |
 
 ### Seguridad
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Spring Security | 7 | Autenticación y autorización por rol | ✅ |
+| JJWT | 0.12.6 | Emisión y validación de tokens JWT | ✅ |
+| BCrypt | coste 12 | Hash de contraseñas | ✅ |
+| Bucket4j | 8.10.1 | Límite de intentos de login por IP | ✅ |
+| Jasypt | 3.0.5 | Cifrado de propiedades de configuración | ✅ |
+| HMAC-SHA256 | — | Integridad encadenada del log de auditoría | 🕓 |
 
 ### Reportes
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| JasperReports | 7 | PDFs de atenciones y referencias | 🕓 |
+| Apache POI | 5 | Exportación a Excel | 🕓 |
 
 ### Observabilidad
 
-<!-- Tecnologías y versiones -->
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Spring Boot Actuator | 4.0 | Health checks y métricas | ✅ |
+| Micrometer + Prometheus | — | Recolección de métricas | ✅ |
+| Grafana | — | Dashboards de monitoreo | ✅ |
 
 ## Módulos del Sistema
 
