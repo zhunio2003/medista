@@ -1,198 +1,183 @@
+// =============================================================================
+// Estilos del login
+// -----------------------------------------------------------------------------
+// Todos los colores, espacios y radios salen de los tokens de styles.scss
+// (var(--...)). Los únicos números "sueltos" son medidas propias de esta
+// composición: tamaño de la tarjeta, sus esquinas grandes y las diagonales.
+// =============================================================================
+
+@use '@angular/material' as mat;
+
+// -----------------------------------------------------------------------------
+// Fondo de la página
+// -----------------------------------------------------------------------------
 .login-wrapper {
+  position: relative;
   display: flex;
-  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', sans-serif;
-  background-color: #F8FAFC;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 70%;
-    height: 100%;
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-    background-image: url('/login-background.jpg');
-    background-color: rgba(1, 18, 55, 0.88);
-    background-blend-mode: multiply;
-    background-size: cover;
-    background-position: center;
-  }
+  min-height: 100dvh; // dvh = alto real visible en móviles (sin la barra del navegador)
+  padding: var(--spacing-8);
+  box-sizing: border-box;
+  background-color: var(--color-background);
+  // La tarjeta crece hasta 1000px; la escena no debe causar scroll lateral.
+  overflow: hidden;
 }
 
+// -----------------------------------------------------------------------------
+// Tarjeta
+// -----------------------------------------------------------------------------
 .login-card {
+  position: relative;
+  z-index: 1; // encima de la escena de fondo
   display: flex;
-  align-items: stretch; // 👈 clave para que los hijos se estiren
-  width: 1000px;
-  height: 720px;
+  // Ancho fluido: 1000px como máximo, pero nunca más ancho que la pantalla.
+  width: min(1000px, 100%);
+  // 720px de alto, o menos si la ventana es más baja (sin cortar la tarjeta).
+  min-height: min(720px, calc(100dvh - 2 * var(--spacing-8)));
+  border: 8px solid var(--color-surface);
   border-radius: 50px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-  border: 8px solid #FFFFFF;
-  position: relative;
-  z-index: 1;
+  background-color: var(--color-surface);
+  box-shadow: 0 20px 60px rgba(1, 18, 55, 0.14);
 }
 
-.login-left {
+// -----------------------------------------------------------------------------
+// Panel de marca (izquierda)
+// -----------------------------------------------------------------------------
+.login-brand {
+  position: relative;
   flex: 1;
-  background-color: #011237;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px;
-  border-radius: 16px 0 0 16px;
-  position: relative;
-  overflow: visible;
+  padding: var(--spacing-8);
+  background-color: var(--color-primary-deep);
 
+  // La cuña diagonal que "muerde" el panel blanco. Es un rectángulo navy
+  // recortado en trapecio y pegado al borde derecho del panel.
   &::after {
     content: '';
     position: absolute;
-    right: -40px;
     top: 0;
+    right: -40px;
     width: 80px;
     height: 100%;
-    background-color: #011237;
+    background-color: var(--color-primary-deep); // mismo navy que el borde del panel
     clip-path: polygon(0 0, 100% 0, 55% 100%, 0 100%);
-    z-index: 1;
   }
+
+  // El caduceo ocupa casi todo el ancho del panel: es la imagen de marca.
+  &__mark {
+    position: relative;
+    z-index: 1; // encima de la cuña
+    width: min(480px, 92%);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Panel del formulario (derecha)
+// -----------------------------------------------------------------------------
+.login-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12);
+  background-color: var(--color-surface);
 
   &__content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-    position: relative;
-    z-index: 2;
+    gap: var(--spacing-8);
+    width: 100%;
+    max-width: 360px;
   }
-}
-
-.login-logo {
-  width: 800px;
-  height: auto;
-  margin-bottom: 8px;
-}
-
-.login-brand {
-  font-size: 28px;
-  font-weight: 600;
-  color: #FFFFFF;
-  letter-spacing: 2px;
-  margin: 0;
-}
-
-.login-tagline {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
-  margin: 0;
-}
-
-.login-institution {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-}
-
-.login-right {
-  flex: 1;
-  align-self: stretch; 
-  background-color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 48px;
-  // 👈 quitamos el height: 100% que causaba el problema
-}
-
-.login-form-container {
-  width: 100%;
-  max-width: 360px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
 .login-header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   align-items: center;
+  gap: var(--spacing-3);
+  text-align: center;
 }
 
 .login-title {
-  height: 100px;
-  font-size: 30px;
-  font-weight: 600;
-  color: #011237;
   margin: 0;
-  text-align: center;
-  justify-items: center;
+  color: var(--color-primary-deep);
+  font-size: var(--font-size-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: balance; // reparte las palabras si el título baja a 2 líneas
 }
 
 .login-subtitle {
-  font-size: 13px;
-  color: #64748B;
   margin: 0;
-  line-height: 1.5;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label);
   font-style: italic;
+  line-height: 1.5;
+  text-wrap: pretty; // evita una palabra sola en la última línea
 }
 
+// -----------------------------------------------------------------------------
+// Formulario
+// -----------------------------------------------------------------------------
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-1);
+
+  // Botón de esta pantalla un poco más alto que el estándar (42px, DS §8.1):
+  // es la única acción y se lleva el peso visual del formulario.
+  @include mat.button-overrides((filled-container-height: 48px));
 }
 
 .login-field {
   width: 100%;
-}
 
-.login-btn {
-  width: 100%;
-  height: 48px;
-  background-color: #1E3A8A !important;
-  color: #FFFFFF !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  border-radius: 8px !important;
-  margin-top: 25px;
-}
+  // Separación entre el icono y el texto (Material deja el icono pegado).
+  &__icon {
+    padding: 0 var(--spacing-2) 0 var(--spacing-3);
+    transition: color 150ms ease-out;
+  }
 
-.login-footer {
-  font-size: 12px;
-  color: #94A3B8;
-  text-align: center;
-  margin: 0;
+  // Material agrega la clase .mat-focused al campo activo: el icono de ese
+  // campo se pinta de navy para acompañar al borde enfocado.
+  &.mat-focused &__icon {
+    color: var(--color-primary);
+  }
 }
 
 .login-forgot {
   text-align: right;
-  margin-top: -20px;
-  font-style: italic;
-  
+
   a {
-    font-size: 13px;
-    color: #1E3A8A;
-    text-decoration: none;
+    color: var(--color-primary);
+    font-size: var(--font-size-label);
+    font-style: italic;
     font-weight: 500;
-    
+    text-decoration: none;
+    text-underline-offset: 3px;
+    border-radius: var(--radius-sm);
+
     &:hover {
       text-decoration: underline;
     }
   }
 }
 
-::ng-deep .mat-mdc-form-field-icon-prefix > .mat-icon {
-  padding-right: 8px;
-  border-right: none !important;
+.login-submit {
+  width: 100%;
+  margin-top: var(--spacing-6);
 }
 
-::ng-deep .mdc-notched-outline__notch {
-  border-right: none !important;
-  border-left: none !important;
+.login-footer {
+  margin: 0;
+  color: var(--color-text-disabled);
+  font-size: var(--font-size-caption);
+  text-align: center;
 }
