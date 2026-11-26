@@ -1,3 +1,5 @@
+<p align="center"><strong>Español</strong> · <a href="README.en.md">English</a></p>
+
 <div align="center">
     <h1>MEDISTA</h1>
     <strong> Sistema de Gestión de Atención Médica</strong>
