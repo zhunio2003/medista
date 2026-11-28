@@ -1,8 +1,8 @@
-<p align="center"><strong>English</strong> · <a href="README.es.md">Español</a></p>
+<p align="center"><strong>Español</strong> · <a href="README.en.md">English</a></p>
 
 <div align="center">
     <h1>MEDISTA</h1>
-    <strong> Healthcare Management System</strong>
+    <strong> Sistema de Gestión de Atención Médica</strong>
     <img src="docs/brand/medista-logo.png" alt="medista" width="900">
     <br/><br/>
     <img src="https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white" alt="Angular"/>
@@ -54,60 +54,60 @@
     <img src="https://img.shields.io/badge/SonarQube-Quality-4E9BCD?logo=sonarqube&logoColor=white" alt="SonarQube"/>
     <br/>
     <img src="https://img.shields.io/badge/LOPDP-Ecuador-FFD100" alt="LOPDP"/>
-    <img src="https://img.shields.io/badge/MSP-Regulations-FF0000" alt="MSP"/>
-    <img src="https://img.shields.io/badge/license-MIT-green" alt="License"/>
+    <img src="https://img.shields.io/badge/MSP-Normativa-FF0000" alt="MSP"/>
+    <img src="https://img.shields.io/badge/licencia-MIT-green" alt="License"/>
     <br/><br/>
 </div>
 
 ---
 
-## Overview
+## Descripción
 
-MEDISTA is a healthcare management system that fully digitizes the clinical care process of educational institutions, which today runs mostly by hand on paper forms. The system includes a web platform for medical and administrative staff, and a mobile app for students.
+MEDISTA es un sistema de gestión de atención médica que digitaliza completamente el proceso de atención clínica de las instituciones educativas, el cual opera mayormente de forma manual mediante formularios en papel. El sistema contempla una plataforma web para el personal médico y administrativo, y una aplicación móvil para los estudiantes.
 
-It is designed for the medical department of any educational institution, from a small one with a single doctor to one that serves thousands of students. The goal is to replace the paper form, centralize the clinical record, provide data for decision-making and comply with Ecuadorian health data protection regulations.
+Está pensado para el departamento médico de cualquier institución educativa, desde uno pequeño con un solo médico hasta uno que atiende a miles de estudiantes. El objetivo es reemplazar el formulario en papel, centralizar el historial clínico, dar datos para la toma de decisiones y cumplir con la normativa ecuatoriana de protección de datos de salud.
 
-| Role | Platform | What they do |
-| ---- | -------- | ------------ |
-| **Doctor** | Web | Registers patients, creates consultations and referrals, reviews records and receives clinical alerts. |
-| **Dean / Administrator** | Web | Sees **aggregated** dashboards and reports (never individual records), manages users and catalogs. |
-| **Student** | Mobile app | Views their own consultations in read-only mode and receives notifications. |
+| Rol | Plataforma | Qué hace |
+| --- | ---------- | -------- |
+| **Médico** | Web | Registra pacientes, crea atenciones y referencias, consulta historiales y recibe alertas clínicas. |
+| **Decano / Administrador** | Web | Ve dashboards y reportes **agregados** (nunca expedientes individuales), gestiona usuarios y catálogos. |
+| **Estudiante** | App móvil | Consulta en solo lectura sus propias atenciones y recibe notificaciones. |
 
-> **Status:** in development. The requirements and design phase is closed (see [`docs/`](docs/)); implementation moves forward module by module, starting with M7 (Security) and M1 (Patients).
+> **Estado:** en desarrollo. La fase de requisitos y diseño está cerrada (ver [`docs/`](docs/)); la implementación avanza por módulos empezando por M7 (Seguridad) y M1 (Pacientes).
 
-## Screenshots
+## Capturas de Pantalla
 
-Screenshots will be added as the web panel gets navigable screens.
+Las capturas se agregarán a medida que el panel web tenga pantallas navegables.
 
-## Key Features
+## Características Principales
 
-- **Digitized consultation form** — reason for visit, medical history, vital signs, physical exam by system, diagnosis and treatment in a single flow.
-- **Automatic calculations** — BMI (weight / height²), Glasgow total and patient age; they are persisted so the record does not change if a formula changes.
-- **ICD-10 diagnosis** — autocomplete search over 14,000+ codes (fuzzy search with `pg_trgm`), marked as presumptive or definitive.
-- **Conditional obstetric section** — shown only when it applies to the patient.
-- **Cumulative medical history** — what is recorded in one consultation is preloaded in the next ones.
-- **Immutable consultations** — a saved consultation cannot be edited or deleted; it is corrected with attached notes, as required by the MSP (Ministry of Public Health).
-- **Medical referrals as PDF** — in the same format as the department's paper form.
-- **Clinical record** — patient timeline and vital sign trend charts.
-- **Dashboard with cross filters** — program, semester, term, gender, age and diagnosis combined; export to PDF and Excel.
-- **Smart alerts** — frequent patients, possible outbreaks and demand spikes, with configurable thresholds.
-- **Full audit trail** — immutable record of who did what, when and from where.
+- **Formulario de atención digitalizado** — motivo, antecedentes, signos vitales, examen físico por sistemas, diagnóstico y tratamiento en un solo flujo.
+- **Cálculos automáticos** — IMC (peso / talla²), total de Glasgow y edad del paciente; se persisten para que el historial no cambie si cambia la fórmula.
+- **Diagnóstico con CIE-10** — buscador con autocompletado sobre +14.000 códigos (búsqueda difusa con `pg_trgm`), marcado como presuntivo o definitivo.
+- **Sección obstétrica condicional** — aparece solo cuando aplica al paciente.
+- **Antecedentes acumulativos** — lo registrado en una consulta se precarga en las siguientes.
+- **Atenciones inmutables** — una atención guardada no se edita ni se borra; se corrige con notas adjuntas, como exige el MSP.
+- **Referencias médicas en PDF** — con el mismo formato del formulario físico del departamento.
+- **Historial clínico** — línea de tiempo del paciente y gráficas de evolución de signos vitales.
+- **Dashboard con filtros cruzados** — carrera, ciclo, periodo, género, edad y diagnóstico combinados; exportación a PDF y Excel.
+- **Alertas inteligentes** — paciente frecuente, posibles brotes y picos de demanda, con umbrales configurables.
+- **Auditoría completa** — registro inmutable de quién hizo qué, cuándo y desde dónde.
 
-## Architecture
+## Arquitectura
 
-**Modular monolith.** A single Spring Boot application organized *module-first*: each module (M1–M8) is a package with two zones.
+**Monolito modular.** Una sola aplicación Spring Boot organizada *module-first*: cada módulo (M1–M8) es un paquete con dos zonas.
 
-- `api/` — the module's public contract (services and DTOs). It is the only part other modules may use.
-- `internal/` — the implementation (controllers, entities, repositories, mappers). No other module touches it.
+- `api/` — el contrato público del módulo (servicios y DTOs). Es lo único que otros módulos pueden usar.
+- `internal/` — la implementación (controladores, entidades, repositorios, mappers). Ningún otro módulo la toca.
 
-This keeps modules decoupled and, if it is ever needed, they can be extracted into independent services without rewriting the system.
+Así los módulos quedan desacoplados y, si algún día hace falta, se pueden extraer a servicios independientes sin reescribir el sistema.
 
 ```mermaid
 flowchart LR
-    web["Angular Web App<br/>(doctor, dean)"]
-    app["Android App<br/>(student)"]
+    web["Angular Web App<br/>(médico, decano)"]
+    app["App Android<br/>(estudiante)"]
     nginx["Nginx<br/>reverse proxy · HTTPS :443"]
-    api["Spring Boot<br/>modular monolith"]
+    api["Spring Boot<br/>monolito modular"]
     pg[("PostgreSQL 16")]
     redis[("Redis 7")]
     fcm["Firebase Cloud<br/>Messaging"]
@@ -118,175 +118,175 @@ flowchart LR
     app -- REST --> nginx
     nginx --> api
     api -- JDBC --> pg
-    api -- "JWT blacklist · cache" --> redis
+    api -- "blacklist JWT · caché" --> redis
     api -- "push" --> fcm
     fcm -.-> app
     prom -- "scrape /actuator/prometheus" --> api
     graf --> prom
 ```
 
-Everything runs with Docker Compose on the institution's local server. Only Nginx is exposed to the network (port 443); PostgreSQL and Redis stay inside the Docker network. Details are in the [component diagram](docs/03-DESIGN/COMPONENT_DIAGRAM.md) and the [deployment diagram](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
+Todo corre con Docker Compose en el servidor local de la institución. Solo Nginx se expone a la red (puerto 443); PostgreSQL y Redis quedan dentro de la red Docker. El detalle está en el [diagrama de componentes](docs/03-DESIGN/COMPONENT_DIAGRAM.md) y el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
 
-## Tech Stack
+## Stack Tecnológico
 
-✅ = already integrated in the code · 🕓 = defined in the design, not yet integrated
+✅ = ya integrado en el código · 🕓 = definido en el diseño, pendiente de integrar
 
 ### Backend
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| Java | 21 LTS | Language | ✅ |
-| Spring Boot | 4.0.6 | Base framework (Web, Validation, WebSocket) | ✅ |
-| Spring Data JPA + Hibernate | 7 | Persistence | ✅ |
-| Hibernate Envers | 7 | Entity revision history (`*_aud`) | ✅ |
-| Flyway | 11 | Versioned database migrations | ✅ |
-| MapStruct | 1.5.5 | Entity ↔ DTO mapping | ✅ |
-| Lombok | 1.18.42 | Boilerplate reduction | ✅ |
-| SpringDoc OpenAPI | 3 | Interactive API documentation | 🕓 |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Java | 21 LTS | Lenguaje | ✅ |
+| Spring Boot | 4.0.6 | Framework base (Web, Validation, WebSocket) | ✅ |
+| Spring Data JPA + Hibernate | 7 | Persistencia | ✅ |
+| Hibernate Envers | 7 | Historial de revisiones de entidades (`*_aud`) | ✅ |
+| Flyway | 11 | Migraciones versionadas de la base de datos | ✅ |
+| MapStruct | 1.5.5 | Mapeo entidad ↔ DTO | ✅ |
+| Lombok | 1.18.42 | Reducción de código repetitivo | ✅ |
+| SpringDoc OpenAPI | 3 | Documentación interactiva de la API | 🕓 |
 
-### Web Frontend
+### Frontend Web
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| Angular (standalone) | 20 | SPA framework | ✅ |
-| Angular Material + CDK | 20 | Accessible components | ✅ |
-| Tailwind CSS | 4 | Utility styles (Vite plugin) | ✅ |
-| RxJS | 7.8 | Reactive programming | ✅ |
-| TypeScript | 5.8 | Language | ✅ |
-| NgRx Signals | 20 | Application state | 🕓 |
-| Chart.js | 4 | Dashboard charts | 🕓 |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Angular (standalone) | 20 | Framework SPA | ✅ |
+| Angular Material + CDK | 20 | Componentes accesibles | ✅ |
+| Tailwind CSS | 4 | Estilos utilitarios (plugin de Vite) | ✅ |
+| RxJS | 7.8 | Programación reactiva | ✅ |
+| TypeScript | 5.8 | Lenguaje | ✅ |
+| NgRx Signals | 20 | Estado de la aplicación | 🕓 |
+| Chart.js | 4 | Gráficas del dashboard | 🕓 |
 
-### Mobile App
+### App Móvil
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| Kotlin (native Android) | — | Student app, distributed as an APK | 🕓 |
-| Android | 8.0+ (API 26) | Minimum platform | 🕓 |
-| Firebase Cloud Messaging | HTTP v1 | Push notifications | 🕓 |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Kotlin (Android nativo) | — | App del estudiante, distribuida como APK | 🕓 |
+| Android | 8.0+ (API 26) | Plataforma mínima | 🕓 |
+| Firebase Cloud Messaging | HTTP v1 | Notificaciones push | 🕓 |
 
-### Database
+### Base de Datos
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| PostgreSQL | 16 | Main database | ✅ |
-| pgcrypto | — | Field-level encryption of clinical data | ✅ |
-| pg_trgm | — | Fuzzy search of patients and ICD-10 | ✅ |
-| Redis | 7 | JWT blacklist and cache | ✅ |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| PostgreSQL | 16 | Base de datos principal | ✅ |
+| pgcrypto | — | Cifrado a nivel de campo de datos clínicos | ✅ |
+| pg_trgm | — | Búsqueda difusa de pacientes y CIE-10 | ✅ |
+| Redis | 7 | Lista negra de tokens JWT y caché | ✅ |
 
-### Security
+### Seguridad
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| Spring Security | 7 | Authentication and role-based authorization | ✅ |
-| JJWT | 0.12.6 | Issuing and validating JWTs | ✅ |
-| BCrypt | cost 12 | Password hashing | ✅ |
-| Bucket4j | 8.10.1 | Login attempt limit per IP | ✅ |
-| Jasypt | 3.0.5 | Encryption of configuration properties | ✅ |
-| HMAC-SHA256 | — | Chained integrity of the audit log | 🕓 |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Spring Security | 7 | Autenticación y autorización por rol | ✅ |
+| JJWT | 0.12.6 | Emisión y validación de tokens JWT | ✅ |
+| BCrypt | coste 12 | Hash de contraseñas | ✅ |
+| Bucket4j | 8.10.1 | Límite de intentos de login por IP | ✅ |
+| Jasypt | 3.0.5 | Cifrado de propiedades de configuración | ✅ |
+| HMAC-SHA256 | — | Integridad encadenada del log de auditoría | 🕓 |
 
-### Reports
+### Reportes
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| JasperReports | 7 | Consultation and referral PDFs | 🕓 |
-| Apache POI | 5 | Excel export | 🕓 |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| JasperReports | 7 | PDFs de atenciones y referencias | 🕓 |
+| Apache POI | 5 | Exportación a Excel | 🕓 |
 
-### Observability
+### Observabilidad
 
-| Technology | Version | Purpose | Status |
-| ---------- | ------- | ------- | ------ |
-| Spring Boot Actuator | 4.0 | Health checks and metrics | ✅ |
-| Micrometer + Prometheus | — | Metrics collection | ✅ |
-| Grafana | — | Monitoring dashboards | ✅ |
+| Tecnología | Versión | Uso | Estado |
+| ---------- | ------- | --- | ------ |
+| Spring Boot Actuator | 4.0 | Health checks y métricas | ✅ |
+| Micrometer + Prometheus | — | Recolección de métricas | ✅ |
+| Grafana | — | Dashboards de monitoreo | ✅ |
 
-## System Modules
+## Módulos del Sistema
 
-| Module | Description |
+| Módulo | Descripción |
 | ------ | ----------- |
-| **M1 — Patient Management** | Registration, search (national ID, first names, last names) and editing of the student's personal data. |
-| **M2 — Medical Care** | The full clinical form: the heart of the system. Immutable consultations with correction notes. |
-| **M3 — Medical Referral** | Referral to another health facility, with a downloadable PDF in the institutional format. |
-| **M4 — Clinical Record** | Patient timeline, vital sign trends and recurring diagnoses. |
-| **M5 — Dashboard and Reports** | Indicators with cross filters and reports exportable to PDF/Excel, manual or automatic. |
-| **M6 — Notifications** | Alerts in the system inbox, by email and mobile push, with configurable thresholds. |
-| **M7 — Security and Audit** | Login, role-based access control, expiring sessions and an immutable audit log. |
-| **M8 — Administration** | Users, catalogs (programs, ICD-10, facilities), thresholds, automatic reports and backups. |
+| **M1 — Gestión de Pacientes** | Registro, búsqueda (cédula, nombres, apellidos) y edición de los datos de filiación del estudiante. |
+| **M2 — Atención Médica** | El formulario clínico completo: el corazón del sistema. Atenciones inmutables con notas de corrección. |
+| **M3 — Referencia Médica** | Derivación a otro establecimiento de salud con PDF descargable en el formato institucional. |
+| **M4 — Historial Clínico** | Línea de tiempo del paciente, evolución de signos vitales y diagnósticos recurrentes. |
+| **M5 — Dashboard y Reportes** | Indicadores con filtros cruzados y reportes exportables a PDF/Excel, manuales o automáticos. |
+| **M6 — Notificaciones** | Alertas en la bandeja del sistema, por correo y push móvil, con umbrales configurables. |
+| **M7 — Seguridad y Auditoría** | Login, control de acceso por rol, sesiones con expiración y log de auditoría inmutable. |
+| **M8 — Administración** | Usuarios, catálogos (carreras, CIE-10, establecimientos), umbrales, reportes automáticos y respaldos. |
 
-Each module has its use cases in [`docs/02-REQUIREMENTS/USE-CASES/`](docs/02-REQUIREMENTS/USE-CASES/). Appointment scheduling is left as a future module.
+Cada módulo tiene sus casos de uso en [`docs/02-REQUIREMENTS/USE-CASES/`](docs/02-REQUIREMENTS/USE-CASES/). La agenda de citas queda como módulo futuro.
 
-## Data Model
+## Modelo de Datos
 
 <div align="center">
-    <img src="docs/03-DESIGN/diagram/data-model.jpg" alt="MEDISTA entity-relationship model" width="900">
+    <img src="docs/03-DESIGN/diagram/data-model.jpg" alt="Modelo entidad-relación de MEDISTA" width="900">
 </div>
 
-19 tables in PostgreSQL 16, created with Flyway migrations (`backend/src/main/resources/db/migration/`). The main entities:
+19 tablas en PostgreSQL 16, creadas con migraciones Flyway (`backend/src/main/resources/db/migration/`). Las entidades principales:
 
-| Group | Tables |
+| Grupo | Tablas |
 | ----- | ------ |
-| Identity and security | `users`, `audit_logs`, `backup_logs` |
-| Patients (M1) | `patients`, `patient_background`, `careers` |
-| Medical care (M2) | `medical_attendances`, `physical_exam_findings`, `obstetric_emergency`, `complementary_exams`, `diagnoses`, `attendance_corrections`, `cie10_codes` |
-| Referrals (M3) | `medical_referrals`, `referral_diagnoses`, `health_establishments` |
-| Notifications (M6) | `notifications`, `notification_thresholds` |
-| Administration (M8) | `automatic_reports` |
+| Identidad y seguridad | `users`, `audit_logs`, `backup_logs` |
+| Pacientes (M1) | `patients`, `patient_background`, `careers` |
+| Atención médica (M2) | `medical_attendances`, `physical_exam_findings`, `obstetric_emergency`, `complementary_exams`, `diagnoses`, `attendance_corrections`, `cie10_codes` |
+| Referencias (M3) | `medical_referrals`, `referral_diagnoses`, `health_establishments` |
+| Notificaciones (M6) | `notifications`, `notification_thresholds` |
+| Administración (M8) | `automatic_reports` |
 
-Key principles:
+Principios clave:
 
-- **Identity separated from clinical data** — `users` only authenticates; clinical data lives in `patients` ([ADR-001](docs/03-DESIGN/ADR/ADR-001_SEPARATION-USERS-PATIENTS.md)).
-- **Soft delete** — no clinical record is ever physically deleted; it is marked `is_active = false`.
-- **Persisted calculated fields** — BMI and Glasgow are stored so the record stays exact ([ADR-005](docs/03-DESIGN/ADR/ADR-005_PERSISTENCE-CALCULATED-FILES.md)).
-- **Files outside the database** — attachments go to the file system; the database only stores the path ([ADR-007](docs/03-DESIGN/ADR/ADR-007_FILE-STORAGE-SYSTEM-FILE.md)).
-- **Automatic auditing** — Hibernate Envers generates a `*_aud` table for every audited entity.
+- **Identidad separada de los datos clínicos** — `users` solo autentica; los datos clínicos viven en `patients` ([ADR-001](docs/03-DESIGN/ADR/ADR-001_SEPARATION-USERS-PATIENTS.md)).
+- **Eliminación lógica** — ningún registro clínico se borra físicamente; se marca `is_active = false`.
+- **Campos calculados persistidos** — IMC y Glasgow se guardan para que el historial sea exacto ([ADR-005](docs/03-DESIGN/ADR/ADR-005_PERSISTENCE-CALCULATED-FILES.md)).
+- **Archivos fuera de la base** — los adjuntos van al sistema de ficheros; la base guarda solo la ruta ([ADR-007](docs/03-DESIGN/ADR/ADR-007_FILE-STORAGE-SYSTEM-FILE.md)).
+- **Auditoría automática** — Hibernate Envers genera una tabla `*_aud` por cada entidad auditada.
 
-Column, constraint and enum details are in [`DATA_MODEL.md`](docs/03-DESIGN/DATA_MODEL.md).
+El detalle de columnas, restricciones y enums está en [`DATA_MODEL.md`](docs/03-DESIGN/DATA_MODEL.md).
 
-## Prerequisites
+## Requisitos Previos
 
-| Tool | Version | What for |
-| ---- | ------- | -------- |
-| Git | 2.x | Cloning the repository |
-| Docker + Docker Compose | Docker 24+ / Compose v2 | PostgreSQL, Redis, Prometheus and Grafana |
-| JDK | 21 (Temurin recommended) | Building and running the backend |
-| Node.js | 20.19+, 22.12+ or 24 | Web frontend (Angular 20 requirement) |
-| npm | 10+ | Frontend dependencies |
+| Herramienta | Versión | Para qué |
+| ----------- | ------- | -------- |
+| Git | 2.x | Clonar el repositorio |
+| Docker + Docker Compose | Docker 24+ / Compose v2 | PostgreSQL, Redis, Prometheus y Grafana |
+| JDK | 21 (Temurin recomendado) | Compilar y ejecutar el backend |
+| Node.js | 20.19+, 22.12+ o 24 | Frontend web (requisito de Angular 20) |
+| npm | 10+ | Dependencias del frontend |
 
-You don't need to install Maven: the backend ships with the `./mvnw` wrapper.
+Maven no hace falta instalarlo: el backend trae el wrapper `./mvnw`.
 
-## Installation and Setup
+## Instalación y Configuración
 
-Clone the repository and create your environment file from the template:
+Clona el repositorio y crea tu archivo de entorno a partir de la plantilla:
 
 ```bash
 git clone https://github.com/zhunio2003/medista.git
 cd medista
-cp .env.example .env   # fill in the credentials; .env is never committed
+cp .env.example .env   # completa las credenciales; .env nunca se sube al repo
 ```
 
-| Variable | Where it is used |
-| -------- | ---------------- |
-| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASS` | Database and backend |
-| `REDIS_PASSWORD` | Redis and backend |
-| `GRAFANA_PASSWORD` | Grafana `admin` user |
-| `JWT_SECRET`, `JASYPT_PASSWORD` | Backend — **required in production** (the defaults in `application.yml` are for development only) |
+| Variable | Dónde se usa |
+| -------- | ------------ |
+| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASS` | Base de datos y backend |
+| `REDIS_PASSWORD` | Redis y backend |
+| `GRAFANA_PASSWORD` | Usuario `admin` de Grafana |
+| `JWT_SECRET`, `JASYPT_PASSWORD` | Backend — **obligatorias en producción** (los valores por defecto de `application.yml` son solo para desarrollo) |
 
 ### Backend
 
-Start only the database and Redis with Docker, and run the backend on your machine:
+Levanta solo la base de datos y Redis con Docker, y ejecuta el backend en tu máquina:
 
 ```bash
 docker compose up -d postgres_medista redis_medista
 
 cd backend
-set -a; source ../.env; set +a          # load the variables from .env
+set -a; source ../.env; set +a          # carga las variables de .env
 DB_HOST=localhost DB_PORT=5433 \
 REDIS_HOST=localhost REDIS_PORT=6380 \
 ./mvnw spring-boot:run
 ```
 
-Flyway applies the migrations on startup. The API is available at `http://localhost:8000/api` and the health check at `http://localhost:8000/api/actuator/health`.
+Flyway aplica las migraciones al arrancar. La API queda en `http://localhost:8000/api` y el health check en `http://localhost:8000/api/actuator/health`.
 
-### Web Frontend
+### Frontend Web
 
 ```bash
 cd frontend/web
@@ -294,98 +294,96 @@ npm ci
 npm start
 ```
 
-Open `http://localhost:4200`.
+Abre `http://localhost:4200`.
 
-### Mobile App
+### App Móvil
 
-The Android app (Kotlin) is not in the repository yet. This section will be completed once the project is created in `mobile/`.
+La app Android (Kotlin) todavía no está en el repositorio. Esta sección se completará cuando se cree el proyecto en `mobile/`.
 
 ### Docker Compose
 
-To start the whole environment with a single command:
+Para levantar todo el entorno con un solo comando:
 
 ```bash
 docker compose up -d --build
 ```
 
-| Service | Container | Port on your machine |
-| ------- | --------- | -------------------- |
+| Servicio | Contenedor | Puerto en tu máquina |
+| -------- | ---------- | -------------------- |
 | Backend | `backend_medista` | `8000` |
 | PostgreSQL | `postgres_medista` | `5433` |
 | Redis | `redis_medista` | `6380` |
 | Prometheus | `prometheus_medista` | `9091` |
 | Grafana | `grafana_medista` | `3001` |
 
-To shut it down: `docker compose down` (add `-v` only if you also want to delete the data).
+Para apagarlo: `docker compose down` (agrega `-v` solo si quieres borrar también los datos).
 
-## Project Structure
+## Estructura del Proyecto
 
 ```
 medista/
-├── backend/                        # REST API — Spring Boot (Java 21)
+├── backend/                        # API REST — Spring Boot (Java 21)
 │   └── src/
 │       ├── main/java/ec/insti/medista/
-│       │   ├── config/             # cross-cutting configuration (security, etc.)
-│       │   ├── common/             # shared DTOs, exceptions and auditing
-│       │   ├── exception/          # global error handler
-│       │   ├── security/           # M7 — authentication, JWT, auditing
-│       │   ├── patient/            # M1 — patients and medical history
-│       │   └── administration/     # M8 — catalogs
-│       │       ├── api/            #   module's public contract
-│       │       └── internal/       #   private implementation
+│       │   ├── config/             # configuración transversal (seguridad, etc.)
+│       │   ├── common/             # DTOs, excepciones y auditoría compartidos
+│       │   ├── exception/          # manejador global de errores
+│       │   ├── security/           # M7 — autenticación, JWT, auditoría
+│       │   ├── patient/            # M1 — pacientes y antecedentes
+│       │   └── administration/     # M8 — catálogos
+│       │       ├── api/            #   contrato público del módulo
+│       │       └── internal/       #   implementación privada
 │       ├── main/resources/
 │       │   ├── application.yml
-│       │   └── db/migration/       # Flyway migrations (V1…V25)
-│       └── test/                   # unit and integration tests
+│       │   └── db/migration/       # migraciones Flyway (V1…V25)
+│       └── test/                   # tests unitarios y de integración
 ├── frontend/
-│   └── web/                        # web panel — Angular 20
+│   └── web/                        # panel web — Angular 20
 │       └── src/app/
-│           ├── core/               # services, guards, interceptors, models
-│           ├── shared/             # reusable components and pipes
-│           └── features/           # screens per module
+│           ├── core/               # servicios, guards, interceptores, modelos
+│           ├── shared/             # componentes y pipes reutilizables
+│           └── features/           # pantallas por módulo
 ├── infrastructure/
-│   └── prometheus/                 # scraping configuration
-├── docs/                           # project documentation (see below)
-│   ├── 01-FEASIBILITY/             # feasibility study
-│   ├── 02-REQUIREMENTS/            # SRS, traceability matrix, use cases
-│   ├── 03-DESIGN/                  # data model, API, diagrams, ADRs, design system
+│   └── prometheus/                 # configuración de scraping
+├── docs/                           # documentación del proyecto (ver abajo)
+│   ├── 01-FEASIBILITY/             # estudio de factibilidad
+│   ├── 02-REQUIREMENTS/            # ERS, matriz de trazabilidad, casos de uso
+│   ├── 03-DESIGN/                  # modelo de datos, API, diagramas, ADRs, design system
 │   ├── 04-IMPLEMENTATION/ … 07-MANUALS/
 │   └── brand/                      # logo
 ├── docker-compose.yml
 └── .env.example
 ```
 
-The linked documents are written in Spanish.
+| Documento | Contenido |
+| --------- | --------- |
+| [Visión del sistema](docs/MEDISTA-V2_VISION_DEL_SISTEMA.md) | Roles, módulos y reglas de negocio |
+| [Especificación de requisitos](docs/02-REQUIREMENTS/SOFTWARE_REQUIREMENT_ESPECIFICATION.md) | Requisitos funcionales y no funcionales |
+| [Estructura de paquetes](docs/03-DESIGN/BACKEND_PACKAGE_STRUCTURE.md) | Organización del backend y patrones |
+| [Design system](docs/03-DESIGN/DESIGN_SYSTEM.md) | Colores, tipografía e iconografía de la interfaz |
+| [ADRs](docs/03-DESIGN/ADR/) | Decisiones de arquitectura registradas |
 
-| Document | Contents |
-| -------- | -------- |
-| [System vision](docs/MEDISTA-V2_VISION_DEL_SISTEMA.md) | Roles, modules and business rules |
-| [Requirements specification](docs/02-REQUIREMENTS/SOFTWARE_REQUIREMENT_ESPECIFICATION.md) | Functional and non-functional requirements |
-| [Package structure](docs/03-DESIGN/BACKEND_PACKAGE_STRUCTURE.md) | Backend organization and patterns |
-| [Design system](docs/03-DESIGN/DESIGN_SYSTEM.md) | Interface colors, typography and iconography |
-| [ADRs](docs/03-DESIGN/ADR/) | Recorded architecture decisions |
+## Documentación de API
 
-## API Documentation
+El contrato completo de la API (todos los endpoints de M1–M8 con request, response, roles y códigos de estado) está en [`API_CONTRACT_SPECIFICATIONS.md`](docs/03-DESIGN/API_CONTRACT_SPECIFICATIONS.md). La documentación interactiva con Swagger UI (SpringDoc OpenAPI) se agregará al backend en una próxima iteración.
 
-The full API contract (every M1–M8 endpoint with request, response, roles and status codes) is in [`API_CONTRACT_SPECIFICATIONS.md`](docs/03-DESIGN/API_CONTRACT_SPECIFICATIONS.md). Interactive documentation with Swagger UI (SpringDoc OpenAPI) will be added to the backend in an upcoming iteration.
+**Convenciones:** prefijo `/api/v1/`, recursos en plural y kebab-case, JSON en camelCase, fechas ISO 8601 en UTC, paginación estándar y un formato de error único para toda la API.
 
-**Conventions:** `/api/v1/` prefix, plural kebab-case resources, camelCase JSON, ISO 8601 dates in UTC, standard pagination and a single error format across the whole API.
+Todos los endpoints requieren `Authorization: Bearer <accessToken>` salvo los públicos de autenticación.
 
-Every endpoint requires `Authorization: Bearer <accessToken>` except the public authentication ones.
-
-| Method | Endpoint | Description | Status |
+| Método | Endpoint | Descripción | Estado |
 | ------ | -------- | ----------- | ------ |
-| `POST` | `/api/v1/auth/login` | Signs in and issues access and refresh tokens | ✅ |
-| `POST` | `/api/v1/auth/refresh` | Renews the access token | ✅ |
-| `POST` | `/api/v1/auth/logout` | Signs out and invalidates the token | ✅ |
-| `POST` | `/api/v1/patients` | Registers a patient | 🕓 |
-| `GET` | `/api/v1/patients/search` | Searches patients by national ID or name | 🕓 |
-| `PUT` | `/api/v1/patients/{id}/background` | Updates the medical history | 🕓 |
-| `POST` | `/api/v1/medical-attendances` | Creates a consultation | 🕓 |
-| `POST` | `/api/v1/medical-attendances/{id}/corrections` | Adds a correction note | 🕓 |
-| `GET` | `/api/v1/medical-attendances/{id}/pdf` | Downloads the consultation as a PDF | 🕓 |
+| `POST` | `/api/v1/auth/login` | Inicia sesión y emite tokens de acceso y refresh | ✅ |
+| `POST` | `/api/v1/auth/refresh` | Renueva el token de acceso | ✅ |
+| `POST` | `/api/v1/auth/logout` | Cierra sesión e invalida el token | ✅ |
+| `POST` | `/api/v1/patients` | Registra un paciente | 🕓 |
+| `GET` | `/api/v1/patients/search` | Busca pacientes por cédula o nombre | 🕓 |
+| `PUT` | `/api/v1/patients/{id}/background` | Actualiza los antecedentes | 🕓 |
+| `POST` | `/api/v1/medical-attendances` | Crea una atención médica | 🕓 |
+| `POST` | `/api/v1/medical-attendances/{id}/corrections` | Agrega una nota de corrección | 🕓 |
+| `GET` | `/api/v1/medical-attendances/{id}/pdf` | Descarga la atención en PDF | 🕓 |
 
-Login example:
+Ejemplo de login:
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/auth/login \
@@ -393,106 +391,106 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
   -d '{"email": "medico@institucion.edu.ec", "password": "********"}'
 ```
 
-## Security and Regulatory Compliance
+## Seguridad y Cumplimiento Normativo
 
-MEDISTA handles health data, the most sensitive category of personal data. The measures are grouped as follows:
+MEDISTA maneja datos de salud, la categoría más sensible de datos personales. Las medidas se agrupan así:
 
-**Authentication and sessions**
-- Login with an email from the institution's domain; any other domain is rejected.
-- Passwords hashed with BCrypt (cost 12).
-- 1-hour JWT access token and 24-hour refresh token; on logout the token goes to a blacklist in Redis.
-- At most 5 login attempts every 5 minutes per IP (Bucket4j); exceeding it returns `429`.
+**Autenticación y sesiones**
+- Login con el correo del dominio de la institución; cualquier otro dominio se rechaza.
+- Contraseñas con hash BCrypt (coste 12).
+- Token de acceso JWT de 1 hora y token de refresh de 24 horas; al cerrar sesión el token pasa a una lista negra en Redis.
+- Máximo 5 intentos de login cada 5 minutos por IP (Bucket4j); al excederlo se responde `429`.
 
-**Authorization**
-- Role-based access control (`MEDICO`, `DECANO`, `ADMINISTRADOR`, `ESTUDIANTE`) on every endpoint.
-- The dean/administrator only sees aggregated data, never individual records.
-- Students can only read their own consultations.
+**Autorización**
+- Control de acceso por rol (`MEDICO`, `DECANO`, `ADMINISTRADOR`, `ESTUDIANTE`) en cada endpoint.
+- El decano/administrador solo ve datos agregados, nunca expedientes individuales.
+- El estudiante solo puede leer sus propias atenciones.
 
-**Data protection**
-- Field-level encryption of sensitive clinical data with `pgcrypto`.
-- Configuration secrets encrypted with Jasypt; credentials kept out of the repository (`.env`).
-- HTTPS required; PostgreSQL and Redis are not exposed outside the Docker network.
+**Protección de datos**
+- Cifrado a nivel de campo de datos clínicos sensibles con `pgcrypto`.
+- Secretos de configuración cifrados con Jasypt; credenciales fuera del repositorio (`.env`).
+- HTTPS obligatorio; PostgreSQL y Redis no se exponen fuera de la red Docker.
 
-**Traceability**
-- Immutable audit log: user, action, entity, IP, user agent and date, with integrity guaranteed by chained HMAC-SHA256.
-- Revision history of every entity with Hibernate Envers.
-- Consultations are never deleted or edited: they are only corrected with notes.
+**Trazabilidad**
+- Log de auditoría inmutable: usuario, acción, entidad, IP, user agent y fecha, con integridad por HMAC-SHA256 encadenado.
+- Historial de revisiones de cada entidad con Hibernate Envers.
+- Las atenciones no se eliminan ni se editan: solo se corrigen con notas.
 
-**Applicable regulations**
-- Ecuador's Organic Law on Personal Data Protection (**LOPDP**).
-- Ministry of Public Health (**MSP**) regulations on clinical records.
-- Principles of confidentiality, integrity and availability of health data.
+**Normativa aplicable**
+- Ley Orgánica de Protección de Datos Personales (**LOPDP**) del Ecuador.
+- Normativa del Ministerio de Salud Pública (**MSP**) sobre la historia clínica.
+- Principios de confidencialidad, integridad y disponibilidad de los datos de salud.
 
 ## Testing
 
-| Layer | Type | Tools | Status |
-| ----- | ---- | ----- | ------ |
-| Backend | Service unit tests | JUnit 5 + Mockito | ✅ |
-| Backend | Integration against a real database | Testcontainers (PostgreSQL) | 🕓 |
-| Backend | Architecture rules (`api`/`internal`) | ArchUnit | 🕓 |
-| Web frontend | Component unit tests | Jasmine + Karma | ✅ |
-| Web frontend | End-to-end | Cypress | 🕓 |
-| Quality | Static analysis and coverage | SonarQube | 🕓 |
+| Capa | Tipo | Herramientas | Estado |
+| ---- | ---- | ------------ | ------ |
+| Backend | Unitarios de servicios | JUnit 5 + Mockito | ✅ |
+| Backend | Integración con base real | Testcontainers (PostgreSQL) | 🕓 |
+| Backend | Reglas de arquitectura (`api`/`internal`) | ArchUnit | 🕓 |
+| Frontend web | Unitarios de componentes | Jasmine + Karma | ✅ |
+| Frontend web | End-to-end | Cypress | 🕓 |
+| Calidad | Análisis estático y cobertura | SonarQube | 🕓 |
 
 ```bash
 # Backend
 cd backend
 ./mvnw test
 
-# Web frontend
+# Frontend web
 cd frontend/web
-npm test                                   # watch mode in Chrome
-npm test -- --watch=false --browsers=ChromeHeadless   # single run
+npm test                                   # modo watch en Chrome
+npm test -- --watch=false --browsers=ChromeHeadless   # una sola pasada
 ```
 
-## Deployment
+## Despliegue
 
-MEDISTA is deployed **on-premise** on the institution's local server, with no cloud dependency (the only outbound internet traffic goes to Firebase for push notifications).
+MEDISTA se despliega **on-premise** en el servidor local de la institución, sin depender de la nube (la única salida a internet es hacia Firebase para las notificaciones push).
 
-| Aspect | Decision |
-| ------ | -------- |
-| Server | Physical, Linux (Ubuntu Server recommended) |
-| Orchestration | Docker Compose |
-| Entry point | Nginx as reverse proxy; only port 443 (HTTPS) open to the LAN |
-| Web frontend | Static Angular build served by Nginx |
-| Mobile app | APK installed directly (no Google Play) |
-| Backups | Scheduled `pg_dump`, encrypted with GPG, on a persistent volume |
-| Monitoring | Prometheus + Grafana over Actuator metrics |
+| Aspecto | Decisión |
+| ------- | -------- |
+| Servidor | Físico, Linux (Ubuntu Server recomendado) |
+| Orquestación | Docker Compose |
+| Punto de entrada | Nginx como reverse proxy; solo el puerto 443 (HTTPS) abierto a la red LAN |
+| Frontend web | Build estático de Angular servido por Nginx |
+| App móvil | APK instalado directamente (sin Google Play) |
+| Respaldos | `pg_dump` programado y cifrado con GPG sobre volumen persistente |
+| Monitoreo | Prometheus + Grafana sobre las métricas de Actuator |
 
-General steps:
+Pasos generales:
 
 ```bash
-cp .env.example .env               # real credentials + JWT_SECRET and JASYPT_PASSWORD
+cp .env.example .env               # credenciales reales + JWT_SECRET y JASYPT_PASSWORD
 docker compose up -d --build
-cd frontend/web && npm ci && npm run build   # output in dist/web/browser
+cd frontend/web && npm ci && npm run build   # salida en dist/web/browser
 ```
 
-The Nginx configuration and the CI/CD pipeline (`.github/workflows/`) are pending. The full topology is in the [deployment diagram](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
+La configuración de Nginx y el pipeline de CI/CD (`.github/workflows/`) están pendientes. La topología completa está en el [diagrama de despliegue](docs/03-DESIGN/DEPLOYMENT_DIAGRAM.md).
 
 ## Roadmap
 
-- [x] Phase 1 — Feasibility and requirements (SRS, use cases, traceability matrix)
-- [x] Phase 2 — Design (data model, API contract, diagrams, ADRs, design system)
-- [x] Database schema with Flyway migrations
-- [ ] M7 — Security: login, refresh and logout ✅ · password recovery · audit log queries
-- [ ] M1 — Patient management (service in progress, controllers missing)
-- [ ] M2 — Medical care
-- [ ] M3 — Medical referral with PDF (JasperReports)
-- [ ] M4 — Clinical record
-- [ ] M5 — Statistics dashboard and reports
-- [ ] M6 — Notifications (WebSocket and FCM)
-- [ ] M8 — Administration
-- [ ] Web panel: login, layout and per-module screens
-- [ ] Android mobile app for students
-- [ ] Nginx, CI/CD and on-premise deployment
-- [ ] Future — Scheduling and follow-up appointments
+- [x] Fase 1 — Factibilidad y requisitos (ERS, casos de uso, matriz de trazabilidad)
+- [x] Fase 2 — Diseño (modelo de datos, contrato de API, diagramas, ADRs, design system)
+- [x] Esquema de base de datos con migraciones Flyway
+- [ ] M7 — Seguridad: login, refresh y logout ✅ · recuperación de contraseña · consulta de auditoría
+- [ ] M1 — Gestión de pacientes (servicio en progreso, faltan controladores)
+- [ ] M2 — Atención médica
+- [ ] M3 — Referencia médica con PDF (JasperReports)
+- [ ] M4 — Historial clínico
+- [ ] M5 — Dashboard estadístico y reportes
+- [ ] M6 — Notificaciones (WebSocket y FCM)
+- [ ] M8 — Administración
+- [ ] Panel web: login, layout y pantallas por módulo
+- [ ] App móvil Android para estudiantes
+- [ ] Nginx, CI/CD y despliegue on-premise
+- [ ] Futuro — Agenda y citas de seguimiento
 
-## Author
+## Autor
 
-**Miguel Angel Zhunio Remache** — full stack development
+**Miguel Angel Zhunio Remache** — desarrollo full stack
 
 [![GitHub](https://img.shields.io/badge/GitHub-zhunio2003-181717?logo=github&logoColor=white)](https://github.com/zhunio2003)
 
-## License
+## Licencia
 
-Distributed under the MIT License. See [`LICENSE`](LICENSE).
+Distribuido bajo la licencia MIT. Ver [`LICENSE`](LICENSE).
